@@ -1,24 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import styles from "./app.module.scss";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className={styles.content}>
+     
+        <h1>H1 - Welcome one and all!</h1>
+        <h2>H2 - Welcome one and all!</h2>
+        <h3>H3 - Welcome one and all!</h3>
+        <h4>H4 - Welcome one and all!</h4>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
     </div>
   );
 }

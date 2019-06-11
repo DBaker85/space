@@ -1,0 +1,66 @@
+@import "./variables";
+
+body {
+  font-family: $font-family-sans;
+  font-size: $base-font-size;
+  line-height: 1.5;
+  color: $color-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-cursive;
+  color: $color-header;
+  margin-bottom: 20px;
+}
+
+// min-width: 320px;
+// max-width: 1200px;
+
+h1 {
+  @include fluid-type(
+    320px,
+    1200px,
+    $base-font-size * 2,
+    $base-font-size * 3.5
+  );
+}
+// min - 2em
+// max - 3em
+
+h2 {
+  @include fluid-type(
+    320px,
+    1200px,
+    $base-font-size * 1.625,
+    $base-font-size * 2.25
+  );
+}
+// min - 1.625em
+// max - 2.25em
+
+h3 {
+  @include fluid-type(
+    320px,
+    1200px,
+    $base-font-size * 1.375,
+    $base-font-size * 1.75
+  );
+}
+// min - 1.375em
+// max - 1.75em
+
+h4 {
+  @include fluid-type(
+    320px,
+    1200px,
+    $base-font-size * 1.125,
+    $base-font-size * 1.125
+  );
+}
+// min - 1.125em
+// max - 1.125em
