@@ -1,0 +1,107 @@
+@import "../scss/variables";
+
+$circles: (
+    top: $color-gray,
+    right: $color-yellow,
+    bottom: $color-red,
+    left: $color-gray-dark
+  );
+  
+  $loader-size: 60px;
+  $dot-radius: 20px;
+  $animation-length: 2.5s;
+  
+  %circle{
+      width: $dot-radius;
+      height: $dot-radius;
+      border-radius: 100%;
+      display: block;
+     position:absolute;
+    will-change: transform;
+  }
+  
+  
+  @each $circle, $bgcolor in $circles {
+    .circle-#{$circle} {
+      @extend %circle;
+      background: $bgcolor;
+    }
+  };
+  
+  .loader{
+    
+    .circle-wrapper{
+      width: $loader-size;
+      height: $loader-size;
+      display:block;
+      // border: 1px solid red;
+      position:relative;
+      will-change: transform;
+      animation: rotation $animation-length infinite;
+    }
+    .circle-top{
+      top:0;
+      left: calc(50% - #{$dot-radius/2});
+      animation: float-top $animation-length linear infinite;
+    }
+    .circle-right{
+      top:calc(50% - #{$dot-radius/2});
+      right: 0;
+      animation: float-right $animation-length linear infinite;
+    }
+    .circle-bottom{
+      bottom:0;
+      left:calc(50% - #{$dot-radius/2});
+      animation: float-bottom $animation-length linear infinite;
+    }
+    .circle-left{
+      top:calc(50% - #{$dot-radius/2});
+      left: 0;
+      animation: float-left $animation-length linear infinite;
+    }
+  }
+  
+  @keyframes float-top {
+    0% {transform: translate(0,0) scale(1)}
+    25%{ transform: translate(1px,-3px) scale(1.1); opacity:.9}
+    50%{ transform: translate(3px, -4px) scale(0.9)}
+    75%{transform: translate(2px, -6px) scale(0.8); opacity:.8}
+    //  end drift 
+    80%{transform: translate(0,0) scale(.6)}
+    100%{}
+  }
+  
+  @keyframes float-right {
+    0% {transform: translate(0,0) scale(1)}
+    25%{ transform: translate(3px,1px) scale(1.1)}
+    50%{ transform: translate(6px,2px) scale(1); opacity:.8}
+    75%{transform: translate(10px,3px) scale(1.2)}
+    //  end drift 
+    80%{transform: translate(0,0) scale(.6)}
+    100%{}
+  }
+  
+  @keyframes float-bottom {
+    0% {transform: translate(0,0) scale(1)}
+    25%{ transform: translate(-3px,3px) scale(0.8); opacity:.8}
+    50%{ transform: translate(-5px,8px) scale(1.2)}
+    75%{transform: translate(-3px,13px) scale(1.1)}
+    //  end drift 
+    80%{transform: translate(0,0) scale(.6)}
+    100%{}
+  }
+  
+  @keyframes float-left {
+    0% {transform: translate(0,0) scale(1)}
+    25%{ transform: translate(-3px,3px) scale(0.8); opacity:.7}
+    50%{ transform: translate(-8px,5px) scale(1.1)}
+    75%{transform: translate(-13px,1px) scale(1.2)}
+    //  end drift 
+    80%{transform: translate(0,0) scale(.6)}
+    100%{}
+  }
+  
+  @keyframes rotation{
+    0%, 85% {transform: rotate(0deg)};
+    100%{transform: rotate(360deg)}
+  }

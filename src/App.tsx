@@ -1,19 +1,27 @@
-import React from 'react';
+import React from "react";
 import styles from "./app.module.scss";
+import Routing from "./routing";
+import { BrowserRouter } from "react-router-dom";
+import Loadable from "react-loadable";
+
+
+const LazyStarfield = Loadable({
+  loader: ()=> import("./starfield/starfield"),
+  loading: ()=>null
+})
+
 
 const App: React.FC = () => {
   return (
-    <div className={styles.content}>
-     
-        <h1>H1 - Welcome one and all!</h1>
-        <h2>H2 - Welcome one and all!</h2>
-        <h3>H3 - Welcome one and all!</h3>
-        <h4>H4 - Welcome one and all!</h4>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-    </div>
+    <React.Fragment>
+      <LazyStarfield />
+      <div className={styles.content}>
+        <BrowserRouter>
+          <Routing />
+        </BrowserRouter>
+      </div>
+    </React.Fragment>
   );
-}
+};
 
 export default App;
