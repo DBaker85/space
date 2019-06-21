@@ -12,6 +12,8 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
+    "@types/autoprefixer": "^9.5.0",
+    "@types/chalk": "^2.2.0",
     "@types/fs-extra": "^7.0.0",
     "@types/jest": "24.0.13",
     "@types/node": "12.0.7",
@@ -20,19 +22,24 @@
     "@types/react-dom": "16.8.4",
     "@types/react-loadable": "^5.5.1",
     "@types/react-router-dom": "^4.3.4",
+    "autoprefixer": "^9.6.0",
+    "chalk": "^2.4.2",
     "fs-extra": "^8.0.1",
     "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^7.0.17",
     "react-scripts": "3.0.1",
     "ts-node": "^8.3.0",
     "typescript": "3.5.1"
   },
   "scripts": {
     "ts-node": "ts-node",
-    "start": "react-scripts start",
+    "start": "npm-run-all --serial generate:first-styles start:react",
+    "start:react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate:loader-styles": "ts-node --skip-project scripts/loader.ts"
+    "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts"
   },
   "eslintConfig": {
     "extends": "react-app"
