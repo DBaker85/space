@@ -4,13 +4,13 @@ import { render } from "node-sass";
 
 const Generate = () => {
   const indexFile = resolve(__dirname, "..", "public", "index.html");
-  const loaderfile = resolve(__dirname, "index.scss");
+  const sassfile = resolve(__dirname, "..","src","scss","_first-load.scss");
   readFile(indexFile, "utf8").then(
     file => {
-      var rx = new RegExp("<style id=\"loader\"[\\d\\D]*?/style>", "g");
+      var rx = new RegExp("<style id=\"first-load\"[\\d\\D]*?/style>", "g");
       render(
         {
-          file: loaderfile,
+          file: sassfile,
           outputStyle: "compressed"
         },
         (err, result) => {
@@ -19,7 +19,7 @@ const Generate = () => {
           } else {
             const newFile = file.replace(
               rx,
-              `<style id="loader">${result.css.toString()}</style>`
+              `<style id="first-load">${result.css.toString()}</style>`
             );
             writeFile(indexFile, newFile).then(
               sucess => {
