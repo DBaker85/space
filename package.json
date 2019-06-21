@@ -29,6 +29,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.17",
     "react-scripts": "3.0.1",
+    "sass-extract": "^2.1.0",
     "ts-node": "^8.3.0",
     "typescript": "3.5.1"
   },
@@ -39,7 +40,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts"
+    "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
+    "generate:variables": "ts-node --skip-project scripts/compile-variables.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,13 +1,14 @@
 // const moJs: any = require("mo-js");
 
 import {Burst, Timeline} from "mo-js"
+import { constants } from "../shared/constants";
 
 const burstEffect: any = new Burst({
   radius: { 0: 100 },
   count: 20,
   children: {
     shape: "cross",
-    stroke: "teal",
+    stroke: constants.colors.colorRed,
     strokeWidth: { 6: 0 },
     angle: { 360: 0 },
     duration: 3000,

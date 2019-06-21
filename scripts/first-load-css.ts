@@ -21,33 +21,33 @@ const Generate = () => {
         },
         (err, result) => {
           if (err) {
-            console.log(`${chalk.red('❌ Error compiling SASS')} 
+            console.log(`❌  ${chalk.red('Error')} compiling SASS')} 
             ${err.file} :
-            ${err.line} - ${err.column})}\
+            ${err.line} - ${err.column})}
             ${err.message}
             `);
           } else {
-            console.log('✔️ Sass compiled')
+            console.log('✔️  Sass compiled')
             postcss([autoprefixer])
               .process(result.css.toString(),{from:undefined})
               .then(
                 prefixedResult => {
-                  console.log('✔️ Styles autoprefixed')
+                  console.log('✔️  Styles autoprefixed')
                   const newFile = file.replace(
                     rx,
                     `<style id="first-load">${prefixedResult}</style>`
                   );
                   writeFile(indexFile, newFile).then(
                     () => {
-                      console.log(`✔️ Styles written to ${chalk.green('index.html')}`);
+                      console.log(`✔️  Styles written to ${chalk.green('index.html')}`);
                     },
                     err => {
-                      console.log(`❌ Error writing inlining styles: ${err}`);
+                      console.log(`❌  ${chalk.red('Error')} writing inlining styles: ${err}`);
                     }
                   );
                 },
                 error => {
-                  console.log(`❌ Error autoprefixing styles: 
+                  console.log(`❌  ${chalk.red('Error')} autoprefixing styles: 
                   ${error}
                   `);
                 }
