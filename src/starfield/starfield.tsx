@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from "react";
-import Particles from "react-particles-js";
+import React, { FunctionComponent } from 'react';
+import Particles from 'react-particles-js';
 
+import { cssConstants as css } from '../shared/constants';
 
 // interactivity: {
 //     detect_on: "canvas",
@@ -18,12 +19,11 @@ import Particles from "react-particles-js";
 //     }
 //   },
 
-
 const styles = {
   left: 0,
   top: 0,
-  position: "fixed",
-  zIndex:-1
+  position: 'fixed',
+  zIndex: -1
 };
 
 const stars = {
@@ -33,12 +33,12 @@ const stars = {
       max: 250,
       density: { enable: true, value_area: 600 }
     },
-    color: { value: "#ffffff" },
+    color: { value: css.colors.colorWhite },
     shape: {
-      type: "circle" as "circle",
-      stroke: { width: 0, color: "#000000" },
+      type: 'circle' as 'circle',
+      stroke: { width: 0, color: '#000000' },
       polygon: { nb_sides: 5 },
-      image: { src: "img/github.svg", width: 100, height: 100 }
+      image: { src: 'img/github.svg', width: 100, height: 100 }
     },
     opacity: {
       value: 1,
@@ -53,17 +53,17 @@ const stars = {
     line_linked: {
       enable: false,
       distance: 150,
-      color: "#ffffff",
+      color: '#ffffff',
       opacity: 0.4,
       width: 1
     },
     move: {
       enable: true,
       speed: 1,
-      direction: "none" as "none",
+      direction: 'none' as 'none',
       random: false,
       straight: false,
-      out_mode: "out" as "out",
+      out_mode: 'out' as 'out',
       bounce: false,
       attract: { enable: false, rotateX: 600, rotateY: 600 }
     }
@@ -72,7 +72,9 @@ const stars = {
 };
 
 const Starfield: FunctionComponent = props => {
-  return <Particles width="100vw" height="100vh" style={styles} params={stars} />;
+  return (
+    <Particles width="100vw" height="100vh" style={styles} params={stars} />
+  );
 };
 
 export default Starfield;
