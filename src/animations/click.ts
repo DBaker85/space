@@ -44,5 +44,5 @@ export const burst = (e: any, cb: any) => {
       burstEffect.tune({ x: e.pageX, y: e.pageY }),
       burstEffect2.tune({ x: e.pageX, y: e.pageY })
     )
-    .replay();
+    .play();
 };

@@ -79,7 +79,10 @@ const CompileColors = () => {
           options => {
             outputFile(
               variableFileOut,
-              format(constantsTemplate(constants), options),
+              format(constantsTemplate(constants), {
+                ...options,
+                parser: 'typescript'
+              }),
               'utf8'
             ).then(
               () => {
