@@ -37,7 +37,7 @@
   },
   "scripts": {
     "ts-node": "ts-node",
-    "start": "npm-run-all --serial generate:first-styles start:react",
+    "start": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
     "start:react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

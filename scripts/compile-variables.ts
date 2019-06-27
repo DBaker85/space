@@ -63,7 +63,8 @@ const CompileColors = () => {
         outputFile(variableFileOut, format(constantsTemplate(constants),{parser: "babel"}), 'utf8').then(
           () => {
             console.log(
-              `✔️  Color variables written to ${chalk.green("constants.ts")}`
+              `✔️  Variables written to ${chalk.green("constants.ts")}
+              `
             );
           },
           err => {
