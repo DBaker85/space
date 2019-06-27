@@ -1,9 +1,9 @@
 @font-face {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
-  src: local("Montserrat"),
-    url("./assets/fonts/Montserrat/Montserrat-Regular.ttf") format("truetype");
+  src: local('Montserrat'),
+    url('./assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
 }
 
 // @font-face {
@@ -23,9 +23,9 @@
 // }
 
 @font-face {
-  font-family: "Bungee";
+  font-family: 'Bungee';
   font-style: normal;
   font-weight: 400;
-  src: local("Bungee"), local("Bungee"),
-    url("./assets/fonts/Bungee/Bungee-Regular.ttf") format("truetype");
+  src: local('Bungee'), local('Bungee'),
+    url('./assets/fonts/Bungee/Bungee-Regular.ttf') format('truetype');
 }
