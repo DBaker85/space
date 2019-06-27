@@ -2,7 +2,7 @@ import { outputFile } from 'fs-extra';
 import { resolve } from 'path';
 import chalk from 'chalk';
 import * as sassExtract from 'sass-extract';
-import { format } from 'prettier';
+import { format, resolveConfig } from 'prettier';
 
 import { hyphenToCamel } from './utils/tools';
 
@@ -72,21 +72,29 @@ const CompileColors = () => {
             }
           });
         });
-
-        outputFile(
-          variableFileOut,
-          format(constantsTemplate(constants), { parser: 'typescript' }),
-          'utf8'
-        ).then(
-          () => {
-            console.log(
-              `✔️  Variables written to ${chalk.green('constants.ts')}
+        resolveConfig(resolve(__dirname, '..')).then(
+          options => {
+            outputFile(
+              variableFileOut,
+              format(constantsTemplate(constants), options),
+              'utf8'
+            ).then(
+              () => {
+                console.log(
+                  `✔️  Variables written to ${chalk.green('css-constants.ts')}
               `
+                );
+              },
+              err => {
+                console.log(
+                  `❌  ${chalk.red('Error')} writing css variables: ${err}`
+                );
+              }
             );
           },
           err => {
             console.log(
-              `❌  ${chalk.red('Error')} writing css variables: ${err}`
+              `❌  ${chalk.red('Error')} resolving prettier config: ${err}`
             );
           }
         );
