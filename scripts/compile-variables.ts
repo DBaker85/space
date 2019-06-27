@@ -6,7 +6,7 @@ import { format, resolveConfig } from 'prettier';
 
 import { hyphenToCamel } from './utils/tools';
 
-const { json2ts } = require('json-ts');
+import { json2ts } from 'json-ts';
 
 let constants = {
   colors: {}
