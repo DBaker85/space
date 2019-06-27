@@ -8,7 +8,7 @@ const burstEffect: any = new Burst({
   count: 20,
   children: {
     shape: 'cross',
-    stroke: css.colors.colorWhite,
+    stroke: css.colors.colorRed,
     strokeWidth: { 6: 0 },
     angle: { 360: 0 },
     duration: 3000,
