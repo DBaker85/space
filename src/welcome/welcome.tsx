@@ -1,41 +1,71 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-// import { Html, Timeline } from 'mo-js';
+import { TimelineLite } from 'gsap';
 
-import { burst } from '../animations/click';
+import { cssConstants } from '../shared/css-constants';
+import styles from './welcome.module.scss';
 
 interface welcomeProps extends RouteComponentProps {}
 
 interface State {
   title: String;
-  timeline?: any;
 }
 
 export default class Welcome extends React.Component<welcomeProps, State> {
+  private welcomeTimeline: TimelineLite;
+  public myElements: any = [];
+
   constructor(props: welcomeProps) {
     super(props);
     this.state = {
       title: 'Welcome'
     };
-    console.log(this);
+    this.welcomeTimeline = new TimelineLite({ paused: true });
   }
 
   titleBuilder() {
     return this.state.title.split('').map((letter, index) => {
-      return <span key={index}>{letter}</span>;
+      return (
+        <div ref={div => (this.myElements[index] = div)} key={index}>
+          {letter}
+        </div>
+      );
     });
   }
 
-  render() {
-    console.log(this.titleBuilder());
+  componentDidMount() {
+    this.welcomeTimeline
+      .staggerFrom(
+        this.myElements,
+        1,
+        {
+          y: function() {
+            return -Math.random() * 600;
+          },
+          x: function() {
+            return Math.random() * 300;
+          },
+          autoAlpha: 0,
+          rotation: function() {
+            return Math.random() * 300;
+          },
+          color: cssConstants.colors.colorRed
+        },
+        0.1,
+        null,
+        () => console.log('complete')
+      )
+      .play();
+  }
 
+  render() {
     return (
       <React.Fragment>
         <h1
-          className="clickable"
+          id="contain"
+          className={`clickable ${styles['title-wrapper']}`}
           onClick={e => {
             e.preventDefault();
-            burst(e, () => this.props.history.push('dude'));
           }}
         >
           {this.titleBuilder()}
