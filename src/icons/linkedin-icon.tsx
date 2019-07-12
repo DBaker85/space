@@ -2,13 +2,14 @@ import React, { FunctionComponent } from 'react';
 import { IconProps } from '../shared/models';
 import styles from './icons.module.scss';
 
-const LinkedInIcon: FunctionComponent<IconProps> = ({ color }) => {
+const LinkedInIcon: FunctionComponent<IconProps> = ({ color, inputRef }) => {
   return (
     <svg
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className={styles.icon}
+      ref={inputRef ? inputRef : null}
     >
       <title>LinkedIn icon</title>
       <path

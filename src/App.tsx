@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, Fragment } from 'react';
 import styles from './app.module.scss';
 import Routing from './routing';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,16 +9,16 @@ const LazyStarfield = Loadable({
   loading: () => null
 });
 
-const App: React.FC = () => {
+const App: FunctionComponent = () => {
   return (
-    <React.Fragment>
+    <Fragment>
       <LazyStarfield />
       <div className={styles.content}>
         <BrowserRouter>
           <Routing />
         </BrowserRouter>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
