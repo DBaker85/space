@@ -55,7 +55,14 @@ const CompileColors = () => {
     '---'
   )} Generating JS friendly CSS colors ${chalk.gray('---')}
   `);
-  const indexFile = resolve(__dirname, '..', 'src', 'scss', '_variables.scss');
+  const indexFile = resolve(
+    __dirname,
+    '..',
+    'src',
+    'scss',
+    'variables',
+    '_base-colors.scss'
+  );
 
   sassExtract
     .render({
