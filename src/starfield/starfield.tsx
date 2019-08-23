@@ -71,7 +71,7 @@ const stars = {
   retina_detect: true
 };
 
-const Starfield: FunctionComponent = props => {
+const Starfield: FunctionComponent = () => {
   return (
     <Particles width="100vw" height="100vh" style={styles} params={stars} />
   );
