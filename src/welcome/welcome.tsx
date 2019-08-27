@@ -1,7 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { TimelineLite, TweenLite } from 'gsap';
-import { MorphSVGPlugin } from '../gsap-bonus';
+import { TimelineLite } from 'gsap';
 import { cssConstants } from '../shared/css-constants';
 
 import GithubIcon from '../icons/github-icon';
