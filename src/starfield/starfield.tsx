@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Particles from 'react-particles-js';
-
+import clone from 'lodash.clonedeep';
 import { cssConstants as css } from '../shared/constants';
 
 // interactivity: {
@@ -69,6 +69,19 @@ const stars = {
     }
   },
   retina_detect: true
+};
+
+const movingStars = clone(stars);
+
+movingStars.particles.move = {
+  enable: true,
+  speed: 50,
+  direction: 'bottom' as any,
+  random: false,
+  straight: true,
+  out_mode: 'out' as any,
+  bounce: false,
+  attract: { enable: false, rotateX: 600, rotateY: 600 }
 };
 
 const Starfield: FunctionComponent = () => {
