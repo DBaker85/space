@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { IconProps } from '../shared/models';
-import styles from './icons.module.scss';
+import { IconProps } from './models';
+import { iconStyle } from './icon-style';
 
 const CodepenIcon: FunctionComponent<IconProps> = ({ color, inputRef }) => {
   return (
@@ -8,7 +8,7 @@ const CodepenIcon: FunctionComponent<IconProps> = ({ color, inputRef }) => {
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.icon}
+      style={iconStyle()}
       ref={inputRef ? inputRef : null}
     >
       <title>CodePen icon</title>
