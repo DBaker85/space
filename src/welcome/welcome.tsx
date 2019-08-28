@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import { TimelineLite } from 'gsap';
@@ -15,7 +15,7 @@ import { cssConstants } from '../shared/constants';
 
 import styles from './welcome.module.scss';
 
-import Button from '../shared/elements/button';
+// import Button from '../shared/elements/button';
 
 interface welcomeProps extends RouteComponentProps {}
 
