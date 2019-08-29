@@ -2,7 +2,8 @@ import React, { FunctionComponent } from 'react';
 import Particles from 'react-particles-js';
 import clone from 'lodash.clonedeep';
 import { cssConstants as css } from '../shared/constants';
-
+import { connect } from 'react-redux';
+import { RootState } from '../redux/reducers';
 // interactivity: {
 //     detect_on: "canvas",
 //     events: {
@@ -74,20 +75,36 @@ const stars = {
 const movingStars = clone(stars);
 
 movingStars.particles.move = {
-  enable: true,
-  speed: 50,
-  direction: 'bottom' as any,
-  random: false,
-  straight: true,
-  out_mode: 'out' as any,
-  bounce: false,
-  attract: { enable: false, rotateX: 600, rotateY: 600 }
+  ...movingStars.particles.move,
+  ...{
+    speed: 50,
+    direction: 'bottom' as any,
+    random: false,
+    straight: true
+  }
 };
 
-const Starfield: FunctionComponent = () => {
+interface StarfieldProps {
+  move?: boolean;
+}
+
+const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
+  let starConfig = stars;
+  if (move) {
+    starConfig = movingStars;
+  }
   return (
-    <Particles width="100vw" height="100vh" style={styles} params={stars} />
+    <Particles
+      width="100vw"
+      height="100vh"
+      style={styles}
+      params={starConfig}
+    />
   );
 };
 
-export default Starfield;
+const mapStateToProps = (state: RootState) => ({
+  move: state.stars.move
+});
+
+export default connect(mapStateToProps)(Starfield);

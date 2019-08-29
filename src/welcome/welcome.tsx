@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { connect } from 'react-redux';
 
 import { TimelineLite } from 'gsap';
 // import { cssConstants } from '../shared/css-constants';
@@ -14,15 +15,19 @@ import { cssConstants } from '../shared/constants';
 // import rocket from '../assets/images/rocket/color.svg'
 
 import styles from './welcome.module.scss';
+import { toggleStars } from '../redux/reducers';
 
 // import Button from '../shared/elements/button';
 
-interface welcomeProps extends RouteComponentProps {}
+interface welcomeProps extends RouteComponentProps {
+  toggleStars?: Dispatch<any>;
+}
 
 interface State {}
 
-export default class Welcome extends React.Component<welcomeProps, State> {
+class Welcome extends React.Component<welcomeProps, State> {
   private launchTimeline: TimelineLite;
+  private arriveTimeline: TimelineLite;
 
   bwRocket: any;
   launchText: any;
@@ -33,9 +38,11 @@ export default class Welcome extends React.Component<welcomeProps, State> {
     super(props);
     this.state = {};
     this.launchTimeline = new TimelineLite({ paused: true });
+    this.arriveTimeline = new TimelineLite({ paused: true });
   }
 
   componentDidMount() {
+    const { toggleStars } = this.props;
     this.launchTimeline
       // object, duration, actions, position in timeline in seconds
       .to(this.launchText, 0.3, { opacity: 0 })
@@ -53,13 +60,26 @@ export default class Welcome extends React.Component<welcomeProps, State> {
       .to(this.rocket, 1, { opacity: 1, scale: 2 }, 2)
       .to(this.bwRocket, 1, { opacity: 0, scale: 2 }, 2)
       // hide button
-      .to(this.launchButton, 1, { backgroundColor: 'transparent' }, 2);
+      .to(this.launchButton, 1, { backgroundColor: 'transparent' }, 2)
+      .call(() => {
+        if (toggleStars) {
+          toggleStars(true);
+          this.arriveTimeline.play();
+        }
+      });
+
+    this.arriveTimeline
+      .to(this.rocket, 1, { y: '-100vh' }, 4)
+      .call(
+        () => (toggleStars ? toggleStars(false) : null),
+        undefined,
+        null,
+        4
+      );
     // launch
   }
 
   render() {
-    console.log(this);
-
     return (
       <div
         className={styles['launch-button']}
@@ -101,3 +121,10 @@ export default class Welcome extends React.Component<welcomeProps, State> {
 //   inputRef={(el: any) => (this.socialElements[2] = el)}
 // />
 // </div>
+const mapDispatchToProps = {
+  toggleStars: toggleStars
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(Welcome);
