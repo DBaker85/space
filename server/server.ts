@@ -1,4 +1,5 @@
 import express, { static as Static } from 'express';
+import gzip from 'compression';
 import { ApolloServer, gql } from 'apollo-server-express';
 
 import { resolve } from 'path';
@@ -24,6 +25,8 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
+app.use(gzip());
+
 server.applyMiddleware({ app });
 
 const clientPath = resolve(__dirname, '..', 'build');
