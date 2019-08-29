@@ -23,7 +23,6 @@ export const stars = (state = { move: false }, action: StartsActionTypes) => {
 };
 
 // actions
-
 export function toggleStars(move: boolean) {
   return {
     type: MOVE_STARS,
