@@ -81,12 +81,10 @@ class Welcome extends React.Component<welcomeProps, State> {
       .to(this.rocket, 1, { y: '-100vh' }, 2)
       .to(this.flame, 0.3, { y: 20 }, 1.7)
       .to(this.flame, 1, { y: '-100vh' }, 2)
-      .call(
-        () => (toggleStars ? toggleStars(false) : null),
-        undefined,
-        null,
-        2
-      );
+      .call(() => (toggleStars ? toggleStars(false) : null), undefined, null, 2)
+      .call(() => {
+        this.props.history.push('/dude');
+      });
     // launch
   }
 
@@ -122,22 +120,6 @@ class Welcome extends React.Component<welcomeProps, State> {
   }
 }
 
-// <div className={styles['social-holder']}>
-// <GithubIcon
-//   color={cssConstants.colors.colorWhite}
-//   inputRef={(el: any) => (this.socialElements[0] = el)}
-// />
-// ,
-// <CodePenIcon
-//   color={cssConstants.colors.colorWhite}
-//   inputRef={(el: any) => (this.socialElements[1] = el)}
-// />
-// ,
-// <LinkedInIcon
-//   color={cssConstants.colors.colorWhite}
-//   inputRef={(el: any) => (this.socialElements[2] = el)}
-// />
-// </div>
 const mapDispatchToProps = {
   toggleStars: toggleStars
 };
