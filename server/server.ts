@@ -1,26 +1,14 @@
 import express, { static as Static } from 'express';
 import gzip from 'compression';
-import { ApolloServer, gql } from 'apollo-server-express';
-
+import { ApolloServer } from 'apollo-server-express';
 import { resolve } from 'path';
+
+import { resolvers } from './graphQL/resolvers';
+import { typeDefs } from './graphQL/typeDefs';
 
 const localPort = 5055;
 
 const port = process.env.PORT || localPort;
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  }
-};
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
