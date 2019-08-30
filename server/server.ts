@@ -6,6 +6,14 @@ import { resolve } from 'path';
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
 
+// // ssr test
+// import App from "../src/App";
+// import { renderToString } from "react-dom/server"
+// import { createElement } from "react";
+
+// // @ts-ignore
+// console.log(renderToString(createElement(App)));
+
 const localPort = 5055;
 
 const port = process.env.PORT || localPort;

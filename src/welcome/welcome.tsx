@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 
-import { TimelineLite } from 'gsap';
+import { TimelineLite, TweenMax } from 'gsap';
 // import { cssConstants } from '../shared/css-constants';
 
 // import GithubIcon from '../icons/github-icon';
@@ -12,10 +12,10 @@ import { TimelineLite } from 'gsap';
 import RocketIcon from '../icons/rocket-icon';
 import RocketColorIcon from '../icons/rocket-icon-color';
 import { cssConstants } from '../shared/constants';
-// import rocket from '../assets/images/rocket/color.svg'
+import flame from '../assets/images/rocket/fire.svg';
 
 import styles from './welcome.module.scss';
-import { toggleStars } from '../redux';
+import { toggleStars } from '../redux/actions';
 
 // import Button from '../shared/elements/button';
 
@@ -32,6 +32,7 @@ class Welcome extends React.Component<welcomeProps, State> {
   bwRocket: any;
   launchText: any;
   rocket: any;
+  flame: any;
   launchButton: any;
 
   constructor(props: welcomeProps) {
@@ -43,33 +44,43 @@ class Welcome extends React.Component<welcomeProps, State> {
 
   componentDidMount() {
     const { toggleStars } = this.props;
+
+    TweenMax.to(this.flame, 0.05, {
+      x: '+=4',
+      repeat: -1,
+      yoyo: true
+    });
+
+    TweenMax.to(this.rocket, 0.05, {
+      x: '+=1',
+      repeat: -1,
+      yoyo: true
+    });
+
     this.launchTimeline
+      .set(this.flame, { rotation: 180 })
       // object, duration, actions, position in timeline in seconds
       .to(this.launchText, 0.3, { opacity: 0 })
       .to(this.launchButton, 1, { width: 80 }, 0.5)
       .to(this.launchText, 1, { width: 0, margin: 0, display: 'none' }, 0.5)
-      .to(this.rocket, 1, { rotation: -45 }, 0.5)
-      .to(this.bwRocket, 1, { rotation: -45 }, 0.5)
-      // move down
-      .to(
-        this.launchButton,
-        0.8,
-        { transform: 'translateY(calc(50vh - 200px))' },
-        1.5
-      )
-      .to(this.rocket, 1, { opacity: 1, scale: 2 }, 2)
-      .to(this.bwRocket, 1, { opacity: 0, scale: 2 }, 2)
-      // hide button
-      .to(this.launchButton, 1, { backgroundColor: 'transparent' }, 2)
+      .to(this.rocket, 2, { rotation: -45, scale: 2, opacity: 1 }, 0.5)
+      .to(this.bwRocket, 2, { rotation: -45, scale: 2, opacity: 0 }, 0.5)
+      .to(this.launchButton, 0.5, { backgroundColor: 'transparent' }, 1.5)
+      // add shake and launch
+
       .call(() => {
         if (toggleStars) {
           toggleStars(true);
           this.arriveTimeline.play();
         }
-      });
+      })
+      .to(this.flame, 0.5, { height: 80 }, 2.5);
 
     this.arriveTimeline
-      .to(this.rocket, 1, { y: '-100vh' }, 4)
+      .to(this.rocket, 0.3, { y: 20 }, 1.7)
+      .to(this.rocket, 1, { y: '-100vh' }, 2)
+      .to(this.flame, 0.3, { y: 20 }, 1.7)
+      .to(this.flame, 1, { y: '-100vh' }, 2)
       .call(
         () => (toggleStars ? toggleStars(false) : null),
         undefined,
@@ -99,6 +110,12 @@ class Welcome extends React.Component<welcomeProps, State> {
           />
 
           <RocketColorIcon inputRef={(el: any) => (this.rocket = el)} />
+          <img
+            alt="flame"
+            className={styles['flame']}
+            ref={(el: any) => (this.flame = el)}
+            src={flame}
+          />
         </div>
       </div>
     );

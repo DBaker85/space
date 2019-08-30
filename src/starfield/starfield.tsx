@@ -77,7 +77,7 @@ const movingStars = clone(stars);
 movingStars.particles.move = {
   ...movingStars.particles.move,
   ...{
-    speed: 50,
+    speed: 100,
     direction: 'bottom' as any,
     random: false,
     straight: true
