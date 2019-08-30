@@ -3,7 +3,7 @@ import Particles from 'react-particles-js';
 import clone from 'lodash.clonedeep';
 import { cssConstants as css } from '../shared/constants';
 import { connect } from 'react-redux';
-import { RootState } from '../redux/reducers';
+import { RootState } from '../redux';
 // interactivity: {
 //     detect_on: "canvas",
 //     events: {

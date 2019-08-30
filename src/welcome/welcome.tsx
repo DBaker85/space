@@ -15,7 +15,7 @@ import { cssConstants } from '../shared/constants';
 // import rocket from '../assets/images/rocket/color.svg'
 
 import styles from './welcome.module.scss';
-import { toggleStars } from '../redux/reducers';
+import { toggleStars } from '../redux';
 
 // import Button from '../shared/elements/button';
 
