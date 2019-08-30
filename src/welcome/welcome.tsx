@@ -85,7 +85,7 @@ class Welcome extends React.Component<welcomeProps, State> {
         () => (toggleStars ? toggleStars(false) : null),
         undefined,
         null,
-        4
+        2
       );
     // launch
   }
