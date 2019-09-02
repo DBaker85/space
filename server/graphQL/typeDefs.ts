@@ -6,23 +6,21 @@ export const typeDefs = gql`
     neo: NeoOutputType
   }
 
-
-type NeoLinksType{
+  type NeoLinksType {
     next: String
     prev: String
     self: String
+  }
 
-}
+  # type NeoObjectsType{
+  #   [date:String]: String
+  # }
 
-type NeoObjectsType{
-  [date:String]: String
-}
-
-type NeoOutputType {
-  links: NeoLinksType
-  element_count: Float
-  near_earth_objects: NeoObjectsType
-}
+  type NeoOutputType {
+    links: NeoLinksType
+    element_count: Float
+    # near_earth_objects: NeoObjectsType
+  }
 `;
 
 // [
