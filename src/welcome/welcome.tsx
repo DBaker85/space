@@ -3,11 +3,6 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 
 import { TimelineLite, TweenMax } from 'gsap';
-// import { cssConstants } from '../shared/css-constants';
-
-// import GithubIcon from '../icons/github-icon';
-// import CodePenIcon from '../icons/codepen-icon';
-// import LinkedInIcon from '../icons/linkedin-icon';
 
 import RocketIcon from '../icons/rocket-icon';
 import RocketColorIcon from '../icons/rocket-icon-color';

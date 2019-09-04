@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import * as sassExtract from 'sass-extract';
 import { format, resolveConfig } from 'prettier';
 
-import { hyphenToCamel } from './utils/tools';
+import { hyphenToCamel, RGBToHSL } from './utils/tools';
 
 import { json2ts } from 'json-ts';
 
@@ -74,10 +74,13 @@ const CompileColors = () => {
           Object.keys(rendered.vars[variableType]).forEach(variable => {
             // filter out colors
             if (rendered.vars[variableType][variable].value.hex !== undefined) {
+              const values = rendered.vars[variableType][variable].value;
               Object.assign(constants.colors, {
-                [hyphenToCamel(variable.replace('$', ''))]: rendered.vars[
-                  variableType
-                ][variable].value.hex
+                [hyphenToCamel(variable.replace('$', ''))]: RGBToHSL(
+                  values.r,
+                  values.g,
+                  values.b
+                )
               });
             }
           });
