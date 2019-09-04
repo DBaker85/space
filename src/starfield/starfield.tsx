@@ -4,6 +4,9 @@ import clone from 'lodash.clonedeep';
 import { cssConstants as css } from '../shared/constants';
 import { connect } from 'react-redux';
 import { RootState } from '../redux';
+
+import { toHex } from '../shared/utils/hsl';
+
 // interactivity: {
 //     detect_on: "canvas",
 //     events: {
@@ -34,7 +37,7 @@ const stars = {
       max: 250,
       density: { enable: true, value_area: 600 }
     },
-    color: { value: css.colors.colorWhite },
+    color: { value: toHex(css.colors.colorWhite) },
     shape: {
       type: 'circle' as 'circle',
       stroke: { width: 0, color: '#000000' },
@@ -71,7 +74,7 @@ const stars = {
   },
   retina_detect: true
 };
-
+console.log(stars);
 const movingStars = clone(stars);
 
 movingStars.particles.move = {

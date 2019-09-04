@@ -1,4 +1,4 @@
-import { uid, darkenColor, lightenColor } from './utils';
+import { uid } from './utils';
 
 it('generates a unique short id', () => {
   const id = uid(4);

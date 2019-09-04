@@ -76,7 +76,11 @@ const CompileColors = () => {
             if (rendered.vars[variableType][variable].value.hex !== undefined) {
               const values = rendered.vars[variableType][variable].value;
               Object.assign(constants.colors, {
-                [hyphenToCamel(variable.replace('$', ''))]: values.hex
+                [hyphenToCamel(variable.replace('$', ''))]: RGBToHSL(
+                  values.r,
+                  values.g,
+                  values.b
+                )
               });
             }
           });

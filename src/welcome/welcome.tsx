@@ -12,8 +12,6 @@ import flame from '../assets/images/rocket/fire.svg';
 import styles from './welcome.module.scss';
 import { toggleStars } from '../redux/actions';
 
-// import Button from '../shared/elements/button';
-
 interface welcomeProps extends RouteComponentProps {
   toggleStars?: Dispatch<any>;
 }
