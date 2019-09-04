@@ -3,31 +3,35 @@ export const uid = (length: number) =>
   [...Array(length)].map(i => (~~(Math.random() * 36)).toString(36)).join('');
 
 const darkenLightenColor = (color: string, amount: number, darken = true) => {
-  if (!color.startsWith('hsl')) {
-    console.warn('Darken color failed: supplied color is not hsl format');
-    return color;
-  }
-  const hsl = color
-    .replace('hsl(', '')
-    .replace(')', '')
-    .split(',');
+  let usePound = false;
 
-  const l = Number(hsl[2].replace('%', ''));
-
-  let nl = darken ? l - amount : l + amount;
-
-  if (nl < 0) {
-    nl = 0;
+  if (color[0] == '#') {
+    color = color.slice(1);
+    usePound = true;
   }
 
-  if (nl > 100) {
-    nl = 100;
+  if (darken) {
+    amount = -Math.abs(amount);
   }
 
-  hsl[2] = nl + '%';
-  const newHsl = hsl.join(',');
+  let num = parseInt(color, 16);
 
-  return `hsl(${newHsl})`;
+  let r = (num >> 16) + amount;
+
+  if (r > 255) r = 255;
+  else if (r < 0) r = 0;
+
+  let b = ((num >> 8) & 0x00ff) + amount;
+
+  if (b > 255) b = 255;
+  else if (b < 0) b = 0;
+
+  let g = (num & 0x0000ff) + amount;
+
+  if (g > 255) g = 255;
+  else if (g < 0) g = 0;
+
+  return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
 };
 
 export const darkenColor = (color: string, amount: number) =>
