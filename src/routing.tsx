@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Loader from './loader/loader';
 
+import Main from './main/main';
+
 const LazyWelcome = Loadable({
   loader: () => import('./welcome/welcome'),
   loading: () => <Loader />
@@ -11,7 +13,7 @@ const LazyWelcome = Loadable({
 const Routing: FunctionComponent = () => {
   return (
     <Switch>
-      <Route path="/dude" render={() => <h1>To the best</h1>} />
+      <Route path="/main" component={Main} />
       <Route path="/" component={LazyWelcome} />
     </Switch>
   );

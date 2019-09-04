@@ -83,7 +83,7 @@ class Welcome extends React.Component<welcomeProps, State> {
       .to(this.flame, 1, { y: '-100vh' }, 2)
       .call(() => (toggleStars ? toggleStars(false) : null), undefined, null, 2)
       .call(() => {
-        this.props.history.push('/dude');
+        this.props.history.push('/main');
       });
     // launch
   }
