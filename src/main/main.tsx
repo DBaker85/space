@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 
+import Planet1 from '../icons/planets/planet-a-icon';
+import Planet2 from '../icons/planets/planet-b-icon';
+import { cssConstants as css } from '../shared/css-constants';
+
 import styles from './main.module.scss';
 
-const Neo = [
+const Neos = [
   {
     estimated_diameter: {
       kilometers: {
@@ -64,18 +68,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   render() {
     return (
       <Fragment>
-        {Neo.map((object, index) => (
-          <div
-            className={styles.shapes}
-            style={{
-              width: `${object.estimated_diameter.kilometers
-                .estimated_diameter_min * 100}vh`,
-              height: `${object.estimated_diameter.kilometers
-                .estimated_diameter_min * 100}vh`,
-              zIndex: index,
-              backgroundColor: 'black'
-            }}
-          ></div>
+        {Neos.map(neo => (
+          <Planet1
+            size={(
+              neo.estimated_diameter.kilometers.estimated_diameter_min * 500
+            ).toString()}
+          />
         ))}
       </Fragment>
     );

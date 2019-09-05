@@ -27,6 +27,24 @@ const darkenLightenColor = (
   amount: number,
   darken: boolean = true
 ): string => {
+  if (color.startsWith('#')) {
+    console.warn(
+      `${
+        darken ? 'Darken' : 'Lighten'
+      } color: Cannot process ${color} > Use HSL colors`
+    );
+    return color;
+  }
+
+  if (color.startsWith('rgg')) {
+    console.warn(
+      `${
+        darken ? 'Darken' : 'Lighten'
+      } color: Cannot process ${color} > Use HSL colors`
+    );
+    return color;
+  }
+
   let hslValues = getHSLvalues(color);
   if (darken) {
     amount = -Math.abs(amount);
