@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import Planet1 from '../icons/planets/planet-a-icon';
-import Planet2 from '../icons/planets/planet-b-icon';
-import { cssConstants as css } from '../shared/css-constants';
+// import Planet2 from '../icons/planets/planet-b-icon';
+// import { cssConstants as css } from '../shared/css-constants';
 
-import styles from './main.module.scss';
+// import styles from './main.module.scss';
 
 const Neos = [
   {
