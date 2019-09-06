@@ -27,38 +27,29 @@ const darkenLightenColor = (
   amount: number,
   darken: boolean = true
 ): string => {
-  if (color.startsWith('#')) {
+  if (color.startsWith('hsl')) {
+    let hslValues = getHSLvalues(color);
+    if (darken) {
+      amount = -Math.abs(amount);
+    }
+
+    hslValues.l = hslValues.l + amount;
+
+    if (hslValues.l < 0) {
+      hslValues.l = 0;
+    }
+    if (hslValues.l > 100) {
+      hslValues.l = 100;
+    }
+    return `hsl(${hslValues.h},${hslValues.s}%,${Math.round(hslValues.l)}%)`;
+  } else {
     console.warn(
       `${
         darken ? 'Darken' : 'Lighten'
-      } color: Cannot process ${color} > Use HSL colors`
+      } color: Cannot process '${color}' > Use HSL colors`
     );
     return color;
   }
-
-  if (color.startsWith('rgg')) {
-    console.warn(
-      `${
-        darken ? 'Darken' : 'Lighten'
-      } color: Cannot process ${color} > Use HSL colors`
-    );
-    return color;
-  }
-
-  let hslValues = getHSLvalues(color);
-  if (darken) {
-    amount = -Math.abs(amount);
-  }
-
-  hslValues.l = hslValues.l + amount;
-
-  if (hslValues.l < 0) {
-    hslValues.l = 0;
-  }
-  if (hslValues.l > 100) {
-    hslValues.l = 100;
-  }
-  return `hsl(${hslValues.h},${hslValues.s}%,${Math.round(hslValues.l)}%)`;
 };
 
 /**

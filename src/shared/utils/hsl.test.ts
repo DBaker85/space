@@ -19,6 +19,14 @@ it('darkens a color by 10%', () => {
   expect(darkenedValue).toEqual('hsl(200,50%,50%)');
 });
 
+it('does not break when wrong values supplied', () => {
+  const darkenedValue = darken(color.hex, 10);
+  expect(darkenedValue).toEqual(color.hex);
+
+  const lightenedValue = lighten('test', 10);
+  expect(lightenedValue).toEqual('test');
+});
+
 it('lightens a color by 10%', () => {
   const lightenedValue = lighten(color.hsl, 10);
   expect(lightenedValue).toEqual('hsl(200,50%,70%)');
