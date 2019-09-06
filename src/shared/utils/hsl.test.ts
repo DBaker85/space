@@ -1,4 +1,4 @@
-import { darken, lighten, getValues, toHex } from './hsl';
+import { darken, lighten, getValues, toHex, complimentary } from './hsl';
 
 const color = { hsl: 'hsl(200,50%,60%)', hex: '#66aacc' };
 
@@ -35,4 +35,10 @@ it('lightens a color by 10%', () => {
 it('converts hsl to hex', () => {
   const hex = toHex(color.hsl);
   expect(hex).toEqual(color.hex);
+});
+
+it('get hsl complimentary color', () => {
+  const complimentaryColor = complimentary(color.hsl);
+  const expectedComplimentaryColor = 'hsl(320,50%,60%)';
+  expect(complimentaryColor).toEqual(expectedComplimentaryColor);
 });

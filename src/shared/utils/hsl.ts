@@ -132,3 +132,21 @@ export const toHex = (hsl: string): string => {
   const values = getHSLvalues(hsl);
   return HSLToHex(values.h, values.s, values.l);
 };
+
+/**
+ * Convert hsl string to hex code
+ * @param hsl - string to convert to hex: "hsl(320, 100%, 50%)"
+ * @returns hsl
+ */
+export const complimentary = (color: string): string => {
+  let hslValues = getHSLvalues(color);
+
+  let finalhue = hslValues.h + 120;
+  if (finalhue > 360) {
+    finalhue = finalhue - 360;
+  }
+
+  hslValues.h = finalhue;
+
+  return `hsl(${Math.floor(hslValues.h)},${hslValues.s}%,${hslValues.l}%)`;
+};

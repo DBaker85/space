@@ -5,16 +5,19 @@ import { uid } from '../shared/utils/utils';
 import Planet1 from '../icons/planets/planet-a-icon';
 import Planet2 from '../icons/planets/planet-b-icon';
 import Planet3 from '../icons/planets/planet-c-icon';
+import Planet4 from '../icons/planets/planet-d-icon';
+import Planet5 from '../icons/planets/planet-e-icon';
+
 import { cssConstants as css } from '../shared/css-constants';
 
 const planet = (size: number) => {
   const color = Math.floor(Math.random() * css.planetColors.length);
-  const planet = Math.floor(Math.random() * 3);
-  console.log(color, css.planetColors[color]);
+  const planet = Math.floor(Math.random() * 4);
+
   switch (planet) {
     case 0:
       return (
-        <Planet1
+        <Planet5
           color={css.planetColors[color]}
           key={`planet-${uid(4)}`}
           size={size}
@@ -22,7 +25,7 @@ const planet = (size: number) => {
       );
     case 1:
       return (
-        <Planet2
+        <Planet5
           color={css.planetColors[color]}
           key={`planet-${uid(4)}`}
           size={size}
@@ -30,7 +33,15 @@ const planet = (size: number) => {
       );
     case 2:
       return (
-        <Planet3
+        <Planet5
+          color={css.planetColors[color]}
+          key={`planet-${uid(4)}`}
+          size={size}
+        />
+      );
+    case 3:
+      return (
+        <Planet5
           color={css.planetColors[color]}
           key={`planet-${uid(4)}`}
           size={size}
@@ -102,13 +113,7 @@ interface MainPageState {
 
 class MainPage extends Component<MainPageProps, MainPageState> {
   render() {
-    return (
-      <Fragment>
-        {Neos.map(neo =>
-          planet(neo.estimated_diameter.kilometers.estimated_diameter_max * 200)
-        )}
-      </Fragment>
-    );
+    return <Fragment>{Neos.map(neo => planet(200))}</Fragment>;
   }
 }
 
