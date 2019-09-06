@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { IconProps } from '../models';
-import { lighten, darken } from '../../shared/utils/hsl';
 
 const PlanetIcon: FunctionComponent<IconProps> = ({
   color = '',
