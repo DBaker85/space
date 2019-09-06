@@ -9,22 +9,35 @@ import { hyphenToCamel, RGBToHSL } from './utils/tools';
 import { json2ts } from 'json-ts';
 
 let constants = {
-  colors: {}
+  colors: {},
+  planetColors: []
 };
 
 const jsonParser = items => {
   let state = ``;
   Object.keys(items).forEach((item, index, array) => {
-    let subitems = ``;
-    Object.keys(items[item]).forEach((subitem, index, array) => {
-      subitems =
-        subitems +
-        `${subitem}:'${items[item][subitem]}'${
-          index + 1 < array.length ? ',' : ''
-        }`;
-    });
-    state =
-      state + `${item}:{${subitems}}${index + 1 < array.length ? ',' : ''}`;
+    if (!Array.isArray(items[item])) {
+      let subitems = ``;
+      Object.keys(items[item]).forEach((subitem, index, array) => {
+        subitems =
+          subitems +
+          `${subitem}:'${items[item][subitem]}'${
+            index + 1 < array.length ? ',' : ''
+          }`;
+      });
+
+      state =
+        state + `${item}:{${subitems}}${index + 1 < array.length ? ',' : ''}`;
+    }
+    if (Array.isArray(items[item])) {
+      let subArray = ``;
+      Object.keys(items[item]).forEach((subitem, index, array) => {
+        subArray =
+          subArray +
+          `'${items[item][subitem]}'${index + 1 < array.length ? ',' : ''}`;
+      });
+      state = state + `${item}:[${subArray}]`;
+    }
   });
   return state;
 };
@@ -73,7 +86,10 @@ const CompileColors = () => {
         Object.keys(rendered.vars).forEach(variableType => {
           Object.keys(rendered.vars[variableType]).forEach(variable => {
             // filter out colors
-            if (rendered.vars[variableType][variable].value.hex !== undefined) {
+            if (
+              rendered.vars[variableType][variable].value.hex !== undefined &&
+              !variable.includes('-space-')
+            ) {
               const values = rendered.vars[variableType][variable].value;
               Object.assign(constants.colors, {
                 [hyphenToCamel(variable.replace('$', ''))]: RGBToHSL(
@@ -82,6 +98,15 @@ const CompileColors = () => {
                   values.b
                 )
               });
+            }
+            if (
+              rendered.vars[variableType][variable].value.hex !== undefined &&
+              variable.includes('-space-')
+            ) {
+              const values = rendered.vars[variableType][variable].value;
+              constants.planetColors.push(
+                RGBToHSL(values.r, values.g, values.b)
+              );
             }
           });
         });

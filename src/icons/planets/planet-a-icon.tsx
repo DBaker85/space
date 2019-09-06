@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { IconProps } from '../models';
 import { lighten, darken } from '../../shared/utils/hsl';
-import { cssConstants } from '../../shared/constants';
 
 const PlanetIcon: FunctionComponent<IconProps> = ({
-  color = cssConstants.colors.colorSpace1,
+  color = '',
   inputRef,
   size = 100
 }) => {
