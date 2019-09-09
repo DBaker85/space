@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-server-express';
 import fetch, { Response } from 'node-fetch';
 import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
-import { mapRange } from '../../utils/utils';
+import { mapRange, findLargest, findSmallest } from '../../utils/utils';
 
 interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
 
@@ -21,12 +21,6 @@ const mapSizeRange = (value: number, in_min: number, in_max: number) =>
 
 const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
   mapRange(value, in_min, in_max, 0, 100);
-
-const findSmallest = (array: any[], key: string) =>
-  array.reduce((prev, curr) => (prev[key] < curr[key] ? prev : curr))[key];
-
-const findLargest = (array: any[], key: string) =>
-  array.reduce((prev, curr) => (prev[key] > curr[key] ? prev : curr))[key];
 
 export const nearEarthObjectsQueries = {
   neo: async (): Promise<QueryResponse | ApolloError> => {

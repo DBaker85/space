@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Fragment } from 'react';
+import React, { FunctionComponent } from 'react';
 import { uid } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
