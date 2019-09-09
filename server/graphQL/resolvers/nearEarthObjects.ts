@@ -19,6 +19,15 @@ interface QueryResponse {
 const mapSizeRange = (value: number, in_min: number, in_max: number) =>
   mapRange(value, in_min, in_max, 5, 25);
 
+const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
+  mapRange(value, in_min, in_max, 0, 100);
+
+const findSmallest = (array: any[], key: string) =>
+  array.reduce((prev, curr) => (prev[key] < curr[key] ? prev : curr))[key];
+
+const findLargest = (array: any[], key: string) =>
+  array.reduce((prev, curr) => (prev[key] > curr[key] ? prev : curr))[key];
+
 export const nearEarthObjectsQueries = {
   neo: async (): Promise<QueryResponse | ApolloError> => {
     // yyyy-mm-dd
@@ -51,23 +60,22 @@ export const nearEarthObjectsQueries = {
       }))
       .map(object => ({
         size: Math.round(object.size * 100),
-        orbit: +object.orbit
-      }))
-      .sort((a, b) => a.size - b.size)
-      .map((object, i, array) => ({
-        ...object,
-        ...{
-          size: mapSizeRange(
-            object.size,
-            array[0].size,
-            array[array.length - 1].size
-          )
-        }
+        orbit: Math.round(+object.orbit)
       }));
+
+    const smallestSize = findSmallest(objects, 'size');
+    const largestSize = findLargest(objects, 'size');
+    const smallestOrbit = findSmallest(objects, 'orbit');
+    const largestOrbit = findLargest(objects, 'orbit');
+
+    const rangedObjects = objects.map(object => ({
+      size: mapSizeRange(object.size, smallestSize, largestSize),
+      orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit)
+    }));
 
     return {
       elements: element_count,
-      objects
+      objects: rangedObjects
     };
   }
 };
