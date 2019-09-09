@@ -26,8 +26,9 @@ import { toHex } from '../shared/utils/hsl';
 const styles = {
   left: 0,
   top: 0,
-  position: 'fixed',
-  zIndex: -1
+  position: 'fixed' as 'fixed',
+  zIndex: -1,
+  background: `linear-gradient(${css.colors.colorBlack} , ${css.colors.colorBlueDark})`
 };
 
 const stars = {
@@ -97,12 +98,9 @@ const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
     starConfig = movingStars;
   }
   return (
-    <Particles
-      width="100vw"
-      height="100vh"
-      style={styles}
-      params={starConfig}
-    />
+    <div style={styles}>
+      <Particles width="100vw" height="100vh" params={starConfig} />
+    </div>
   );
 };
 
