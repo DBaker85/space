@@ -1,7 +1,7 @@
 export interface IconProps {
   color?: string;
   inputRef?: any;
-  size?: number;
+  size?: string;
 }
 
 export interface IconStyleInput {

@@ -3,7 +3,7 @@ import { IconProps } from '../models';
 const PlanetIcon: FunctionComponent<IconProps> = ({
   color = '',
   inputRef,
-  size = 100
+  size = '100vh'
 }) => {
   return (
     <svg

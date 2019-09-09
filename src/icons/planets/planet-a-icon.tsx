@@ -5,7 +5,7 @@ import { complimentary } from '../../shared/utils/hsl';
 const PlanetIcon: FunctionComponent<IconProps> = ({
   color = '',
   inputRef,
-  size = 100
+  size = '100vh'
 }) => {
   const ring = complimentary(color); // original #e19748
   return (
@@ -16,7 +16,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
       ref={inputRef ? inputRef : null}
       viewBox="0 0 68.30603 54.312466"
       height={size}
-      width={size}
+      width="auto"
     >
       <defs id="defs6485">
         <clipPath id="clipPath5198" clipPathUnits="userSpaceOnUse">

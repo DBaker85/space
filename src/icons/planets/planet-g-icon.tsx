@@ -5,7 +5,7 @@ import { lighten, complimentary } from '../../shared/utils/hsl';
 const PlanetIcon: FunctionComponent<IconProps> = ({
   color = '',
   inputRef,
-  size = 100
+  size = '100vh'
 }) => {
   const color2 = lighten(color, 20);
   const color3 = lighten(color, 25);

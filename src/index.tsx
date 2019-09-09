@@ -9,6 +9,13 @@ import rootReducer from './redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+
+const client = new ApolloClient({
+  uri: '/graphql'
+});
+
 const store = createStore(
   rootReducer,
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
@@ -16,9 +23,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

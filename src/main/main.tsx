@@ -1,5 +1,7 @@
 import React, { FunctionComponent, Fragment } from 'react';
 import { uid } from '../shared/utils/utils';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 import Planet0 from '../icons/planets/planet-a-icon';
 import Planet1 from '../icons/planets/planet-b-icon';
@@ -13,7 +15,7 @@ import Planet8 from '../icons/planets/planet-i-icon';
 
 import { cssConstants as css } from '../shared/css-constants';
 
-const planet = (size: number) => {
+const planet = (size: string) => {
   const color = Math.floor(Math.random() * css.planetColors.length);
   const planet = Math.floor(Math.random() * 9);
 
@@ -97,59 +99,24 @@ const planet = (size: number) => {
 
 // import styles from './main.module.scss';
 
-const Neos = [
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.0399167319,
-        estimated_diameter_max: 0.0892565259
-      }
-    }
-  },
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.0366906138,
-        estimated_diameter_max: 0.0820427065
-      }
-    }
-  },
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.3503926411,
-        estimated_diameter_max: 0.7835017643
-      }
-    }
-  },
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.0211132445,
-        estimated_diameter_max: 0.0472106499
-      }
-    }
-  },
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.3669061375,
-        estimated_diameter_max: 0.8204270649
-      }
-    }
-  },
-  {
-    estimated_diameter: {
-      kilometers: {
-        estimated_diameter_min: 0.0476820563,
-        estimated_diameter_max: 0.1066203193
-      }
-    }
-  }
-];
-
 const Planets: FunctionComponent = () => {
-  return <Fragment>{Neos.map(neo => planet(200))}</Fragment>;
+  // return <Fragment>{Neos.map(neo => planet(200))}</Fragment>;
+  const { loading, error, data } = useQuery(gql`
+    {
+      neo {
+        objects {
+          size
+        }
+      }
+    }
+  `) as any;
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
+  // @ts-ignore
+  return data.neo.objects.map(object => {
+    return planet(object.size + 'vh');
+  });
 };
 
 export default Planets;

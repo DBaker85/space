@@ -5,7 +5,7 @@ import { darken } from '../../shared/utils/hsl';
 const PlanetIcon: FunctionComponent<IconProps> = ({
   color = '',
   inputRef,
-  size = 100
+  size = '100vh'
 }) => {
   const landmass = darken(color, 20);
   const landmass2 = darken(color, 10);
