@@ -64,7 +64,7 @@ interface OrbitalData {
   };
 }
 
-interface NearEarthObject {
+export interface NearEarthObject {
   links: Links;
   id: string;
   neo_reference_id: string;

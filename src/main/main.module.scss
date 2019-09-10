@@ -1,7 +1,9 @@
-.shapes {
+.center {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  left: calc(50vw - 25px);
+  top: calc(50vh - 25px);
   display: block;
+  background-color: red;
 }

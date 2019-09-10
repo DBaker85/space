@@ -70,7 +70,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.05000311 }}
               id="g5480"
-              clip-path="url(#clipPath5474)"
+              clipPath="url(#clipPath5474)"
             >
               <g id="g5478" transform="translate(160.8271,221.3203)">
                 <path
@@ -115,7 +115,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.05000311 }}
               id="g5500"
-              clip-path="url(#clipPath5494)"
+              clipPath="url(#clipPath5494)"
             >
               <g id="g5498" transform="translate(168.4282,221.3203)">
                 <path
@@ -151,7 +151,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
           id="g5508"
           transform="matrix(0.35277777,0,0,-0.35277777,-631.80435,233.71361)"
         >
-          <g clip-path="url(#clipPath5514)" id="g5510">
+          <g clipPath="url(#clipPath5514)" id="g5510">
             <g transform="translate(116.0161,177.8779)" id="g5516">
               <path
                 id="path5518"
@@ -211,7 +211,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5552"
-              clip-path="url(#clipPath5546)"
+              clipPath="url(#clipPath5546)"
             >
               <g id="g5550" transform="translate(132.9541,228.2998)">
                 <path
@@ -237,7 +237,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5568"
-              clip-path="url(#clipPath5562)"
+              clipPath="url(#clipPath5562)"
             >
               <g id="g5566" transform="translate(108.7983,265.7949)">
                 <path
@@ -263,7 +263,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5584"
-              clip-path="url(#clipPath5578)"
+              clipPath="url(#clipPath5578)"
             >
               <g id="g5582" transform="translate(106.2188,238.0967)">
                 <path

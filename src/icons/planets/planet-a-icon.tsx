@@ -65,7 +65,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
           transform="matrix(0.35277777,0,0,-0.35277777,-568.51756,193.82601)"
           id="g5060"
         >
-          <g clip-path="url(#clipPath5066)" id="g5062">
+          <g clipPath="url(#clipPath5066)" id="g5062">
             <g transform="translate(33.3774,377.8042)" id="g5068">
               <path
                 id="path5070"
@@ -88,7 +88,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
                 <g
                   style={{ opacity: 0.05000311 }}
                   id="g5084"
-                  clip-path="url(#clipPath5078)"
+                  clipPath="url(#clipPath5078)"
                 >
                   <g id="g5082" transform="translate(195.8545,382.5386)">
                     <path
@@ -111,7 +111,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
                 <g
                   style={{ opacity: 0.05000311 }}
                   id="g5100"
-                  clip-path="url(#clipPath5094)"
+                  clipPath="url(#clipPath5094)"
                 >
                   <g id="g5098" transform="translate(205.667,382.5386)">
                     <path
@@ -146,7 +146,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
           transform="matrix(0.35277777,0,0,-0.35277777,-568.51756,193.82601)"
           id="g5108"
         >
-          <g clip-path="url(#clipPath5114)" id="g5110">
+          <g clipPath="url(#clipPath5114)" id="g5110">
             <g transform="translate(46.6704,421.2681)" id="g5116">
               <path
                 id="path5118"
@@ -278,7 +278,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5172"
-              clip-path="url(#clipPath5166)"
+              clipPath="url(#clipPath5166)"
             >
               <g id="g5170" transform="translate(159.8716,391.5493)">
                 <path
@@ -304,7 +304,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5188"
-              clip-path="url(#clipPath5182)"
+              clipPath="url(#clipPath5182)"
             >
               <g id="g5186" transform="translate(128.6885,439.9526)">
                 <path
@@ -330,7 +330,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
             <g
               style={{ opacity: 0.14999402 }}
               id="g5204"
-              clip-path="url(#clipPath5198)"
+              clipPath="url(#clipPath5198)"
             >
               <g id="g5202" transform="translate(125.3584,404.1968)">
                 <path
