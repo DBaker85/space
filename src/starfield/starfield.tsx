@@ -76,7 +76,7 @@ const stars = {
   },
   retina_detect: true
 };
-console.log(stars);
+
 const movingStars = clone(stars);
 
 movingStars.particles.move = {

@@ -62,10 +62,14 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .to(rocket, 1, { y: '-100vh' }, 2)
       .to(flame, 0.3, { y: 20 }, 1.7)
       .to(flame, 1, { y: '-100vh' }, 2)
-      .call(() =>
-        client.writeData({
-          data: { stars: { move: false, __typename: 'Star' } }
-        })
+      .call(
+        () =>
+          client.writeData({
+            data: { stars: { move: false, __typename: 'Star' } }
+          }),
+        undefined,
+        null,
+        2
       )
       .call(() => {
         history.push('/main');
