@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Particles from 'react-particles-js';
 import clone from 'lodash.clonedeep';
 import gql from 'graphql-tag';
@@ -102,10 +102,19 @@ const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
     }
   `) as any;
 
-  let starConfig = stars;
-  if (data.stars.move) {
-    starConfig = movingStars;
-  }
+  const [starConfig, setStarConfig] = useState(stars);
+
+  useEffect(() => {
+    if (data && data.stars.move) {
+      console.log('move stars');
+      setStarConfig(movingStars);
+    }
+    if (data && !data.stars.move) {
+      setStarConfig(stars);
+      console.log('stop stars');
+    }
+  }, [data]);
+
   return (
     <div style={styles}>
       <Particles width="100vw" height="100vh" params={starConfig} />
