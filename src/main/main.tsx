@@ -124,7 +124,6 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
 };
 
 const Planets: FunctionComponent = () => {
-  // return <Fragment>{Neos.map(neo => planet(200))}</Fragment>;
   const { loading, error, data } = useQuery(gql`
     {
       neo {
@@ -143,7 +142,6 @@ const Planets: FunctionComponent = () => {
       planets.current = planets.current.slice(0, data.neo.elements);
       TweenMax.set(planets.current, {
         x: () => Math.floor(Math.random() * 80) + 'vw',
-        opacity: 1,
         rotation: () => randomNegative(Math.floor(Math.random() * 40))
       });
       TweenMax.from(planets.current, 1, {
