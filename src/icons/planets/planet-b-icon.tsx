@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react';
-import { IconProps } from '../models';
+import { PlanetProps } from '../models';
 
-const PlanetIcon: FunctionComponent<IconProps> = ({
+const PlanetIcon: FunctionComponent<PlanetProps> = ({
   color = '',
   inputRef,
-  size = '100vh'
+  size = '100vh',
+  style
 }) => {
   return (
     <svg
       role="img"
       preserveAspectRatio="xMidYMid meet"
-      // style={iconStyle()}
+      style={style}
       ref={inputRef ? inputRef : null}
       viewBox="0 0 19.698935 19.699076"
       height={size}

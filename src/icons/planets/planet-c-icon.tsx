@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { IconProps } from '../models';
+import { PlanetProps } from '../models';
 import { darken } from '../../shared/utils/hsl';
 
-const PlanetIcon: FunctionComponent<IconProps> = ({
+const PlanetIcon: FunctionComponent<PlanetProps> = ({
   color = '',
   inputRef,
-  size = '100vh'
+  size = '100vh',
+  style
 }) => {
   const landmass = darken(color, 20);
   const landmass2 = darken(color, 10);
@@ -13,7 +14,7 @@ const PlanetIcon: FunctionComponent<IconProps> = ({
     <svg
       role="img"
       preserveAspectRatio="xMidYMid meet"
-      // style={iconStyle()}
+      style={style}
       ref={inputRef ? inputRef : null}
       viewBox="0 0 27.263336 27.263514"
       height={size}

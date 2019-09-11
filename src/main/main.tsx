@@ -17,7 +17,7 @@ import Planet7 from '../icons/planets/planet-h-icon';
 import Planet8 from '../icons/planets/planet-i-icon';
 
 import { cssConstants as css } from '../shared/css-constants';
-import Loader from '../loader/loader';
+import { transform } from '@babel/core';
 
 const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
   size,
@@ -25,6 +25,9 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
 }) => {
   const color = Math.floor(Math.random() * css.planetColors.length);
   const planet = Math.floor(Math.random() * 9);
+  const style = {
+    opacity: 1
+  };
 
   switch (planet) {
     case 0:
@@ -33,6 +36,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 1:
@@ -41,6 +45,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 2:
@@ -49,6 +54,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 3:
@@ -57,6 +63,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 4:
@@ -65,6 +72,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 5:
@@ -73,6 +81,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 6:
@@ -81,6 +90,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 7:
@@ -89,6 +99,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     case 8:
@@ -97,6 +108,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
     default:
@@ -105,6 +117,7 @@ const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
           color={css.planetColors[color]}
           size={size}
           inputRef={inputRef}
+          style={style}
         />
       );
   }
@@ -118,46 +131,57 @@ const Planets: FunctionComponent = () => {
         elements
         objects {
           size
-          orbit
         }
       }
     }
   `) as any;
 
   let planets = useRef([]);
-  let rotationTicks: number;
 
   useEffect(() => {
     if (data) {
       planets.current = planets.current.slice(0, data.neo.elements);
-      TweenMax.staggerTo(
-        planets.current,
-        0.5,
-        {
-          x: function() {
-            return `${Math.random() < 0.5 ? 30 : -30}vh`;
-          },
-          y: () => `${Math.random() < 0.5 ? 30 : -30}vw`
-        },
-        0.1
-      );
+      TweenMax.set(planets.current, {
+        x: () => Math.floor(Math.random() * 80) + 'vw',
+        opacity: 1,
+        rotation: () =>
+          Math.random() > 0.5
+            ? Math.floor(Math.random() * 40)
+            : -Math.floor(Math.random() * 40)
+      });
+      TweenMax.from(planets.current, 1, {
+        x: '50vw',
+        y: 0,
+        scale: 0,
+        opacity: 1
+      });
     }
   }, [data]);
 
-  if (loading) return <Loader />;
+  if (loading) return null;
   if (error) return <p>Error...</p>;
 
   return (
     <Fragment>
-      {data.neo.objects.map(
-        (object: { size: number; orbit: number }, index: number) => (
-          <Planet
-            size={object.size + 'vh'}
-            inputRef={(el: any) => ((planets.current[index] as any) = el)}
-            key={`planet-${uid(4)}`}
-          />
-        )
-      )}
+      <div
+        style={{
+          height: '75vh',
+          width: '100vw',
+          marginTop: '-30vh',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        {data.neo.objects.map(
+          (object: { size: number; orbit: number }, index: number) => (
+            <Planet
+              size={object.size + 'vh'}
+              inputRef={(el: any) => ((planets.current[index] as any) = el)}
+              key={`planet-${uid(3)}`}
+            />
+          )
+        )}
+      </div>
     </Fragment>
   );
 };
