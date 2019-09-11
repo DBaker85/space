@@ -94,7 +94,6 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .call(() => {
         history.push('/main');
       });
-    // launch
   });
 
   return (
