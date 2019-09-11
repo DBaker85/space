@@ -1,6 +1,5 @@
 import React, { Dispatch } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { connect } from 'react-redux';
 
 import { TimelineLite, TweenMax } from 'gsap';
 
@@ -10,11 +9,8 @@ import { cssConstants } from '../shared/constants';
 import flame from '../assets/images/rocket/fire.svg';
 
 import styles from './welcome.module.scss';
-import { toggleStars } from '../redux/actions';
 
-interface welcomeProps extends RouteComponentProps {
-  toggleStars?: Dispatch<any>;
-}
+interface welcomeProps extends RouteComponentProps {}
 
 interface State {}
 
@@ -36,8 +32,6 @@ class Welcome extends React.Component<welcomeProps, State> {
   }
 
   componentDidMount() {
-    const { toggleStars } = this.props;
-
     TweenMax.to(this.flame, 0.05, {
       x: '+=4',
       repeat: -1,
@@ -62,10 +56,10 @@ class Welcome extends React.Component<welcomeProps, State> {
       // add shake and launch
 
       .call(() => {
-        if (toggleStars) {
-          toggleStars(true);
-          this.arriveTimeline.play();
-        }
+        // if (toggleStars) {
+        //   toggleStars(true);
+        //   this.arriveTimeline.play();
+        // }
       })
       .to(this.flame, 0.5, { height: 80 }, 2.5);
 
@@ -74,7 +68,7 @@ class Welcome extends React.Component<welcomeProps, State> {
       .to(this.rocket, 1, { y: '-100vh' }, 2)
       .to(this.flame, 0.3, { y: 20 }, 1.7)
       .to(this.flame, 1, { y: '-100vh' }, 2)
-      .call(() => (toggleStars ? toggleStars(false) : null), undefined, null, 2)
+      // .call(() => (toggleStars ? toggleStars(false) : null), undefined, null, 2)
       .call(() => {
         this.props.history.push('/main');
       });
@@ -113,10 +107,4 @@ class Welcome extends React.Component<welcomeProps, State> {
   }
 }
 
-const mapDispatchToProps = {
-  toggleStars: toggleStars
-};
-export default connect(
-  null,
-  mapDispatchToProps
-)(Welcome);
+export default Welcome;

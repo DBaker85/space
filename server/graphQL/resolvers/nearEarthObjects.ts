@@ -20,7 +20,7 @@ const mapSizeRange = (value: number, in_min: number, in_max: number) =>
   mapRange(value, in_min, in_max, 5, 25);
 
 const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
-  mapRange(value, in_min, in_max, 0, 100);
+  mapRange(value, in_min, in_max, 60, 100);
 
 export const nearEarthObjectsQueries = {
   neo: async (): Promise<QueryResponse | ApolloError> => {
@@ -76,63 +76,63 @@ export const nearEarthObjectsQueries = {
       objects: [
         {
           size: 25,
-          orbit: 80
+          orbit: mapOrbitRange(80, 0, 100)
         },
         {
           size: 23,
-          orbit: 86
+          orbit: mapOrbitRange(86, 0, 100)
         },
         {
           size: 7,
-          orbit: 65
+          orbit: mapOrbitRange(65, 0, 100)
         },
         {
           size: 9,
-          orbit: 100
+          orbit: mapOrbitRange(100, 0, 100)
         },
         {
           size: 9,
-          orbit: 73
+          orbit: mapOrbitRange(73, 0, 100)
         },
         {
           size: 8,
-          orbit: 21
+          orbit: mapOrbitRange(21, 0, 100)
         },
         {
           size: 16,
-          orbit: 51
+          orbit: mapOrbitRange(51, 0, 100)
         },
         {
           size: 7,
-          orbit: 38
+          orbit: mapOrbitRange(38, 0, 100)
         },
         {
           size: 9,
-          orbit: 48
+          orbit: mapOrbitRange(48, 0, 100)
         },
         {
           size: 6,
-          orbit: 17
+          orbit: mapOrbitRange(17, 0, 100)
         },
         {
           size: 8,
-          orbit: 40
+          orbit: mapOrbitRange(40, 0, 100)
         },
         {
           size: 5,
-          orbit: 0
+          orbit: mapOrbitRange(0, 0, 100)
         },
         {
           size: 6,
-          orbit: 11
+          orbit: mapOrbitRange(11, 0, 100)
         },
         {
           size: 6,
-          orbit: 3
+          orbit: mapOrbitRange(3, 0, 100)
         },
         {
           size: 16,
-          orbit: 32
+          orbit: mapOrbitRange(32, 0, 100)
         }
       ]
     };

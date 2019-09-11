@@ -19,7 +19,10 @@ import Planet8 from '../icons/planets/planet-i-icon';
 import { cssConstants as css } from '../shared/css-constants';
 import Loader from '../loader/loader';
 
-const planet = (size: string, ref: any = null) => {
+const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
+  size,
+  inputRef = null
+}) => {
   const color = Math.floor(Math.random() * css.planetColors.length);
   const planet = Math.floor(Math.random() * 9);
 
@@ -28,85 +31,82 @@ const planet = (size: string, ref: any = null) => {
       return (
         <Planet0
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 1:
       return (
         <Planet1
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 2:
       return (
         <Planet2
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 3:
       return (
         <Planet3
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 4:
       return (
         <Planet4
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 5:
       return (
         <Planet5
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 6:
       return (
         <Planet6
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 7:
       return (
         <Planet7
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     case 8:
       return (
         <Planet8
           color={css.planetColors[color]}
-          key={`planet-${uid(4)}`}
           size={size}
-          inputRef={ref}
+          inputRef={inputRef}
         />
       );
     default:
-      break;
+      return (
+        <Planet0
+          color={css.planetColors[color]}
+          size={size}
+          inputRef={inputRef}
+        />
+      );
   }
 };
 
@@ -124,12 +124,23 @@ const Planets: FunctionComponent = () => {
     }
   `) as any;
 
-  let centerRef = useRef(null);
   let planets = useRef([]);
+  let rotationTicks: number;
 
   useEffect(() => {
     if (data) {
       planets.current = planets.current.slice(0, data.neo.elements);
+      TweenMax.staggerTo(
+        planets.current,
+        0.5,
+        {
+          x: function() {
+            return `${Math.random() < 0.5 ? 30 : -30}vh`;
+          },
+          y: () => `${Math.random() < 0.5 ? 30 : -30}vw`
+        },
+        0.1
+      );
     }
   }, [data]);
 
@@ -138,23 +149,13 @@ const Planets: FunctionComponent = () => {
 
   return (
     <Fragment>
-      <div ref={centerRef} className={styles.center}></div>
-
       {data.neo.objects.map(
         (object: { size: number; orbit: number }, index: number) => (
-          <div
-            ref={el => ((planets.current[index] as any) = el)}
-            key={`wrapper-${uid(4)}`}
-            style={{
-              display: 'block',
-              height: object.orbit - object.size / 2 + 'vh',
-              width: object.orbit - object.size / 2 + 'vw',
-              position: 'fixed',
-              transform: `rotate(${Math.floor(Math.random() * 360)}deg)`
-            }}
-          >
-            {planet(object.size + 'vh')}
-          </div>
+          <Planet
+            size={object.size + 'vh'}
+            inputRef={(el: any) => ((planets.current[index] as any) = el)}
+            key={`planet-${uid(4)}`}
+          />
         )
       )}
     </Fragment>

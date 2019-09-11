@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import Particles from 'react-particles-js';
 import clone from 'lodash.clonedeep';
+import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo';
+
 import { cssConstants as css } from '../shared/constants';
-import { connect } from 'react-redux';
-import { RootState } from '../redux';
 
 import { toHex } from '../shared/utils/hsl';
 
@@ -93,8 +94,16 @@ interface StarfieldProps {
 }
 
 const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
+  const { data } = useQuery(gql`
+    {
+      stars @client {
+        move
+      }
+    }
+  `) as any;
+
   let starConfig = stars;
-  if (move) {
+  if (data.stars.move) {
     starConfig = movingStars;
   }
   return (
@@ -104,8 +113,4 @@ const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  move: state.stars.move
-});
-
-export default connect(mapStateToProps)(Starfield);
+export default Starfield;
