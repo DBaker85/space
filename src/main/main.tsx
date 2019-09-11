@@ -1,5 +1,5 @@
 import React, { FunctionComponent, Fragment, useRef, useEffect } from 'react';
-import { uid } from '../shared/utils/utils';
+import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { TweenMax, Linear } from 'gsap';
@@ -144,10 +144,7 @@ const Planets: FunctionComponent = () => {
       TweenMax.set(planets.current, {
         x: () => Math.floor(Math.random() * 80) + 'vw',
         opacity: 1,
-        rotation: () =>
-          Math.random() > 0.5
-            ? Math.floor(Math.random() * 40)
-            : -Math.floor(Math.random() * 40)
+        rotation: () => randomNegative(Math.floor(Math.random() * 40))
       });
       TweenMax.from(planets.current, 1, {
         x: '50vw',
