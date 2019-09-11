@@ -7,7 +7,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import ApolloClient from 'apollo-client';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import gql from 'graphql-tag';
@@ -46,21 +46,6 @@ const client = new ApolloClient({
 cache.writeData({
   data: initialState
 });
-
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-    stars @client {
-      move
-    }
-  }
-`;
-
-function IsLoggedIn() {
-  const { data } = useQuery(IS_LOGGED_IN);
-  console.log(data);
-  return null;
-}
 
 ReactDOM.render(
   <ApolloProvider client={client}>

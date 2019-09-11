@@ -2,9 +2,7 @@ import React, { FunctionComponent, Fragment, useRef, useEffect } from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { TweenMax, Linear } from 'gsap';
-
-import styles from './main.module.scss';
+import { TweenMax } from 'gsap';
 
 import Planet0 from '../icons/planets/planet-a-icon';
 import Planet1 from '../icons/planets/planet-b-icon';
@@ -17,7 +15,6 @@ import Planet7 from '../icons/planets/planet-h-icon';
 import Planet8 from '../icons/planets/planet-i-icon';
 
 import { cssConstants as css } from '../shared/css-constants';
-import { transform } from '@babel/core';
 
 const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
   size,
@@ -162,7 +159,7 @@ const Planets: FunctionComponent = () => {
         style={{
           height: '75vh',
           width: '100vw',
-          marginTop: '-30vh',
+          marginTop: '-25vh',
           display: 'flex',
           flexDirection: 'column'
         }}
