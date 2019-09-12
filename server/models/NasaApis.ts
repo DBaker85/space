@@ -39,8 +39,8 @@ interface OrbitalData {
   orbit_determination_date: string;
   first_observation_date: string;
   last_observation_date: string;
-  data_arc_in_days: 10;
-  observations_used: 15;
+  data_arc_in_days: number;
+  observations_used: number;
   orbit_uncertainty: string;
   minimum_orbit_intersection: string;
   jupiter_tisserand_invariant: string;
@@ -70,7 +70,7 @@ export interface NearEarthObject {
   neo_reference_id: string;
   name: string;
   nasa_jpl_url: string;
-  absolute_magnitude_h: 23.95;
+  absolute_magnitude_h: number;
   estimated_diameter: EstimatedDiameters;
   is_potentially_hazardous_asteroid: boolean;
   close_approach_data: CloseApproachData[];

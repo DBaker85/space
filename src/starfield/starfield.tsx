@@ -106,12 +106,10 @@ const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
 
   useEffect(() => {
     if (data && data.stars.move) {
-      console.log('move stars');
       setStarConfig(movingStars);
     }
     if (data && !data.stars.move) {
       setStarConfig(stars);
-      console.log('stop stars');
     }
   }, [data]);
 
