@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { useApolloClient } from '@apollo/react-hooks';
 import { TimelineLite, TweenMax } from 'gsap';
 
-import { moveStars } from '../apollo/stars/cacheOperations';
+import { useStarToggle } from '../apollo/stars/cacheOperations';
 
 import { cssConstants } from '../shared/constants';
 
@@ -22,7 +21,8 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
   let flameEl = useRef(null);
   let launchButtonEl = useRef(null);
 
-  const client = useApolloClient();
+  const moveStars = useStarToggle();
+
   const launchTimeline = new TimelineLite({ paused: true });
   const arriveTimeline = new TimelineLite({ paused: true });
 
@@ -68,13 +68,9 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
         { backgroundColor: 'transparent' },
         1.5
       )
-      // add shake and launch
-
       .call(() => {
-        // if (toggleStars) {
-        client.writeData(moveStars(true));
+        moveStars(true);
         arriveTimeline.play();
-        // }
       })
       .to(flameEl.current as any, 0.5, { height: 80 }, 2.5);
 
@@ -83,7 +79,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .to(rocketEl.current as any, 1, { y: '-100vh' }, 2)
       .to(flameEl.current as any, 0.3, { y: 20 }, 1.7)
       .to(flameEl.current as any, 1, { y: '-100vh' }, 2)
-      .call(() => client.writeData(moveStars(false)), undefined, null, 2)
+      .call(() => moveStars(false), undefined, null, 2)
       .call(() => {
         history.push('/main');
       });
