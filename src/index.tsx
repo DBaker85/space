@@ -6,46 +6,8 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import ApolloClient from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import gql from 'graphql-tag';
-
-const initialState = {
-  stars: { move: false, __typename: 'Star' }
-};
-
-const typeDefs = gql`
-  extend type Query {
-    stars: Star
-  }
-
-  extend type Star {
-    move: Boolean
-  }
-
-  extend type Mutation {
-    addOrRemoveFromCart(id: ID!): [Launch]
-  }
-`;
-
-const resolvers = {};
-
-const cache = new InMemoryCache();
-
-const client = new ApolloClient({
-  cache,
-  link: new HttpLink({
-    uri: 'graphql'
-  }),
-  typeDefs,
-  resolvers
-});
-
-cache.writeData({
-  data: initialState
-});
+import { client } from './apollo';
 
 ReactDOM.render(
   <ApolloProvider client={client}>
