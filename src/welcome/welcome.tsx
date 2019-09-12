@@ -3,9 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import { useApolloClient } from '@apollo/react-hooks';
 import { TimelineLite, TweenMax } from 'gsap';
 
+import { moveStars } from '../apollo/stars/cacheOperations';
+
+import { cssConstants } from '../shared/constants';
+
 import RocketIcon from '../icons/rocket-icon';
 import RocketColorIcon from '../icons/rocket-icon-color';
-import { cssConstants } from '../shared/constants';
 import flameIcon from '../assets/images/rocket/fire.svg';
 
 import styles from './welcome.module.scss';
@@ -69,9 +72,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
 
       .call(() => {
         // if (toggleStars) {
-        client.writeData({
-          data: { stars: { move: true, __typename: 'Star' } }
-        });
+        client.writeData(moveStars(true));
         arriveTimeline.play();
         // }
       })
@@ -82,15 +83,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .to(rocketEl.current as any, 1, { y: '-100vh' }, 2)
       .to(flameEl.current as any, 0.3, { y: 20 }, 1.7)
       .to(flameEl.current as any, 1, { y: '-100vh' }, 2)
-      .call(
-        () =>
-          client.writeData({
-            data: { stars: { move: false, __typename: 'Star' } }
-          }),
-        undefined,
-        null,
-        2
-      )
+      .call(() => client.writeData(moveStars(false)), undefined, null, 2)
       .call(() => {
         history.push('/main');
       });
