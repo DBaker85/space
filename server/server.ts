@@ -6,7 +6,9 @@ import { resolve } from 'path';
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
 
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
+import chalk from 'chalk';
+
 // // ssr test
 // import App from "../src/App";
 // import { renderToString } from "react-dom/server"
@@ -17,21 +19,35 @@ import { MongoClient, ObjectId } from 'mongodb';
 
 const localPort = 5055;
 const port = process.env.PORT || localPort;
-const MONGO_URL = 'mongodb://localhost:27017/space';
+const dbRetries = 3;
+let db: any;
+
+const MONGO_URL = 'mongodb://localhost:27017';
 
 const mongoClient = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
-mongoClient.connect(err => {
-  console.log('Connected successfully to server');
+(async () => {
+  let i;
+  for (i = 0; i < dbRetries; ++i) {
+    try {
+      await mongoClient.connect();
+      console.log('Connection to database successfull');
+      db = mongoClient.db('space');
+      break;
+    } catch (err) {
+      console.log(chalk.red('Connection to database failed'));
+    }
+  }
+})();
 
-  const db = mongoClient.db('space');
-  console.log(db);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: () => ({ db })
 });
-
-const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
 

@@ -3,6 +3,7 @@ import fetch, { Response } from 'node-fetch';
 import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
 import { mapRange, findLargest, findSmallest } from '../../utils/utils';
+import { Db } from 'mongodb';
 
 interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
 
@@ -28,63 +29,69 @@ export const nearEarthObjectsQueries = {
   neo: async (
     parent: any,
     _: any,
-    context: any
+    { db }: { db: Db }
   ): Promise<QueryResponse | ApolloError> => {
-    console.log(context);
-    if (!neos) {
-      console.log('api call');
-      // yyyy-mm-dd
-      const today = new Date().toISOString().slice(0, 10);
+    const today = new Date().toISOString().slice(0, 10);
+    let jsonResp: ApiResponse;
+    const dbase = await db
+      .collection('near-earth-objects')
+      .findOne({ date: today });
+    if (dbase) {
+      jsonResp = dbase;
+    } else {
       const response = (await fetch(
         `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=DEMO_KEY`
       )) as Response;
 
-      const jsonResp = (await response.json()) as ApiResponse;
+      jsonResp = (await response.json()) as ApiResponse;
+      db.collection('near-earth-objects').insertOne({
+        ...{
+          date: today
+        },
+        ...jsonResp
+      });
+    }
 
-      const {
-        element_count,
-        near_earth_objects,
-        code,
-        error,
-        http_error = ''
-      } = jsonResp;
+    const {
+      element_count,
+      near_earth_objects,
+      code,
+      error,
+      http_error = ''
+    } = jsonResp;
 
-      if (code && code > 400) {
-        return new ApolloError(http_error, code.toString());
-      }
-      if (error) {
-        return new ApolloError(error.message, error.code);
-      }
+    if (code && code > 400) {
+      return new ApolloError(http_error, code.toString());
+    }
+    if (error) {
+      return new ApolloError(error.message, error.code);
+    }
 
-      const objects = near_earth_objects[today]
-        .map(object => ({
-          size: object.estimated_diameter.kilometers.estimated_diameter_min,
-          orbit: object.close_approach_data[0].miss_distance.kilometers
-        }))
-        .map(object => ({
-          size: Math.round(object.size * 100),
-          orbit: Math.round(+object.orbit)
-        }));
-
-      const smallestSize = findSmallest(objects, 'size');
-      const largestSize = findLargest(objects, 'size');
-      const smallestOrbit = findSmallest(objects, 'orbit');
-      const largestOrbit = findLargest(objects, 'orbit');
-
-      const rangedObjects = objects.map(object => ({
-        size: mapSizeRange(object.size, smallestSize, largestSize),
-        orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit)
+    const objects = near_earth_objects[today]
+      .map(object => ({
+        size: object.estimated_diameter.kilometers.estimated_diameter_min,
+        orbit: object.close_approach_data[0].miss_distance.kilometers
+      }))
+      .map(object => ({
+        size: Math.round(object.size * 100),
+        orbit: Math.round(+object.orbit)
       }));
 
-      neos = {
-        elements: element_count,
-        objects: rangedObjects
-      };
+    const smallestSize = findSmallest(objects, 'size');
+    const largestSize = findLargest(objects, 'size');
+    const smallestOrbit = findSmallest(objects, 'orbit');
+    const largestOrbit = findLargest(objects, 'orbit');
 
-      return neos;
-    } else {
-      console.log('local memory');
-      return neos;
-    }
+    const rangedObjects = objects.map(object => ({
+      size: mapSizeRange(object.size, smallestSize, largestSize),
+      orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit)
+    }));
+
+    neos = {
+      elements: element_count,
+      objects: rangedObjects
+    };
+
+    return neos;
   }
 };
