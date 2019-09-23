@@ -1,8 +1,7 @@
 import React, { FunctionComponent, Fragment, useRef, useEffect } from 'react';
-import { uid, randomNegative } from '../shared/utils/utils';
+import { uid } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { TweenMax } from 'gsap';
 
 import Planet0 from '../icons/planets/planet-a-icon';
 import Planet1 from '../icons/planets/planet-b-icon';
@@ -133,8 +132,9 @@ const Planets: FunctionComponent = () => {
     }
   `) as any;
 
-  let planets = useRef([]);
   const planetState = usePlanetState();
+
+  let planets = useRef([]);
 
   useEffect(() => {
     if (data) {
@@ -151,7 +151,7 @@ const Planets: FunctionComponent = () => {
       //   opacity: 1
       // });
     }
-  }, [data]);
+  }, [data, planetState]);
 
   if (loading) return null;
   if (error) return <p>Error...</p>;

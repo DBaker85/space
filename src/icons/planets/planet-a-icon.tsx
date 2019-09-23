@@ -17,7 +17,7 @@ const PlanetIcon: FunctionComponent<PlanetProps> = ({
       ref={inputRef ? inputRef : null}
       viewBox="0 0 68.30603 54.312466"
       height={size}
-      width="auto"
+      width={size}
     >
       <defs id="defs6485">
         <clipPath id="clipPath5198" clipPathUnits="userSpaceOnUse">
