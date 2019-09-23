@@ -89,11 +89,7 @@ movingStars.particles.move = {
   }
 };
 
-interface StarfieldProps {
-  move?: boolean;
-}
-
-const Starfield: FunctionComponent<StarfieldProps> = ({ move }) => {
+const Starfield: FunctionComponent = () => {
   const { data } = useQuery(gql`
     {
       stars @client {

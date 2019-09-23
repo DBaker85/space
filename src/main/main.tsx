@@ -15,6 +15,7 @@ import Planet7 from '../icons/planets/planet-h-icon';
 import Planet8 from '../icons/planets/planet-i-icon';
 
 import { cssConstants as css } from '../shared/css-constants';
+import { usePlanetState } from '../apollo/planets/cacheOperations';
 
 const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
   size,
@@ -133,20 +134,22 @@ const Planets: FunctionComponent = () => {
   `) as any;
 
   let planets = useRef([]);
+  const planetState = usePlanetState();
 
   useEffect(() => {
     if (data) {
       planets.current = planets.current.slice(0, data.neo.elements);
-      TweenMax.set(planets.current, {
-        x: () => Math.floor(Math.random() * 80) + 'vw',
-        rotation: () => randomNegative(Math.floor(Math.random() * 40))
-      });
-      TweenMax.from(planets.current, 1, {
-        x: '50vw',
-        y: 0,
-        scale: 0,
-        opacity: 1
-      });
+      planetState(data.neo.objects);
+      // TweenMax.set(planets.current, {
+      //   x: () => Math.floor(Math.random() * 80) + 'vw',
+      //   rotation: () => randomNegative(Math.floor(Math.random() * 40))
+      // });
+      // TweenMax.from(planets.current, 1, {
+      //   x: '50vw',
+      //   y: 0,
+      //   scale: 0,
+      //   opacity: 1
+      // });
     }
   }, [data]);
 
@@ -155,25 +158,15 @@ const Planets: FunctionComponent = () => {
 
   return (
     <Fragment>
-      <div
-        style={{
-          height: '75vh',
-          width: '100vw',
-          marginTop: '-25vh',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        {data.neo.objects.map(
-          (object: { size: number; orbit: number }, index: number) => (
-            <Planet
-              size={object.size + 'vh'}
-              inputRef={(el: any) => ((planets.current[index] as any) = el)}
-              key={`planet-${uid(3)}`}
-            />
-          )
-        )}
-      </div>
+      {data.neo.objects.map(
+        (object: { size: number; orbit: number }, index: number) => (
+          <Planet
+            size={object.size + 'vh'}
+            inputRef={(el: any) => ((planets.current[index] as any) = el)}
+            key={`planet-${uid(3)}`}
+          />
+        )
+      )}
     </Fragment>
   );
 };
