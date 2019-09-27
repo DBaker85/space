@@ -6,7 +6,7 @@ import { resolve } from 'path';
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, Db } from 'mongodb';
 import chalk from 'chalk';
 
 // // ssr test
@@ -18,11 +18,16 @@ import chalk from 'chalk';
 // console.log(renderToString(createElement(App)));
 
 const localPort = 5055;
-const port = process.env.PORT || localPort;
-const dbRetries = 3;
-let db: any;
+const localMongo = 'mongodb://localhost:27017';
 
-const MONGO_URL = 'mongodb://localhost:27017';
+const mongo = '';
+
+const dbRetries = 3;
+
+const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
+const port = process.env.PORT || localPort;
+
+let db: Db;
 
 const mongoClient = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
@@ -67,39 +72,3 @@ app.get('*', (req, res) => {
 app.listen(port);
 
 console.log('App is listening on port ' + port);
-
-/**
- *
- *
-mongoClient.connect((err)=>{
-
-  console.log("Connected successfully to server");
-
-  const db = mongoClient.db("space");
-  console.log (db)
-
-const server = new ApolloServer({ typeDefs, resolvers, context: { db}});
-
-const app = express();
-
-app.use(gzip());
-
-server.applyMiddleware({ app });
-
-const clientPath = resolve(__dirname, '..', 'build');
-
-app.use(Static(clientPath));
-
-// Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
-  res.sendFile(resolve(clientPath, 'index.html'));
-});
-
-app.listen(port);
-
-console.log('App is listening on port ' + port);
-
-
-})
- *
- */
