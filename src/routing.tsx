@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import Loader from './loader/loader';
+import Loader from './shared/loader/loader';
 
 import Main from './main/main';
 

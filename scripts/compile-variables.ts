@@ -64,6 +64,7 @@ const variableFileOut = resolve(
   'css-constants.ts'
 );
 const CompileColors = () => {
+  console.log('');
   console.log(`${chalk.gray(
     '---'
   )} Generating JS friendly CSS colors ${chalk.gray('---')}

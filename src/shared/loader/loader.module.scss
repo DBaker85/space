@@ -1,4 +1,4 @@
-@import '../scss/variables';
+@import '../../scss/variables';
 
 $circles: (
   top: $color-gray,
@@ -17,7 +17,6 @@ $animation-length: 2s;
   border-radius: 100%;
   display: block;
   position: absolute;
-  will-change: transform;
 }
 
 @each $circle, $bgcolor in $circles {
@@ -32,9 +31,8 @@ $animation-length: 2s;
     width: $loader-size;
     height: $loader-size;
     display: block;
-    // border: 1px solid red;
     position: relative;
-    will-change: transform;
+
     animation: rotation $animation-length infinite;
   }
   .circle-top {

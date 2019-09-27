@@ -23,7 +23,7 @@ const Generate = () => {
         },
         (err, result) => {
           if (err) {
-            console.log(`❌  ${chalk.red('Error')} compiling SASS')} 
+            console.log(`❌  ${chalk.red('Error')} compiling SASS')}
             ${err.file} :
             ${err.line} - ${err.column})}
             ${err.message}
@@ -55,7 +55,7 @@ const Generate = () => {
                   );
                 },
                 error => {
-                  console.log(`❌  ${chalk.red('Error')} autoprefixing styles: 
+                  console.log(`❌  ${chalk.red('Error')} autoprefixing styles:
                   ${error}
                   `);
                 }

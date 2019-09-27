@@ -4,7 +4,7 @@
 @import './reset';
 @import './base';
 @import './fonts';
-@import '../loader/loader.module';
+@import '../shared/loader/loader.module';
 
 .fullscreen-loader-wrapper {
   height: 100vh;
