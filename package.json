@@ -59,7 +59,7 @@
     "react-scripts": "3.0.1",
     "sass-extract": "^2.1.0",
     "ts-node": "^8.4.1",
-    "typescript": "3.5.1"
+    "typescript": "^3.5.1"
   },
   "author": {
     "name": "David Baker"
@@ -71,7 +71,7 @@
     "start:server": "pm2 start ecosystem.config.js --env production",
     "start:react": "react-scripts start",
     "build:react": "react-scripts build",
-    "build:server":"typescript --project server/tsconfig.json",
+    "build:server": "tsc --project server/tsconfig.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
