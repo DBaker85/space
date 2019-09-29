@@ -4,7 +4,7 @@ module.exports = {
       name: 'Space',
       script: 'dist/server.js',
       args: '',
-      instances: 1,
+      instances: 'max',
       autorestart: true,
       exec_mode: 'cluster',
       watch: false,
