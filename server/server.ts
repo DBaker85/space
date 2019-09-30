@@ -51,6 +51,9 @@ const mongoClient = new MongoClient(MONGO_URL, {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  playground: {
+    endpoint: '/graphiQL'
+  },
   context: () => ({ db })
 });
 
