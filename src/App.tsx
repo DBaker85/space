@@ -2,6 +2,8 @@ import React, { FunctionComponent, Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
+import NetworkDetector from './shared/network-detector/network-detector';
+
 import styles from './app.module.scss';
 import Routing from './routing';
 
@@ -19,6 +21,7 @@ const App: FunctionComponent = () => {
           <Routing />
         </BrowserRouter>
       </div>
+      <NetworkDetector />
     </Fragment>
   );
 };
