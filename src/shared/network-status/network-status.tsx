@@ -9,6 +9,9 @@ import {
 import offlineIcon from '../../assets/images/wifi/disconnected.png';
 import onlineIcon from '../../assets/images/wifi/connected.png';
 import noInternetIcon from '../../assets/images/wifi/no-internet.png';
+import satellite from '../../assets/images/satellite.svg';
+
+import styles from './network-status.module.scss';
 
 type NetworkState = {
   icon: string;
@@ -84,21 +87,14 @@ const NetworkStatus: FunctionComponent = () => {
   }, [data]);
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'fixed',
-        top: 0,
-        left: 0
-      }}
-    >
-      <div>
-        <div>
-          <img src={networkStatus.icon} alt={networkStatus.alt}></img>
+    <div className={styles['wrapper']}>
+      <div className={styles['satellite-holder']}>
+        <div className={styles['network-bubble']}>
+          <img src={networkStatus.icon} alt={networkStatus.alt} />
         </div>
+        <img src={satellite} alt="" />
       </div>
-      {networkStatus.hoverText}
+      {/* {networkStatus.hoverText} */}
     </div>
   );
 };
