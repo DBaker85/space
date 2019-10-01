@@ -39,7 +39,6 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
 
     launchTimeline
       .set(flameEl.current as any, { rotation: 180 })
-      // object, duration, actions, position in timeline in seconds
       .to(launchTextEl.current as any, 0.3, { opacity: 0 })
       .to(launchButtonEl.current as any, 1, { width: 80 }, 0.5)
       .to(
@@ -51,13 +50,13 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .to(
         rocketEl.current as any,
         2,
-        { rotation: -45, scale: 2, opacity: 1 },
+        { rotation: 0, scale: 2, opacity: 1 },
         0.5
       )
       .to(
         bwRocketEl.current as any,
         2,
-        { rotation: -45, scale: 2, opacity: 0 },
+        { rotation: 0, scale: 2, opacity: 0 },
         0.5
       )
       .to(
@@ -70,7 +69,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
         moveStars(true);
         arriveTimeline.play();
       })
-      .to(flameEl.current as any, 0.5, { height: 80 }, 2.5);
+      .to(flameEl.current as any, 0.3, { height: 80 }, 2.5);
 
     arriveTimeline
       .to(rocketEl.current as any, 0.3, { y: 20 }, 1.7)
