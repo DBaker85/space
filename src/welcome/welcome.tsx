@@ -4,10 +4,8 @@ import { TimelineLite, TweenMax } from 'gsap';
 
 import { useStarToggle } from '../apollo/stars/cacheOperations';
 
-import { cssConstants } from '../shared/constants';
-
-import RocketIcon from '../icons/rocket-icon';
-import RocketColorIcon from '../icons/rocket-icon-color';
+import rocketIcon from '../assets/images/rocket/bw.svg';
+import rocketColorIcon from '../assets/images/rocket/color.svg';
 import flameIcon from '../assets/images/rocket/fire.svg';
 
 import styles from './welcome.module.scss';
@@ -95,12 +93,19 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
         Launch
       </div>
       <div className={styles['icon-holder']}>
-        <RocketIcon
-          inputRef={bwRocketEl}
-          color={cssConstants.colors.colorWhite}
+        <img
+          alt="Rocket Icon"
+          className={styles['rocket']}
+          ref={bwRocketEl}
+          src={rocketIcon}
+        />
+        <img
+          alt="Rocket Icon color"
+          className={styles['rocket']}
+          ref={rocketEl}
+          src={rocketColorIcon}
         />
 
-        <RocketColorIcon inputRef={rocketEl} />
         <img
           alt="flame"
           className={styles['flame']}
