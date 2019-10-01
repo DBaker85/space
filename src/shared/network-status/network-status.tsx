@@ -10,10 +10,33 @@ import offlineIcon from '../../assets/images/wifi/disconnected.png';
 import onlineIcon from '../../assets/images/wifi/connected.png';
 import noInternetIcon from '../../assets/images/wifi/no-internet.png';
 
-const NetworkDetector: FunctionComponent = () => {
+type NetworkState = {
+  icon: string;
+  alt: string;
+  hoverText: string;
+};
+const onlineStatus: NetworkState = {
+  icon: onlineIcon,
+  alt: 'Network status online',
+  hoverText: 'You are connected to the internet'
+};
+const offlineStatus: NetworkState = {
+  icon: offlineIcon,
+  alt: 'Network status offline',
+  hoverText: 'You not online'
+};
+const disconnectedStatus: NetworkState = {
+  icon: noInternetIcon,
+  alt: 'Network status no internet',
+  hoverText: 'You online but do not have internet'
+};
+
+const NetworkStatus: FunctionComponent = () => {
   const isOnline = useOnlineToggle();
   const isConnected = useConnectedToggle();
-  const [statusIcon, setStatusIcon] = useState(onlineIcon);
+  const [networkStatus, setNetworkStatus] = useState<NetworkState>(
+    onlineStatus
+  );
 
   const { data } = useQuery(gql`
     {
@@ -50,13 +73,13 @@ const NetworkDetector: FunctionComponent = () => {
 
   useEffect(() => {
     if (data && !data.online) {
-      setStatusIcon(offlineIcon);
+      setNetworkStatus(offlineStatus);
     }
     if (data && data.online && !data.connected) {
-      setStatusIcon(noInternetIcon);
+      setNetworkStatus(disconnectedStatus);
     }
     if (data && data.online && data.connected) {
-      setStatusIcon(onlineIcon);
+      setNetworkStatus(onlineStatus);
     }
   }, [data]);
 
@@ -72,12 +95,12 @@ const NetworkDetector: FunctionComponent = () => {
     >
       <div>
         <div>
-          <img src={statusIcon} alt="Wifi status"></img>
+          <img src={networkStatus.icon} alt={networkStatus.alt}></img>
         </div>
       </div>
-      hover help text
+      {networkStatus.hoverText}
     </div>
   );
 };
 
-export default NetworkDetector;
+export default NetworkStatus;
