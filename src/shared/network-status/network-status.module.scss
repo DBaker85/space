@@ -3,14 +3,15 @@
 .wrapper {
   position: fixed;
   display: flex;
-  top: 20px;
-  right: 30px;
-  width: 90px;
+  top: 5vh;
+  right: 8vw;
+  width: 25vw;
   height: 140px;
   .satellite-holder {
     position: relative;
     display: flex;
     align-items: flex-end;
+    width: 100%;
     img {
       width: 100%;
       height: auto;

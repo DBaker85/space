@@ -9,29 +9,34 @@ import {
 import offlineIcon from '../../assets/images/wifi/disconnected.png';
 import onlineIcon from '../../assets/images/wifi/connected.png';
 import noInternetIcon from '../../assets/images/wifi/no-internet.png';
-import satellite from '../../assets/images/satellite.svg';
+import Satellite from '../../icons/satellite/satellite';
 
 import styles from './network-status.module.scss';
+import { cssConstants as css } from '../css-constants';
 
 type NetworkState = {
   icon: string;
   alt: string;
   hoverText: string;
+  color: string;
 };
 const onlineStatus: NetworkState = {
   icon: onlineIcon,
   alt: 'Network status online',
-  hoverText: 'You are connected to the internet'
+  hoverText: 'You are connected to the internet',
+  color: css.colors.colorGreen
 };
 const offlineStatus: NetworkState = {
   icon: offlineIcon,
   alt: 'Network status offline',
-  hoverText: 'You not online'
+  hoverText: 'You not online',
+  color: css.colors.colorRed
 };
 const disconnectedStatus: NetworkState = {
   icon: noInternetIcon,
   alt: 'Network status no internet',
-  hoverText: 'You online but do not have internet'
+  hoverText: 'You online but do not have internet',
+  color: css.colors.colorYellow
 };
 
 const NetworkStatus: FunctionComponent = () => {
@@ -88,11 +93,11 @@ const NetworkStatus: FunctionComponent = () => {
 
   return (
     <div className={styles['wrapper']}>
+      <div className={styles['network-bubble']}>
+        <img src={networkStatus.icon} alt={networkStatus.alt} />
+      </div>
       <div className={styles['satellite-holder']}>
-        <div className={styles['network-bubble']}>
-          <img src={networkStatus.icon} alt={networkStatus.alt} />
-        </div>
-        <img src={satellite} alt="" />
+        <Satellite color={networkStatus.color} />
       </div>
       {/* {networkStatus.hoverText} */}
     </div>
