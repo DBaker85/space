@@ -3,10 +3,13 @@
 .wrapper {
   position: fixed;
   display: flex;
-  top: 5vh;
-  right: 8vw;
-  width: 25vw;
+  top: 5%;
+  right: -250px;
+  width: 10vw;
+  min-width: 120px;
   height: 140px;
+  max-width: 180px;
+  // transform: scale(0.3);
   .satellite-holder {
     position: relative;
     display: flex;
@@ -20,17 +23,19 @@
   .network-bubble {
     position: absolute;
     top: 0;
-    right: -20px;
+    right: 90%;
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 50px;
-    height: 50px;
-    padding: 10px;
+    height: 0;
     border-radius: 100% 100% 100% 0;
     background-color: $color-white;
-    transform: rotate(-30deg);
+    transform: rotate(-60deg);
     img {
-      transform: rotate(30deg);
-      width: 100%;
+      opacity: 0;
+      transform: rotate(60deg);
+      width: 30px;
       height: auto;
     }
   }

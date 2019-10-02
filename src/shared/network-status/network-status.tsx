@@ -1,6 +1,8 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
 import { useQuery } from 'react-apollo';
 import gql from 'graphql-tag';
+import { TimelineLite, TweenMax } from 'gsap';
+
 import {
   useOnlineToggle,
   useConnectedToggle
@@ -40,6 +42,13 @@ const disconnectedStatus: NetworkState = {
 };
 
 const NetworkStatus: FunctionComponent = () => {
+  const satelliteWrapperEl = useRef(null);
+  const satelliteEl = useRef(null);
+  const networkBubbleEl = useRef(null);
+  const networkIconEl = useRef(null);
+
+  const arriveTimeline = new TimelineLite({ paused: true });
+
   const isOnline = useOnlineToggle();
   const isConnected = useConnectedToggle();
   const [networkStatus, setNetworkStatus] = useState<NetworkState>(
@@ -59,6 +68,7 @@ const NetworkStatus: FunctionComponent = () => {
         mode: 'no-cors'
       }).then(() => {
         isConnected(true);
+        arriveTimeline.reverse();
         clearInterval(webPing);
       });
     }, 2000);
@@ -69,6 +79,7 @@ const NetworkStatus: FunctionComponent = () => {
     if (condition === 'offline') {
       isOnline(false);
       isConnected(false);
+      arriveTimeline.play();
     }
     if (condition === 'online') {
       isOnline(true);
@@ -89,15 +100,37 @@ const NetworkStatus: FunctionComponent = () => {
     if (data && data.online && data.connected) {
       setNetworkStatus(onlineStatus);
     }
-  }, [data]);
+
+    TweenMax.to(satelliteEl.current as any, 3, {
+      x: () => Math.random() * 8,
+      y: () => Math.random() * 8,
+      repeat: -1,
+      yoyo: true
+    });
+
+    arriveTimeline
+      .to(satelliteWrapperEl.current as any, 0.7, {
+        x: -300
+      })
+      .to(networkBubbleEl.current as any, 0.3, {
+        height: 50
+      })
+      .to(networkIconEl.current as any, 0.3, {
+        opacity: 1
+      });
+  }, [data, networkStatus, arriveTimeline]);
 
   return (
-    <div className={styles['wrapper']}>
-      <div className={styles['network-bubble']}>
-        <img src={networkStatus.icon} alt={networkStatus.alt} />
-      </div>
+    <div className={styles['wrapper']} ref={satelliteWrapperEl}>
       <div className={styles['satellite-holder']}>
-        <Satellite color={networkStatus.color} />
+        <Satellite color={networkStatus.color} inputRef={satelliteEl} />
+        <div className={styles['network-bubble']} ref={networkBubbleEl}>
+          <img
+            src={networkStatus.icon}
+            alt={networkStatus.alt}
+            ref={networkIconEl}
+          />
+        </div>
       </div>
       {/* {networkStatus.hoverText} */}
     </div>

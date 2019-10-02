@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { IconProps } from '../models';
-import { iconStyle } from '../icon-style';
 import { darken } from '../../shared/utils/hsl';
 
 import satellite from './satellite.svg';
@@ -11,13 +10,12 @@ const CodepenIcon: FunctionComponent<IconProps> = ({
   inputRef
 }) => {
   return (
-    <div className={styles['satellite']}>
-      <img src={satellite} className={styles['base']} />
+    <div className={styles['satellite']} ref={inputRef ? inputRef : null}>
+      <img src={satellite} className={styles['base']} alt="" />
       <svg
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         className={styles['colors']}
-        ref={inputRef ? inputRef : null}
         width="26.382177mm"
         height="26.527187mm"
         viewBox="0 0 26.382177 26.527187"
