@@ -7,6 +7,9 @@ import NetworkStatus from './shared/network-status/network-status';
 import styles from './app.module.scss';
 import Routing from './routing';
 
+// TODO: Componentise
+// import "./analytics";
+
 const LazyStarfield = Loadable({
   loader: () => import('./starfield/starfield'),
   loading: () => null

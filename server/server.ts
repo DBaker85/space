@@ -8,7 +8,7 @@ import { typeDefs } from './graphQL/typeDefs';
 
 import { MongoClient, Db } from 'mongodb';
 import chalk from 'chalk';
-
+// import cors from "cors"
 // // ssr test
 // import App from "../src/App";
 // import { renderToString } from "react-dom/server"
