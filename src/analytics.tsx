@@ -1,22 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ComponentType } from 'react';
 import ReactGA, { FieldsObject } from 'react-ga';
 import { RouteComponentProps } from 'react-router-dom';
+
+import { idleCallback } from './shared/utils/idleCallback';
 
 const config = [
   {
     trackingId: 'UA-141677330-1',
-    debug: true,
-    gaOptions: {
-      cookieDomain: 'none'
-    }
+    debug: true
   }
 ];
 
-// TODO set to idlecallback or use idle queue
-ReactGA.initialize(config);
+idleCallback(() => ReactGA.initialize(config));
 
 export const withRouteTracker = <P extends RouteComponentProps>(
-  WrappedComponent: React.ComponentType<P>,
+  WrappedComponent: ComponentType<P>,
   options: FieldsObject = {}
 ) => {
   const trackPage = (page: string) => {
@@ -32,5 +30,3 @@ export const withRouteTracker = <P extends RouteComponentProps>(
     return <WrappedComponent {...props} />;
   };
 };
-
-// TODO: click and event trackers
