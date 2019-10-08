@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import Loader from './shared/loader/loader';
 
+import { withRouteTracker } from './analytics';
+import Loader from './shared/loader/loader';
 import Main from './main/main';
 
 const LazyWelcome = Loadable({
@@ -13,8 +14,8 @@ const LazyWelcome = Loadable({
 const Routing: FunctionComponent = () => {
   return (
     <Switch>
-      <Route path="/main" component={Main} />
-      <Route path="/" component={LazyWelcome} />
+      <Route path="/main" component={withRouteTracker(Main)} />
+      <Route path="/" component={withRouteTracker(LazyWelcome)} />
     </Switch>
   );
 };

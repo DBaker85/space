@@ -1,4 +1,6 @@
-import ReactGA from 'react-ga';
+import React, { useEffect } from 'react';
+import ReactGA, { FieldsObject } from 'react-ga';
+import { RouteComponentProps } from 'react-router-dom';
 
 const config = [
   {
@@ -10,6 +12,25 @@ const config = [
   }
 ];
 
+// TODO set to idlecallback or use idle queue
 ReactGA.initialize(config);
-// Send initial test view
-ReactGA.pageview('test-init-pageview');
+
+export const withRouteTracker = <P extends RouteComponentProps>(
+  WrappedComponent: React.ComponentType<P>,
+  options: FieldsObject = {}
+) => {
+  const trackPage = (page: string) => {
+    ReactGA.set({ page, ...options });
+    ReactGA.pageview(page);
+  };
+
+  return (props: P) => {
+    useEffect(() => {
+      trackPage(props.location.pathname);
+    }, [props.location.pathname]);
+
+    return <WrappedComponent {...props} />;
+  };
+};
+
+// TODO: click and event trackers
