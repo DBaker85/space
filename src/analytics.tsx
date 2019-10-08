@@ -11,7 +11,7 @@ const config = [
   }
 ];
 
-idleCallback(() => ReactGA.initialize(config));
+idleCallback(ReactGA.initialize, config);
 
 export const withRouteTracker = <P extends RouteComponentProps>(
   WrappedComponent: ComponentType<P>,

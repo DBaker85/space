@@ -17,10 +17,10 @@ declare global {
   }
 }
 
-export const idleCallback = (func: Function) => {
+export const idleCallback = (func: any, ...args: any) => {
   if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => func(), { timeout: 5000 });
+    window.requestIdleCallback(() => func(...args), { timeout: 5000 });
   } else {
-    func();
+    func(...args);
   }
 };
