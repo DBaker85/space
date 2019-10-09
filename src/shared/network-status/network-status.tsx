@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
 import { useQuery } from 'react-apollo';
 import gql from 'graphql-tag';
-import { TimelineLite, TweenMax } from 'gsap';
+import { TimelineLite, TweenMax, Power0 } from 'gsap';
 
 import {
   useOnlineToggle,
@@ -106,12 +106,13 @@ const NetworkStatus: FunctionComponent = () => {
       x: () => Math.random() * 8,
       y: () => Math.random() * 8,
       repeat: -1,
-      yoyo: true
+      yoyo: true,
+      ease: Power0.easeNone
     }).pause();
 
     departTimeline
       .call(() => satelliteFloat.pause())
-      .to(satelliteWrapperEl.current as any, 0.7, {
+      .to(satelliteWrapperEl.current as any, 1, {
         x: 300
       })
       .to(networkBubbleEl.current as any, 0.3, {
@@ -153,7 +154,3 @@ const NetworkStatus: FunctionComponent = () => {
 };
 
 export default NetworkStatus;
-
-// .call(()=>{
-//
-// })
