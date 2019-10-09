@@ -7,19 +7,25 @@ import { idleCallback } from './shared/utils/idleCallback';
 const config = [
   {
     trackingId: 'UA-141677330-1',
-    debug: true
+    debug: process.env.NODE_ENV === 'production' ? false : true
   }
 ];
 
-idleCallback(() => ReactGA.initialize(config));
+idleCallback(() => {
+  if (process.env.NODE_ENV === 'production') {
+    ReactGA.initialize(config);
+  }
+});
 
 export const withRouteTracker = <P extends RouteComponentProps>(
   WrappedComponent: ComponentType<P>,
   options: FieldsObject = {}
 ) => {
   const trackPage = (page: string) => {
-    ReactGA.set({ page, ...options });
-    ReactGA.pageview(page);
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.set({ page, ...options });
+      ReactGA.pageview(page);
+    }
   };
 
   return (props: P) => {
