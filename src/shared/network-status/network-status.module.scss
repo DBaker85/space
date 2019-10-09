@@ -9,7 +9,6 @@
   min-width: 120px;
   height: 140px;
   max-width: 180px;
-  // transform: scale(0.3);
   .satellite-holder {
     position: relative;
     display: flex;
@@ -38,5 +37,8 @@
       width: 30px;
       height: auto;
     }
+  }
+  .network-icon {
+    opacity: 0;
   }
 }

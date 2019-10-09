@@ -48,6 +48,7 @@ const NetworkStatus: FunctionComponent = () => {
   const networkIconEl = useRef(null);
 
   const arriveTimeline = new TimelineLite({ paused: true });
+  const departTimeline = new TimelineLite({ paused: true });
 
   const isOnline = useOnlineToggle();
   const isConnected = useConnectedToggle();
@@ -68,8 +69,8 @@ const NetworkStatus: FunctionComponent = () => {
         mode: 'no-cors'
       }).then(() => {
         isConnected(true);
-        arriveTimeline.reverse();
         clearInterval(webPing);
+        departTimeline.play();
       });
     }, 2000);
   };
@@ -101,12 +102,24 @@ const NetworkStatus: FunctionComponent = () => {
       setNetworkStatus(onlineStatus);
     }
 
-    TweenMax.to(satelliteEl.current as any, 3, {
+    const satelliteFloat = TweenMax.to(satelliteEl.current as any, 3, {
       x: () => Math.random() * 8,
       y: () => Math.random() * 8,
       repeat: -1,
       yoyo: true
-    });
+    }).pause();
+
+    departTimeline
+      .call(() => satelliteFloat.pause())
+      .to(satelliteWrapperEl.current as any, 0.7, {
+        x: 300
+      })
+      .to(networkBubbleEl.current as any, 0.3, {
+        height: 0
+      })
+      .to(networkIconEl.current as any, 0.3, {
+        opacity: 0
+      });
 
     arriveTimeline
       .to(satelliteWrapperEl.current as any, 0.7, {
@@ -117,8 +130,9 @@ const NetworkStatus: FunctionComponent = () => {
       })
       .to(networkIconEl.current as any, 0.3, {
         opacity: 1
-      });
-  }, [data, networkStatus, arriveTimeline]);
+      })
+      .call(() => satelliteFloat.play());
+  }, [data, networkStatus, arriveTimeline, departTimeline]);
 
   return (
     <div className={styles['wrapper']} ref={satelliteWrapperEl}>
@@ -126,6 +140,7 @@ const NetworkStatus: FunctionComponent = () => {
         <Satellite color={networkStatus.color} inputRef={satelliteEl} />
         <div className={styles['network-bubble']} ref={networkBubbleEl}>
           <img
+            className={styles['network-icon']}
             src={networkStatus.icon}
             alt={networkStatus.alt}
             ref={networkIconEl}
@@ -138,3 +153,7 @@ const NetworkStatus: FunctionComponent = () => {
 };
 
 export default NetworkStatus;
+
+// .call(()=>{
+//
+// })
