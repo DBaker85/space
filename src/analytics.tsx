@@ -11,7 +11,7 @@ const config = [
   }
 ];
 
-idleCallback(ReactGA.initialize, config);
+idleCallback(() => ReactGA.initialize(config));
 
 export const withRouteTracker = <P extends RouteComponentProps>(
   WrappedComponent: ComponentType<P>,
@@ -24,7 +24,7 @@ export const withRouteTracker = <P extends RouteComponentProps>(
 
   return (props: P) => {
     useEffect(() => {
-      trackPage(props.location.pathname);
+      idleCallback(() => trackPage(props.location.pathname));
     }, [props.location.pathname]);
 
     return <WrappedComponent {...props} />;
