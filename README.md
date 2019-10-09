@@ -1,10 +1,10 @@
-# Personal Website
-
-My personal fun website that is a super overkill MERN stack
-
 [![Travis (.org) branch](https://img.shields.io/travis/DBaker85/space/master?label=Master%20build&style=flat-square)](https://travis-ci.org/DBaker85/space)
 [![Travis (.org) branch](https://img.shields.io/travis/DBaker85/space/develop?label=Develop%20build&style=flat-square)](https://travis-ci.org/DBaker85/space)
 ![GitHub repo size](https://img.shields.io/github/repo-size/DBaker85/space?style=flat-square)
+
+# Personal Website
+
+My personal fun website that is a super overkill MERN stack
 
 ---
 
