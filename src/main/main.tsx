@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef, useEffect } from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { TweenMax, TimelineLite } from 'gsap';
+import { TimelineLite } from 'gsap';
 
 import Planet from './planet';
 import styles from './main.module.scss';
