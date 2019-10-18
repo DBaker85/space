@@ -15,6 +15,11 @@ const LazyNetworkStatus = Loadable({
   loading: () => null
 });
 
+const LazyHelperBot = Loadable({
+  loader: () => import('./helper-bot/helper-bot'),
+  loading: () => null
+});
+
 const App: FunctionComponent = () => {
   return (
     <Fragment>
@@ -25,6 +30,7 @@ const App: FunctionComponent = () => {
           <Routing />
         </BrowserRouter>
       </div>
+      <LazyHelperBot />
     </Fragment>
   );
 };
