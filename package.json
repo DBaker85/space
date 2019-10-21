@@ -25,7 +25,8 @@
     "react-loadable": "^5.5.0",
     "react-particles-js": "^2.7.0",
     "react-router-dom": "^5.0.1",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "spdy": "^4.0.1"
   },
   "devDependencies": {
     "@types/agenda": "^2.0.5",
@@ -47,6 +48,7 @@
     "@types/react-redux": "^7.1.2",
     "@types/react-router-dom": "^4.3.5",
     "@types/react-transition-group": "^2.9.2",
+    "@types/spdy": "^3.4.4",
     "autoprefixer": "^9.6.1",
     "chalk": "^2.4.2",
     "customize-cra": "^0.8.0",

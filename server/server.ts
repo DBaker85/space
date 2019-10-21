@@ -75,3 +75,12 @@ app.get('*', (req, res) => {
 app.listen(port);
 
 console.log('App is listening on port ' + port);
+
+// const spdyOptions = {
+//   // Private key
+//   key: readFileSync(__dirname + '/keys/spaceKey.key'),
+
+//   // Fullchain file or cert file (prefer the former)
+//   cert: readFileSync(__dirname + '/keys/spaceCertificate.crt'),
+
+// };
