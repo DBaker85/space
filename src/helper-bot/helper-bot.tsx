@@ -4,7 +4,7 @@ import React, {
   useRef,
   MutableRefObject
 } from 'react';
-import { TweenMax, TimelineMax, Power1, Power0 } from 'gsap';
+import { TweenMax, TimelineMax, Power1 } from 'gsap';
 
 import helperBot from '../assets/images/helper/robot.svg';
 import reflection from '../assets/images/helper/robot-reflection.svg';

@@ -1,13 +1,19 @@
-import React, { FunctionComponent, useRef, useEffect } from 'react';
+import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { TimelineLite } from 'gsap';
+import Loadable from 'react-loadable';
 
 import Planet from './planet';
 import styles from './main.module.scss';
 
 import { usePlanetState } from '../apollo/planets/cacheOperations';
+
+const LazyHelperBot = Loadable({
+  loader: () => import('../helper-bot/helper-bot'),
+  loading: () => null
+});
 
 const Planets: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
@@ -51,17 +57,20 @@ const Planets: FunctionComponent = () => {
   if (error) return <p>Error...</p>;
 
   return (
-    <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
-      {data.neo.objects.map(
-        (object: { size: number; orbit: number }, index: number) => (
-          <Planet
-            size={object.size + 'vh'}
-            inputRef={(el: any) => ((planets.current[index] as any) = el)}
-            key={`planet-${uid(3)}`}
-          />
-        )
-      )}
-    </div>
+    <Fragment>
+      <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
+        {data.neo.objects.map(
+          (object: { size: number; orbit: number }, index: number) => (
+            <Planet
+              size={object.size + 'vh'}
+              inputRef={(el: any) => ((planets.current[index] as any) = el)}
+              key={`planet-${uid(3)}`}
+            />
+          )
+        )}
+      </div>
+      <LazyHelperBot />
+    </Fragment>
   );
 };
 
