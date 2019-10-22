@@ -1,21 +1,16 @@
-import express, { static as Static } from 'express';
-import gzip from 'compression';
-import { ApolloServer } from 'apollo-server-express';
+import Koa from 'koa';
+import serve from 'koa-static';
+import compress from 'koa-compress';
+import Router from 'koa-router';
+import { createSecureServer } from 'http2';
+import { ApolloServer } from 'apollo-server-koa';
 import { resolve } from 'path';
+import { readFileSync } from 'fs-extra';
+import { MongoClient, Db } from 'mongodb';
+import chalk from 'chalk';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
-
-import { MongoClient, Db } from 'mongodb';
-import chalk from 'chalk';
-// import cors from "cors"
-// // ssr test
-// import App from "../src/App";
-// import { renderToString } from "react-dom/server"
-// import { createElement } from "react";
-
-// // @ts-ignore
-// console.log(renderToString(createElement(App)));
 
 const localPort = 5055;
 const localMongo = 'mongodb://localhost:27017';
@@ -57,30 +52,31 @@ const server = new ApolloServer({
   context: () => ({ db })
 });
 
-const app = express();
-
-app.use(gzip());
+const app = new Koa();
+const router = new Router();
 
 server.applyMiddleware({ app });
 
 const clientPath = resolve(__dirname, '..', 'build');
 
-app.use(Static(clientPath));
+app.use(compress());
+
+app.use(serve(clientPath));
 
 // Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
-  res.sendFile(resolve(clientPath, 'index.html'));
+router.get('*', (ctx, res) => {
+  console.log(ctx);
+  ctx.body = readFileSync(resolve(clientPath, 'index.html'));
 });
 
-app.listen(port);
+app.use(router.routes());
 
-console.log('App is listening on port ' + port);
+const h2Options = {
+  // Private key
+  key: readFileSync(resolve(__dirname, 'keys', 'key.pem')),
 
-// const spdyOptions = {
-//   // Private key
-//   key: readFileSync(__dirname + '/keys/spaceKey.key'),
+  // Fullchain file or cert file (prefer the former)
+  cert: readFileSync(resolve(__dirname, 'keys', 'cert.pem'))
+};
 
-//   // Fullchain file or cert file (prefer the former)
-//   cert: readFileSync(__dirname + '/keys/spaceCertificate.crt'),
-
-// };
+createSecureServer(h2Options, app.callback()).listen(port);
