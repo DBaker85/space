@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-server-koa';
 import fetch, { Response } from 'node-fetch';
 import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
@@ -25,17 +24,13 @@ const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
 
 let neos: QueryResponse;
 
-export const nearEarthObjectsQueries = {
-  neo: async (
-    parent: any,
-    _: any,
-    { db }: { db: Db }
-  ): Promise<QueryResponse | ApolloError> => {
+export const nearEarthObjectsQueries = (db: Db | null) => ({
+  neo: async (): Promise<QueryResponse> => {
     const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
-    const dbase = await db
-      .collection('near-earth-objects')
-      .findOne({ date: today });
+    const dbase = db
+      ? await db.collection('near-earth-objects').findOne({ date: today })
+      : null;
     if (dbase) {
       jsonResp = dbase;
     } else {
@@ -44,12 +39,14 @@ export const nearEarthObjectsQueries = {
       )) as Response;
 
       jsonResp = (await response.json()) as ApiResponse;
-      db.collection('near-earth-objects').insertOne({
-        ...{
-          date: today
-        },
-        ...jsonResp
-      });
+      if (db) {
+        db.collection('near-earth-objects').insertOne({
+          ...{
+            date: today
+          },
+          ...jsonResp
+        });
+      }
     }
 
     const {
@@ -61,10 +58,10 @@ export const nearEarthObjectsQueries = {
     } = jsonResp;
 
     if (code && code > 400) {
-      return new ApolloError(http_error, code.toString());
+      // return new ApolloError(http_error, code.toString());
     }
     if (error) {
-      return new ApolloError(error.message, error.code);
+      // return new ApolloError(error.message, error.code);
     }
 
     const objects = near_earth_objects[today]
@@ -94,4 +91,4 @@ export const nearEarthObjectsQueries = {
 
     return neos;
   }
-};
+});

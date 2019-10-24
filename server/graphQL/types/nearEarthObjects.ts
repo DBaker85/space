@@ -1,6 +1,4 @@
-import { gql } from 'apollo-server-koa';
-
-export const NeoTypes = gql`
+export const NeoTypes = `
   type NeoObjectsType {
     size: Float
     orbit: Float
