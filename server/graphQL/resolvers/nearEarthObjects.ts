@@ -2,7 +2,6 @@ import fetch, { Response } from 'node-fetch';
 import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
 import { mapRange, findLargest, findSmallest } from '../../utils/utils';
-import { Db } from 'mongodb';
 import { GraphQLContext } from '../../models/models';
 
 interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
