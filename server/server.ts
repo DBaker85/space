@@ -11,11 +11,24 @@ import { createSecureServer } from 'http2';
 import { resolve } from 'path';
 import { readFileSync } from 'fs-extra';
 
-// import bodyParser from 'koa-bodyparser'
-// import chalk from 'chalk';
-
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
+
+import { Db, MongoClient } from 'mongodb';
+import chalk from 'chalk';
+import { GraphQLContext } from './models/models';
+
+const localMongo = 'mongodb://localhost:27017';
+const mongo = '';
+const dbRetries = 3;
+const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
+
+let db: Db;
+
+const mongoClient = new MongoClient(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const localPort = 5055;
 
@@ -29,6 +42,20 @@ const h2Options = {
   cert: readFileSync(resolve(__dirname, 'keys', 'cert.pem'))
 };
 
+(async () => {
+  let i;
+  for (i = 0; i < dbRetries; ++i) {
+    try {
+      await mongoClient.connect();
+      console.log('Connection to database successfull');
+      db = mongoClient.db('space');
+      break;
+    } catch (err) {
+      console.log(chalk.red('Connection to database failed'));
+    }
+  }
+})();
+
 const app = new Koa();
 app.use(compress());
 app.use(serve(clientPath));
@@ -38,7 +65,8 @@ app.use(
     graphqlHTTP({
       schema: buildSchema(typeDefs),
       rootValue: resolvers,
-      graphiql: true
+      graphiql: true,
+      context: () => ({ db })
     })
   )
 );

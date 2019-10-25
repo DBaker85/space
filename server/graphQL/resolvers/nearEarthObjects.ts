@@ -3,6 +3,7 @@ import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
 import { mapRange, findLargest, findSmallest } from '../../utils/utils';
 import { Db } from 'mongodb';
+import { GraphQLContext } from '../../models/models';
 
 interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
 
@@ -24,8 +25,9 @@ const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
 
 let neos: QueryResponse;
 
-export const nearEarthObjectsQueries = (db: Db | null) => ({
-  neo: async (): Promise<QueryResponse> => {
+export const nearEarthObjectsQueries = {
+  neo: async (parent: any, context: GraphQLContext): Promise<QueryResponse> => {
+    const db = context().db;
     const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
     const dbase = db
@@ -58,10 +60,10 @@ export const nearEarthObjectsQueries = (db: Db | null) => ({
     } = jsonResp;
 
     if (code && code > 400) {
-      // return new ApolloError(http_error, code.toString());
+      throw new Error(`${code.toString()} : ${http_error}`);
     }
     if (error) {
-      // return new ApolloError(error.message, error.code);
+      throw new Error(`${error.code} : ${error.message}`);
     }
 
     const objects = near_earth_objects[today]
@@ -91,4 +93,4 @@ export const nearEarthObjectsQueries = (db: Db | null) => ({
 
     return neos;
   }
-});
+};
