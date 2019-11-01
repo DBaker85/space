@@ -1,22 +1,21 @@
-import Koa from 'koa';
+import Koa, { Context } from 'koa';
 import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
-
 import graphqlHTTP from 'koa-graphql';
-import { buildSchema } from 'graphql';
 
-import { createSecureServer } from 'http2';
+import { openSync, fstatSync } from 'fs-extra';
+import { buildSchema } from 'graphql';
+import { createSecureServer, constants } from 'http2';
+
+import { Db, MongoClient } from 'mongodb';
+import chalk from 'chalk';
 
 import { resolve } from 'path';
 import { readFileSync } from 'fs-extra';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
-
-import { Db, MongoClient } from 'mongodb';
-import chalk from 'chalk';
-import { GraphQLContext } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
 const mongo = '';
@@ -58,7 +57,35 @@ const h2Options = {
 
 const app = new Koa();
 app.use(compress());
-app.use(serve(clientPath));
+
+// TODO: create pushstream manifest of some kind from built index.html
+// TODO: use resolve or join to get paths
+const fd1 = openSync('./build/index.html', 'r');
+const stat1 = fstatSync(fd1);
+
+const fd2 = openSync('./build/static/css/main.1e4e9602.chunk.css', 'r');
+const stat2 = fstatSync(fd1);
+
+// TODO: Filter out request for only doc types somehow
+app.use(async (ctx: Context, next) => {
+  (ctx.res as any).stream.pushStream(
+    { [constants.HTTP2_HEADER_PATH]: '/static/css/main.1e4e9602.chunk.css' },
+    (err: any, pushStream: any) => {
+      pushStream.respondWithFD(fd2, {
+        'content-length': stat2.size,
+        'last-modified': stat2.mtime.toUTCString(),
+        'content-type': 'text/html'
+      });
+    }
+  );
+  (ctx.res as any).stream.respondWithFD(fd1, {
+    'content-length': stat1.size,
+    'last-modified': stat1.mtime.toUTCString(),
+    'content-type': 'text/html'
+  });
+});
+
+app.use(mount('/', serve(clientPath)));
 app.use(
   mount(
     '/graphql',

@@ -1,8 +1,4 @@
-const {
-  override,
-
-  adjustWorkbox
-} = require('customize-cra');
+const { override, adjustWorkbox } = require('customize-cra');
 
 module.exports = override(
   // adjust the underlying workbox
