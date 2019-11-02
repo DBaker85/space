@@ -1,5 +1,5 @@
 const { override, adjustWorkbox, addWebpackPlugin } = require('customize-cra');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = override(
   // adjust the underlying workbox
@@ -9,9 +9,9 @@ module.exports = override(
     })
   ),
   addWebpackPlugin(
-    new HtmlWebpackPlugin({
-      title: 'My App',
-      filename: 'test/admin.json'
+    new ManifestPlugin({
+      fileName: 'testerino.json',
+      filter: file => file.isInitial && !file.name.endsWith('map')
     })
   )
 );
