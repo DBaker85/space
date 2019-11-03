@@ -12,10 +12,14 @@ import { Db, MongoClient } from 'mongodb';
 import chalk from 'chalk';
 
 import { resolve } from 'path';
-import { readFileSync } from 'fs-extra';
+import { readFileSync, readJSONSync } from 'fs-extra';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
+
+import { getInitialFiles } from './utils/getInitialFiles';
+
+import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
 const mongo = '';
@@ -58,29 +62,28 @@ const h2Options = {
 const app = new Koa();
 app.use(compress());
 
-// TODO: create pushstream manifest of some kind from built index.html
+const fileList: PushManifest = readJSONSync(
+  resolve(__dirname, '..', 'build', 'push_manifest.json')
+);
+const initialFiles = getInitialFiles(fileList.initial);
+
 // TODO: use resolve or join to get paths
-const fd1 = openSync('./build/index.html', 'r');
-const stat1 = fstatSync(fd1);
+const indexFd = openSync('./build/index.html', 'r');
+const indexStat = fstatSync(indexFd);
 
-const fd2 = openSync('./build/static/css/main.1e4e9602.chunk.css', 'r');
-const stat2 = fstatSync(fd1);
-
-// TODO: Filter out request for only doc types somehow
+// // TODO: Filter out request for only doc types somehow
 app.use(async (ctx: Context, next) => {
-  (ctx.res as any).stream.pushStream(
-    { [constants.HTTP2_HEADER_PATH]: '/static/css/main.1e4e9602.chunk.css' },
-    (err: any, pushStream: any) => {
-      pushStream.respondWithFD(fd2, {
-        'content-length': stat2.size,
-        'last-modified': stat2.mtime.toUTCString(),
-        'content-type': 'text/html'
-      });
-    }
-  );
-  (ctx.res as any).stream.respondWithFD(fd1, {
-    'content-length': stat1.size,
-    'last-modified': stat1.mtime.toUTCString(),
+  initialFiles.forEach(file => {
+    (ctx.res as any).stream.pushStream(
+      { [constants.HTTP2_HEADER_PATH]: file.path },
+      (err: any, pushStream: any) => {
+        pushStream.respondWithFD(file.file, file.fd);
+      }
+    );
+  });
+  (ctx.res as any).stream.respondWithFD(indexFd, {
+    'content-length': indexStat.size,
+    'last-modified': indexStat.mtime.toUTCString(),
     'content-type': 'text/html'
   });
 });
