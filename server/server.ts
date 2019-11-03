@@ -71,21 +71,32 @@ const initialFiles = getInitialFiles(fileList.initial);
 const indexFd = openSync('./build/index.html', 'r');
 const indexStat = fstatSync(indexFd);
 
-// // TODO: Filter out request for only doc types somehow
+// TODO: check if this regex can be better
+// TODO: Catch errors
+// TODO: fix filestream
 app.use(async (ctx: Context, next) => {
-  initialFiles.forEach(file => {
-    (ctx.res as any).stream.pushStream(
-      { [constants.HTTP2_HEADER_PATH]: file.path },
-      (err: any, pushStream: any) => {
-        pushStream.respondWithFD(file.file, file.fd);
-      }
-    );
-  });
-  (ctx.res as any).stream.respondWithFD(indexFd, {
-    'content-length': indexStat.size,
-    'last-modified': indexStat.mtime.toUTCString(),
-    'content-type': 'text/html'
-  });
+  if (
+    ctx.request.url !== '/graphql' &&
+    !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
+      ctx.request.url
+    )
+  ) {
+    initialFiles.forEach(file => {
+      (ctx.res as any).stream.pushStream(
+        { [constants.HTTP2_HEADER_PATH]: file.path },
+        (err: any, pushStream: any) => {
+          pushStream.respondWithFD(file.file, file.fd);
+        }
+      );
+    });
+    (ctx.res as any).stream.respondWithFD(indexFd, {
+      'content-length': indexStat.size,
+      'last-modified': indexStat.mtime.toUTCString(),
+      'content-type': 'text/html'
+    });
+  } else {
+    await next();
+  }
 });
 
 app.use(mount('/', serve(clientPath)));
