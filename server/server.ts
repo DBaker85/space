@@ -67,8 +67,7 @@ const fileList: PushManifest = readJSONSync(
 );
 const initialFiles = getInitialFiles(fileList.initial);
 
-// TODO: use resolve or join to get paths
-const indexFd = openSync('./build/index.html', 'r');
+const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
 const indexStat = fstatSync(indexFd);
 
 app.use(
@@ -85,6 +84,7 @@ app.use(
 
 // TODO: check if this regex can be better
 // TODO: refactor to different file.
+// FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
   if (
     !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
