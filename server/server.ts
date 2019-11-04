@@ -71,12 +71,22 @@ const initialFiles = getInitialFiles(fileList.initial);
 const indexFd = openSync('./build/index.html', 'r');
 const indexStat = fstatSync(indexFd);
 
+app.use(
+  mount(
+    '/graphql',
+    graphqlHTTP({
+      schema: buildSchema(typeDefs),
+      rootValue: resolvers,
+      graphiql: true,
+      context: () => ({ db })
+    })
+  )
+);
+
 // TODO: check if this regex can be better
-// TODO: Catch errors
-// TODO: fix filestream
+// TODO: refactor to different file.
 app.use(async (ctx: Context, next) => {
   if (
-    ctx.request.url !== '/graphql' &&
     !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
       ctx.request.url
     )
@@ -85,7 +95,20 @@ app.use(async (ctx: Context, next) => {
       (ctx.res as any).stream.pushStream(
         { [constants.HTTP2_HEADER_PATH]: file.path },
         (err: any, pushStream: any) => {
-          pushStream.respondWithFD(file.file, file.fd);
+          if (err) {
+            console.error('push stream callback error: ', err);
+            return;
+          }
+          if (pushStream.pushAllowed) {
+            pushStream.respondWithFD(file.file, file.fd);
+          }
+          pushStream.on('error', (err: any) => {
+            console.error('push stream error: ', err);
+          });
+
+          pushStream.on('close', () => {
+            // console.log('push stream closed');
+          });
         }
       );
     });
@@ -100,17 +123,6 @@ app.use(async (ctx: Context, next) => {
 });
 
 app.use(mount('/', serve(clientPath)));
-app.use(
-  mount(
-    '/graphql',
-    graphqlHTTP({
-      schema: buildSchema(typeDefs),
-      rootValue: resolvers,
-      graphiql: true,
-      context: () => ({ db })
-    })
-  )
-);
 
 createSecureServer(h2Options, app.callback()).listen(port, () =>
   console.log(`static assets served on ${port}`)
