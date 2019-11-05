@@ -1,9 +1,8 @@
-import { ApolloError } from 'apollo-server-express';
 import fetch, { Response } from 'node-fetch';
 import { NearEarthObjectList } from '../../models/NasaApis';
 import { ApiErrorResponse } from '../../models/ApiResponses';
 import { mapRange, findLargest, findSmallest } from '../../utils/utils';
-import { Db } from 'mongodb';
+import { GraphQLContext } from '../../models/models';
 
 interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
 
@@ -26,16 +25,13 @@ const mapOrbitRange = (value: number, in_min: number, in_max: number) =>
 let neos: QueryResponse;
 
 export const nearEarthObjectsQueries = {
-  neo: async (
-    parent: any,
-    _: any,
-    { db }: { db: Db }
-  ): Promise<QueryResponse | ApolloError> => {
+  neo: async (parent: any, context: GraphQLContext): Promise<QueryResponse> => {
+    const db = context().db;
     const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
-    const dbase = await db
-      .collection('near-earth-objects')
-      .findOne({ date: today });
+    const dbase = db
+      ? await db.collection('near-earth-objects').findOne({ date: today })
+      : null;
     if (dbase) {
       jsonResp = dbase;
     } else {
@@ -44,12 +40,16 @@ export const nearEarthObjectsQueries = {
       )) as Response;
 
       jsonResp = (await response.json()) as ApiResponse;
-      db.collection('near-earth-objects').insertOne({
-        ...{
-          date: today
-        },
-        ...jsonResp
-      });
+      const { code, error } = jsonResp;
+
+      if (code && code < 400 && !error && db) {
+        db.collection('near-earth-objects').insertOne({
+          ...{
+            date: today
+          },
+          ...jsonResp
+        });
+      }
     }
 
     const {
@@ -61,10 +61,10 @@ export const nearEarthObjectsQueries = {
     } = jsonResp;
 
     if (code && code > 400) {
-      return new ApolloError(http_error, code.toString());
+      throw new Error(`${code.toString()} : ${http_error}`);
     }
     if (error) {
-      return new ApolloError(error.message, error.code);
+      throw new Error(`${error.code} : ${error.message}`);
     }
 
     const objects = near_earth_objects[today]
