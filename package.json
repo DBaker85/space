@@ -91,7 +91,7 @@
     "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
     "generate:variables": "ts-node --skip-project scripts/compile-variables.ts"
   },
-  "proxy": "http://localhost:5055",
+  "proxy": "https://localhost:5055",
   "eslintConfig": {
     "extends": "react-app"
   }
