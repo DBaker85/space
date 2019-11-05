@@ -2,6 +2,7 @@ export const NeoTypes = `
   type NeoObjectsType {
     size: Float
     orbit: Float
+    isLargest: Boolean
   }
 
   type NeoOutputType {
