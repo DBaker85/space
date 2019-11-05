@@ -6,3 +6,11 @@
   width: 100%;
   align-items: center;
 }
+
+.cockpit {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 100%;
+  box-shadow: 0px 0px 0px 50vw rgba(0, 0, 0, 1);
+}

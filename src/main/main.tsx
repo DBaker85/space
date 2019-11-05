@@ -3,17 +3,11 @@ import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { TimelineLite } from 'gsap';
-import Loadable from 'react-loadable';
+// import Loadable from 'react-loadable';
+import { usePlanetState } from '../apollo/planets/cacheOperations';
 
 import Planet from './planet';
 import styles from './main.module.scss';
-
-import { usePlanetState } from '../apollo/planets/cacheOperations';
-
-const LazyHelperBot = Loadable({
-  loader: () => import('../helper-bot/helper-bot'),
-  loading: () => null
-});
 
 const Planets: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
@@ -22,6 +16,7 @@ const Planets: FunctionComponent = () => {
         elements
         objects {
           size
+          isLargest
         }
       }
     }
@@ -32,6 +27,9 @@ const Planets: FunctionComponent = () => {
   let planets = useRef([]);
   let planetWrapperEL = useRef(null);
   let planetTimeline = new TimelineLite({ paused: true });
+
+  const handleLargestClick = (isLargest: Boolean, planetIndex: number) =>
+    console.log(isLargest, planets.current[planetIndex]);
 
   useEffect(() => {
     if (data) {
@@ -60,16 +58,21 @@ const Planets: FunctionComponent = () => {
     <Fragment>
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(
-          (object: { size: number; orbit: number }, index: number) => (
-            <Planet
-              size={object.size + 'vh'}
-              inputRef={(el: any) => ((planets.current[index] as any) = el)}
+          (
+            object: { size: number; orbit: number; isLargest: Boolean },
+            index: number
+          ) => (
+            <div
+              ref={(el: any) => ((planets.current[index] as any) = el)}
+              onClick={() => handleLargestClick(object.isLargest, index)}
               key={`planet-${uid(3)}`}
-            />
+            >
+              <Planet size={object.size + 'vh'} />
+            </div>
           )
         )}
       </div>
-      <LazyHelperBot />
+      <div className={styles['cockpit']}></div>
     </Fragment>
   );
 };
