@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { TimelineLite } from 'gsap';
+import { TimelineLite, TimelineMax, Power0, TweenMax } from 'gsap';
 // import Loadable from 'react-loadable';
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 
@@ -25,18 +25,23 @@ const Planets: FunctionComponent = () => {
   const planetState = usePlanetState();
 
   let planets = useRef([]);
+  let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
   let planetTimeline = new TimelineLite({ paused: true });
 
   const handleLargestClick = (isLargest: Boolean, planetIndex: number) =>
-    console.log(isLargest, planets.current[planetIndex]);
+    console.log(isLargest, planetWrappers.current[planetIndex]);
 
   useEffect(() => {
     if (data) {
+      planetWrappers.current = planetWrappers.current.slice(
+        0,
+        data.neo.elements
+      );
       planets.current = planets.current.slice(0, data.neo.elements);
       planetState(data.neo.objects);
       planetTimeline
-        .set(planets.current, {
+        .set(planetWrappers.current, {
           x: () => randomNegative(Math.floor(Math.random() * 40)) + 'vw',
           rotation: () => randomNegative(Math.floor(Math.random() * 40))
         })
@@ -48,6 +53,27 @@ const Planets: FunctionComponent = () => {
           opacity: 1
         })
         .play();
+
+      TweenMax.to(planets.current, 5, {
+        bezier: {
+          type: 'soft',
+          values: [
+            {
+              x: () => Math.floor(Math.random() * 10),
+              y: () => -Math.floor(Math.random() * 10)
+            },
+            { x: () => Math.floor(Math.random() * 20), y: 0 },
+            {
+              x: () => Math.floor(Math.random() * 10),
+              y: () => Math.floor(Math.random() * 10)
+            },
+            { x: 0, y: 0 }
+          ],
+          autoRotate: false
+        },
+        ease: Power0.easeInOut,
+        repeat: -1
+      });
     }
   }, [data, planetState, planetTimeline]);
 
@@ -63,11 +89,14 @@ const Planets: FunctionComponent = () => {
             index: number
           ) => (
             <div
-              ref={(el: any) => ((planets.current[index] as any) = el)}
+              ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
               onClick={() => handleLargestClick(object.isLargest, index)}
               key={`planet-${uid(3)}`}
             >
-              <Planet size={object.size + 'vh'} />
+              <Planet
+                size={object.size + 'vh'}
+                inputRef={(el: any) => ((planets.current[index] as any) = el)}
+              />
             </div>
           )
         )}
