@@ -40,7 +40,13 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
     launchTimeline
       .set(flameEl.current as any, { rotation: 180 })
       .to(launchTextEl.current as any, 0.3, { opacity: 0 })
-      .to(launchButtonEl.current as any, 1, { width: 80 }, 0.5)
+      .to(launchButtonEl.current as any, 0.3, { boxShadow: '0', padding: 0 })
+      .to(
+        launchButtonEl.current as any,
+        1,
+        { width: 80, borderRadius: 70 },
+        0.5
+      )
       .to(
         launchTextEl.current as any,
         1,
