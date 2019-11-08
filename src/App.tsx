@@ -11,7 +11,7 @@ const LazyStarfield = Loadable({
 });
 
 const LazyNetworkStatus = Loadable({
-  loader: () => import('./shared/network-status/network-status'),
+  loader: () => import('./shared/utils/network-status'),
   loading: () => null
 });
 

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styles from './loader.module.scss';
 
+// TODO: Add cool text to give user something to read
 const Loader: FunctionComponent = () => {
   return (
     <div className={styles['loader']}>

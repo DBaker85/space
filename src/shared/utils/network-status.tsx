@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 
 import {
   useOnlineToggle,
@@ -31,6 +31,13 @@ const NetworkStatus: FunctionComponent = () => {
       checkNetwork();
     }
   };
+
+  useEffect(() => {
+    return function cleanup() {
+      window.removeEventListener('online', handleConnectionChange);
+      window.removeEventListener('offline', handleConnectionChange);
+    };
+  });
 
   window.addEventListener('online', handleConnectionChange);
   window.addEventListener('offline', handleConnectionChange);

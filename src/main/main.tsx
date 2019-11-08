@@ -72,7 +72,6 @@ const Planets: FunctionComponent = () => {
           )
         )}
       </div>
-      <div className={styles['cockpit']}></div>
     </Fragment>
   );
 };
