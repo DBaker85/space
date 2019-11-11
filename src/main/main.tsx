@@ -106,7 +106,7 @@ const Planets: FunctionComponent = () => {
                 size={object.size + 'vh'}
                 inputRef={(el: any) => ((planets.current[index] as any) = el)}
               />
-              <Scanner />
+              {object.isLargest && <Scanner />}
             </div>
           )
         )}

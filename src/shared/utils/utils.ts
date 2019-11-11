@@ -4,3 +4,5 @@ export const uid = (length: number) =>
 
 export const randomNegative = (n: number) =>
   Math.random() > 0.5 ? Math.abs(n) : -Math.abs(n);
+
+export const random = (n: number) => Math.floor(Math.random() * n);
