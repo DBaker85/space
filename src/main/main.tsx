@@ -37,7 +37,7 @@ const Planets: FunctionComponent = () => {
   let planetWrapperEL = useRef(null);
   let planetTimeline = new TimelineLite({ paused: true });
 
-  const handleLargestClick = (isLargest: Boolean, planetIndex: number) =>
+  const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
     console.log(isLargest, planetWrappers.current[planetIndex]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const Planets: FunctionComponent = () => {
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(
           (
-            object: { size: number; orbit: number; isLargest: Boolean },
+            object: { size: number; orbit: number; isLargest: boolean },
             index: number
           ) => (
             <div
@@ -106,7 +106,10 @@ const Planets: FunctionComponent = () => {
                 size={object.size + 'vh'}
                 inputRef={(el: any) => ((planets.current[index] as any) = el)}
               />
-              {object.isLargest && <Scanner />}
+              <Scanner
+                startDelay={(5 / data.neo.elements) * index}
+                isClickable={object.isLargest}
+              />
             </div>
           )
         )}

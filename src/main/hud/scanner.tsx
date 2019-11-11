@@ -2,9 +2,10 @@ import React, {
   FunctionComponent,
   useRef,
   useEffect,
-  MutableRefObject
+  MutableRefObject,
+  useState
 } from 'react';
-import { TweenMax, Power1 } from 'gsap';
+import { TweenMax, Power1, TimelineMax } from 'gsap';
 
 import { random } from '../../shared/utils/utils';
 
@@ -14,10 +15,22 @@ import ring from '../../assets/images/hud/scanner-ring.svg';
 
 import styles from './scanner.module.scss';
 
-const Scanner: FunctionComponent = () => {
+interface ScannerProps {
+  startDelay: number;
+  isClickable: boolean;
+}
+
+const Scanner: FunctionComponent<ScannerProps> = ({
+  startDelay = 0,
+  isClickable = false
+}) => {
   const innerEl = useRef(null);
   const ringEl = useRef(null);
   const outerEl = useRef(null);
+  const wrapperEl = useRef(null);
+  const scannerTimeline = new TimelineMax({ paused: true, delay: startDelay });
+
+  const [show, setVisibility] = useState(true);
 
   let ringrotate = (ref: MutableRefObject<null>) =>
     TweenMax.to(ref.current as any, 1, {
@@ -30,16 +43,27 @@ const Scanner: FunctionComponent = () => {
     });
 
   useEffect(() => {
-    ringrotate(ringEl);
+    if (show) {
+      scannerTimeline
+        .from(wrapperEl.current as any, 1, { opacity: 0 })
+        .call(() => {
+          if (isClickable) {
+            ringrotate(ringEl);
+          } else {
+            setVisibility(false);
+          }
+        })
+        .play();
+    }
   });
 
-  return (
-    <div className={styles['scanner']}>
+  return show ? (
+    <div className={styles['scanner']} ref={wrapperEl}>
       <img src={inner} alt="" />
       <img src={outer} alt="" />
       <img src={ring} alt="" ref={ringEl} />
     </div>
-  );
+  ) : null;
 };
 
 export default Scanner;
