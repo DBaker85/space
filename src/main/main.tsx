@@ -8,7 +8,10 @@ import { usePlanetState } from '../apollo/planets/cacheOperations';
 
 import Planet from './planet';
 import styles from './main.module.scss';
+import Hud from './hud/hud';
+import Scanner from './hud/scanner';
 
+// TODO: delegate to idlecallback
 const LazyUfos = Loadable({
   loader: () => import('../ufos/ufos'),
   loading: () => null
@@ -87,6 +90,7 @@ const Planets: FunctionComponent = () => {
 
   return (
     <Fragment>
+      {/* <Hud/> */}
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(
           (
@@ -102,11 +106,12 @@ const Planets: FunctionComponent = () => {
                 size={object.size + 'vh'}
                 inputRef={(el: any) => ((planets.current[index] as any) = el)}
               />
+              <Scanner />
             </div>
           )
         )}
       </div>
-      <LazyUfos />
+      {/* <LazyUfos /> */}
     </Fragment>
   );
 };

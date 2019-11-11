@@ -37,3 +37,7 @@ Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"
 <a target="_blank" href="https://icons8.com/icons/set/wifi-off">Wi-Fi off</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 
 <a target="_blank" href="https://icons8.com/icons/set/wi-fi-disconnected">Wi-Fi Disconnected</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+
+<a href="https://www.freepik.com/free-photos-vectors/technology">Technology vector created by macrovector - www.freepik.com</a>
+<a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by macrovector - www.freepik.com</a>
+<a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by freepik - www.freepik.com</a>
