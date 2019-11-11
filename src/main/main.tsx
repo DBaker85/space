@@ -3,11 +3,16 @@ import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { TimelineLite, Power0, TweenMax } from 'gsap';
-// import Loadable from 'react-loadable';
+import Loadable from 'react-loadable';
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 
 import Planet from './planet';
 import styles from './main.module.scss';
+
+const LazyUfos = Loadable({
+  loader: () => import('../ufos/ufos'),
+  loading: () => null
+});
 
 const Planets: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
@@ -101,6 +106,7 @@ const Planets: FunctionComponent = () => {
           )
         )}
       </div>
+      <LazyUfos />
     </Fragment>
   );
 };
