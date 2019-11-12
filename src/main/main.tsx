@@ -107,7 +107,7 @@ const Planets: FunctionComponent = () => {
                 inputRef={(el: any) => ((planets.current[index] as any) = el)}
               />
               <Scanner
-                startDelay={(5 / data.neo.elements) * index}
+                startDelay={(3 / data.neo.elements) * index}
                 isClickable={object.isLargest}
               />
             </div>
