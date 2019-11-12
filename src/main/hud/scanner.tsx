@@ -30,6 +30,8 @@ const Scanner: FunctionComponent<ScannerProps> = ({
   const wrapperEl = useRef(null);
   const scannerTimeline = new TimelineMax({ paused: true, delay: startDelay });
 
+  let innerRingRotate: TweenMax;
+
   const [show, setVisibility] = useState(true);
 
   let ringrotate = (ref: MutableRefObject<null>) =>
@@ -41,23 +43,6 @@ const Scanner: FunctionComponent<ScannerProps> = ({
         ringrotate(ref);
       }
     });
-  let innerRingrotate = () =>
-    TweenMax.fromTo(
-      innerEl.current as any,
-      5,
-      {
-        rotation: 0,
-        transformOrigin: '50%',
-        ease: Power0.easeInOut
-      },
-      {
-        rotation: 360,
-        transformOrigin: '50%',
-        ease: Power0.easeInOut,
-        repeat: -1,
-        paused: true
-      }
-    );
 
   useEffect(() => {
     if (show) {
@@ -70,7 +55,12 @@ const Scanner: FunctionComponent<ScannerProps> = ({
         .to(innerEl.current as any, 1, { rotation: 180 }, 1)
         .to(innerEl.current as any, 0.5, { scale: 1 }, 1)
         .to(innerEl.current as any, 1, { rotation: 0 }, 2)
-        .to(innerEl.current as any, 0.5, { opacity: 0 }, 2.5)
+        .to(
+          innerEl.current as any,
+          0.5,
+          { opacity: 0, ease: Back.easeInOut },
+          2.5
+        )
         .call(() => {
           if (isClickable) {
             ringrotate(ringEl);
@@ -79,6 +69,23 @@ const Scanner: FunctionComponent<ScannerProps> = ({
           }
         })
         .play();
+
+      innerRingRotate = TweenMax.fromTo(
+        innerEl.current as any,
+        5,
+        {
+          rotation: 0,
+          transformOrigin: '50%',
+          ease: Power0.easeInOut
+        },
+        {
+          rotation: 360,
+          transformOrigin: '50%',
+          ease: Power0.easeInOut,
+          repeat: -1,
+          paused: true
+        }
+      );
     }
   });
 
@@ -86,12 +93,13 @@ const Scanner: FunctionComponent<ScannerProps> = ({
     <div
       className={styles['scanner']}
       ref={wrapperEl}
-      onPointerEnter={() => innerRingrotate().play()}
-      onPointerLeave={() => innerRingrotate().kill()}
+      onPointerEnter={() => innerRingRotate.play()}
+      onPointerLeave={() => innerRingRotate.pause()}
     >
       <img className={styles['inner-ring']} src={inner} alt="" ref={innerEl} />
       <img src={outer} alt="" />
       <img src={ring} alt="" ref={ringEl} />
+      <div className={styles['help-text']}></div>
     </div>
   ) : null;
 };
