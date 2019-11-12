@@ -99,7 +99,6 @@ const Scanner: FunctionComponent<ScannerProps> = ({
       <img className={styles['inner-ring']} src={inner} alt="" ref={innerEl} />
       <img src={outer} alt="" />
       <img src={ring} alt="" ref={ringEl} />
-      <div className={styles['help-text']}></div>
     </div>
   ) : null;
 };

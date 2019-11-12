@@ -37,6 +37,7 @@ const Planets: FunctionComponent = () => {
   let planetWrapperEL = useRef(null);
   let planetTimeline = new TimelineLite({ paused: true });
 
+  // TODO: handle analytics
   const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
     console.log(isLargest, planetWrappers.current[planetIndex]);
 
@@ -50,8 +51,7 @@ const Planets: FunctionComponent = () => {
       planetState(data.neo.objects);
       planetTimeline
         .set(planetWrappers.current, {
-          x: () => randomNegative(Math.floor(Math.random() * 40)) + 'vw',
-          rotation: () => randomNegative(Math.floor(Math.random() * 40))
+          x: () => randomNegative(Math.floor(Math.random() * 40)) + 'vw'
         })
         .set(planetWrapperEL.current as any, {
           scale: 0
@@ -96,22 +96,37 @@ const Planets: FunctionComponent = () => {
           (
             object: { size: number; orbit: number; isLargest: boolean },
             index: number
-          ) => (
-            <div
-              ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
-              onClick={() => handleLargestClick(object.isLargest, index)}
-              key={`planet-${uid(3)}`}
-            >
-              <Planet
-                size={object.size + 'vh'}
-                inputRef={(el: any) => ((planets.current[index] as any) = el)}
-              />
-              <Scanner
-                startDelay={(3 / data.neo.elements) * index}
-                isClickable={object.isLargest}
-              />
-            </div>
-          )
+          ) => {
+            const rotation = randomNegative(Math.floor(Math.random() * 40));
+            const inversedRotation =
+              rotation < 0 ? Math.abs(rotation) : -rotation;
+            return (
+              <div
+                ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
+                onClick={() => handleLargestClick(object.isLargest, index)}
+                style={{ transform: `rotate(${rotation}deg)` }}
+                key={`planet-${uid(3)}`}
+                className={styles['planets']}
+              >
+                <Planet
+                  size={object.size + 'vh'}
+                  inputRef={(el: any) => ((planets.current[index] as any) = el)}
+                />
+                <Scanner
+                  startDelay={(3 / data.neo.elements) * index}
+                  isClickable={object.isLargest}
+                />
+                {object.isLargest && (
+                  <div
+                    className={styles['help-text']}
+                    style={{ transform: `rotate(${inversedRotation}deg)` }}
+                  >
+                    About me
+                  </div>
+                )}
+              </div>
+            );
+          }
         )}
       </div>
       {/* <LazyUfos /> */}
@@ -120,3 +135,5 @@ const Planets: FunctionComponent = () => {
 };
 
 export default Planets;
+
+// rotation: () => randomNegative(Math.floor(Math.random() * 40))
