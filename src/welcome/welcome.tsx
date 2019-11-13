@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { TimelineLite, TweenMax } from 'gsap';
+import gsap from 'gsap';
 
 import { useStarToggle } from '../apollo/stars/cacheOperations';
 
@@ -21,17 +21,17 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
 
   const moveStars = useStarToggle();
 
-  const launchTimeline = new TimelineLite({ paused: true });
-  const arriveTimeline = new TimelineLite({ paused: true });
+  const launchTimeline = gsap.timeline({ paused: true });
+  const arriveTimeline = gsap.timeline({ paused: true });
 
   useEffect(() => {
-    TweenMax.to(flameEl.current as any, 0.05, {
+    gsap.to(flameEl.current as any, 0.05, {
       x: '+=4',
       repeat: -1,
       yoyo: true
     });
 
-    TweenMax.to(rocketEl.current as any, 0.05, {
+    gsap.to(rocketEl.current as any, 0.05, {
       x: '+=1',
       repeat: -1,
       yoyo: true
@@ -82,7 +82,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
       .to(rocketEl.current as any, 1, { y: '-100vh' }, 2)
       .to(flameEl.current as any, 0.3, { y: 20 }, 1.7)
       .to(flameEl.current as any, 1, { y: '-100vh' }, 2)
-      .call(() => moveStars(false), undefined, null, 2)
+      .call(() => moveStars(false), undefined, 2)
       .call(() => {
         history.push('/main');
       });

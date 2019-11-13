@@ -2,14 +2,17 @@ import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { TimelineLite, Power0, TweenMax } from 'gsap';
 import Loadable from 'react-loadable';
+import { gsap, MotionPathPlugin, MotionPathHelper, random } from 'gsap/all';
+
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 
 import Planet from './planet';
 import styles from './main.module.scss';
 import Hud from './hud/hud';
-import Scanner from './hud/scanner';
+import Scanner from '../shared/scanner/scanner';
+
+gsap.registerPlugin(MotionPathPlugin);
 
 // TODO: delegate to idlecallback
 const LazyUfos = Loadable({
@@ -35,7 +38,8 @@ const Planets: FunctionComponent = () => {
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
-  let planetTimeline = new TimelineLite({ paused: true });
+  let planetTimeline = gsap.timeline({ paused: true });
+  let floatAnimations: GSAPStatic.Tween[];
 
   // TODO: handle analytics
   const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
@@ -62,25 +66,27 @@ const Planets: FunctionComponent = () => {
         })
         .play();
 
-      TweenMax.to(planets.current, 5, {
-        bezier: {
-          type: 'soft',
-          values: [
-            {
-              x: () => Math.floor(Math.random() * 10),
-              y: () => -Math.floor(Math.random() * 10)
-            },
-            { x: () => Math.floor(Math.random() * 20), y: 0 },
-            {
-              x: () => Math.floor(Math.random() * 10),
-              y: () => Math.floor(Math.random() * 10)
-            },
-            { x: 0, y: 0 }
-          ],
-          autoRotate: false
-        },
-        ease: Power0.easeInOut,
-        repeat: -1
+      // assign animations to array to allow for killing them if necessary
+      floatAnimations = planets.current.map(element => {
+        const randomX = random(5, 10, 1);
+        const randomY = random(10, 20, 1);
+        return gsap.to(element, {
+          motionPath: {
+            path: [
+              { x: randomX, y: randomX },
+              { x: randomY, y: 0 },
+              {
+                x: randomX,
+                y: -randomX
+              },
+              { x: 0, y: 0 }
+            ]
+          },
+          ease: 'none',
+          immediateRender: true,
+          duration: random(10, 15, 1),
+          repeat: -1
+        });
       });
     }
   }, [data, planetState, planetTimeline]);
@@ -90,6 +96,7 @@ const Planets: FunctionComponent = () => {
 
   return (
     <Fragment>
+      <LazyUfos />
       {/* <Hud/> */}
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(
@@ -114,7 +121,7 @@ const Planets: FunctionComponent = () => {
                 />
                 <Scanner
                   startDelay={(3 / data.neo.elements) * index}
-                  isClickable={object.isLargest}
+                  isVisible={object.isLargest}
                 />
                 {object.isLargest && (
                   <div
@@ -129,11 +136,8 @@ const Planets: FunctionComponent = () => {
           }
         )}
       </div>
-      {/* <LazyUfos /> */}
     </Fragment>
   );
 };
 
 export default Planets;
-
-// rotation: () => randomNegative(Math.floor(Math.random() * 40))

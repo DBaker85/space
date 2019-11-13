@@ -5,9 +5,9 @@ import React, {
   MutableRefObject,
   useState
 } from 'react';
-import { TweenMax, Power1, TimelineMax, Power0, Back } from 'gsap';
+import gsap from 'gsap';
 
-import { random } from '../../shared/utils/utils';
+import { random } from '../utils/utils';
 
 import inner from '../../assets/images/hud/scanner-inner.svg';
 import outer from '../../assets/images/hud/scanner-outer.svg';
@@ -17,32 +17,49 @@ import styles from './scanner.module.scss';
 
 interface ScannerProps {
   startDelay: number;
-  isClickable: boolean;
+  isVisible: boolean;
 }
 
 const Scanner: FunctionComponent<ScannerProps> = ({
   startDelay = 0,
-  isClickable = false
+  isVisible = false
 }) => {
+  let innerRingRotate: GSAPStatic.Tween;
   const innerEl = useRef(null);
   const ringEl = useRef(null);
-  const outerEl = useRef(null);
   const wrapperEl = useRef(null);
-  const scannerTimeline = new TimelineMax({ paused: true, delay: startDelay });
-
-  let innerRingRotate: TweenMax;
+  const scannerTimeline = gsap.timeline({ paused: true, delay: startDelay });
 
   const [show, setVisibility] = useState(true);
 
-  let ringrotate = (ref: MutableRefObject<null>) =>
-    TweenMax.to(ref.current as any, 1, {
+  const ringrotate = (ref: MutableRefObject<null>) =>
+    gsap.to(ref.current as any, 1, {
       rotation: () => random(180),
       transformOrigin: '50%',
-      ease: Power1.easeInOut,
+      ease: 'power1.inOut',
       onComplete: () => {
         ringrotate(ref);
       }
     });
+
+  const initInnerRing = (ref: MutableRefObject<null>) => {
+    innerRingRotate = gsap.fromTo(
+      ref.current as any,
+      5,
+      {
+        rotation: 0,
+        transformOrigin: '50%',
+        ease: 'power0.none'
+      },
+      {
+        rotation: 360,
+        transformOrigin: '50%',
+        ease: 'power0.none',
+        repeat: -1,
+        paused: true
+      }
+    );
+  };
 
   useEffect(() => {
     if (show) {
@@ -50,7 +67,7 @@ const Scanner: FunctionComponent<ScannerProps> = ({
         .from(wrapperEl.current as any, 0.5, {
           opacity: 0,
           scale: 0,
-          ease: Back.easeInOut
+          ease: 'back.inOut'
         })
         .to(innerEl.current as any, 1, { rotation: 180 }, 1)
         .to(innerEl.current as any, 0.5, { scale: 1 }, 1)
@@ -58,11 +75,11 @@ const Scanner: FunctionComponent<ScannerProps> = ({
         .to(
           innerEl.current as any,
           0.5,
-          { opacity: 0, ease: Back.easeInOut },
+          { opacity: 0, ease: 'back.inOut' },
           2.5
         )
         .call(() => {
-          if (isClickable) {
+          if (isVisible) {
             ringrotate(ringEl);
           } else {
             setVisibility(false);
@@ -70,22 +87,7 @@ const Scanner: FunctionComponent<ScannerProps> = ({
         })
         .play();
 
-      innerRingRotate = TweenMax.fromTo(
-        innerEl.current as any,
-        5,
-        {
-          rotation: 0,
-          transformOrigin: '50%',
-          ease: Power0.easeInOut
-        },
-        {
-          rotation: 360,
-          transformOrigin: '50%',
-          ease: Power0.easeInOut,
-          repeat: -1,
-          paused: true
-        }
-      );
+      initInnerRing(innerEl);
     }
   });
 
