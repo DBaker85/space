@@ -102,7 +102,7 @@ const Planets: FunctionComponent = () => {
 
   return (
     <Fragment>
-      {/* <LazyUfos /> */}
+      <LazyUfos />
       <Hud scanDelay={scanDelay} targets={1} />
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(

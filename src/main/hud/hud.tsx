@@ -1,5 +1,7 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
+
 import hudImg from '../../assets/images/hud/hud.svg';
+import styles from './hud.module.scss';
 
 interface HudProps {
   scanDelay: number;
@@ -11,11 +13,11 @@ const Hud: FunctionComponent<HudProps> = ({ scanDelay, targets }) => {
 
   setTimeout(() => {
     setScanComplete(true);
-  }, scanDelay * 1000);
+  }, (scanDelay + 2) * 1000);
 
   return (
-    <div>
-      <div>
+    <div className={styles['hud']}>
+      <div className={styles['upper-hud']}>
         <img src={hudImg} alt="" />
         <span>
           {scanComplete
