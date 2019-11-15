@@ -3,7 +3,7 @@ import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import Loadable from 'react-loadable';
-import { gsap, MotionPathPlugin, MotionPathHelper, random } from 'gsap/all';
+import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 
@@ -19,6 +19,8 @@ const LazyUfos = Loadable({
   loader: () => import('../ufos/ufos'),
   loading: () => null
 });
+
+const scanDelay = 4;
 
 const Planets: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
@@ -39,13 +41,13 @@ const Planets: FunctionComponent = () => {
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
   let planetTimeline = gsap.timeline({ paused: true });
-  let floatAnimations: GSAPStatic.Tween[];
 
   // TODO: handle analytics
   const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
     console.log(isLargest, planetWrappers.current[planetIndex]);
 
   useEffect(() => {
+    let floatAnimations: GSAPStatic.Tween[];
     if (data) {
       planetWrappers.current = planetWrappers.current.slice(
         0,
@@ -84,11 +86,15 @@ const Planets: FunctionComponent = () => {
           },
           ease: 'none',
           immediateRender: true,
-          duration: random(10, 15, 1),
+          duration: random(15, 20, 1),
           repeat: -1
         });
       });
     }
+    // cleanup
+    return () => {
+      floatAnimations.forEach(animation => animation.kill());
+    };
   }, [data, planetState, planetTimeline]);
 
   if (loading) return null;
@@ -97,7 +103,7 @@ const Planets: FunctionComponent = () => {
   return (
     <Fragment>
       <LazyUfos />
-      {/* <Hud/> */}
+      <Hud scanDelay={scanDelay} targets={1} />
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.neo.objects.map(
           (
@@ -120,7 +126,7 @@ const Planets: FunctionComponent = () => {
                   inputRef={(el: any) => ((planets.current[index] as any) = el)}
                 />
                 <Scanner
-                  startDelay={(3 / data.neo.elements) * index}
+                  startDelay={(scanDelay / data.neo.elements) * index}
                   isVisible={object.isLargest}
                 />
                 {object.isLargest && (
