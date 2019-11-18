@@ -7,12 +7,9 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import Planet from './planet';
 import styles from './planets.module.scss';
-import Hud from './hud/hud';
 import Scanner from '../shared/scanner/scanner';
 
 gsap.registerPlugin(MotionPathPlugin);
-
-const scanDelay = 4;
 
 interface MainProps {
   scanDelay: number;
@@ -86,7 +83,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
 
   return data.planets.length > 0 ? (
     <Fragment>
-      {/* <Hud scanDelay={scanDelay} targets={1} /> */}
       <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
         {data.planets.map(
           (

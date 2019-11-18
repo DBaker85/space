@@ -6,6 +6,8 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 import Planets from './planets';
+import Hud from './hud/hud';
+
 import { cssConstants as css } from '../shared/constants';
 
 gsap.registerPlugin(MotionPathPlugin);
@@ -53,7 +55,12 @@ const Main: FunctionComponent = () => {
   return (
     <Fragment>
       <LazyUfos />
-      {data && <Planets scanDelay={scanDelay} />}
+      {data && (
+        <Fragment>
+          <Hud scanDelay={scanDelay} targets={1} />
+          <Planets scanDelay={scanDelay} />
+        </Fragment>
+      )}
     </Fragment>
   );
 };
