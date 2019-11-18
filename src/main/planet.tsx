@@ -12,17 +12,17 @@ import Planet8 from '../icons/planets/planet-i-icon';
 
 import { cssConstants as css } from '../shared/css-constants';
 
-const Planet: FunctionComponent<{ size: string; inputRef?: any }> = ({
-  size,
-  inputRef = null
-}) => {
-  const color = Math.floor(Math.random() * css.planetColors.length);
-  const planet = Math.floor(Math.random() * 9);
+const Planet: FunctionComponent<{
+  size: string;
+  inputRef?: any;
+  color: number;
+  type: number;
+}> = ({ size, inputRef = null, type, color }) => {
   const style = {
     opacity: 1
   };
 
-  switch (planet) {
+  switch (type) {
     case 0:
       return (
         <Planet0
