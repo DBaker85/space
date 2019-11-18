@@ -103,29 +103,37 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
                 onClick={() => handleLargestClick(object.isLargest, index)}
                 style={{
-                  transform: `rotate(${rotation}deg) translateX(${object.orbit})`
+                  transform: `translateX(${object.orbit})`
                 }}
                 key={`planet-${uid(3)}`}
                 className={styles['planets']}
               >
-                <Planet
-                  size={object.size + 'vh'}
-                  color={object.color}
-                  type={object.size}
-                  inputRef={(el: any) => ((planets.current[index] as any) = el)}
-                />
-                <Scanner
-                  startDelay={(scanDelay / data.planets.length) * index}
-                  isVisible={object.isLargest}
-                />
-                {object.isLargest && (
-                  <div
-                    className={styles['help-text']}
-                    style={{ transform: `rotate(${inversedRotation}deg)` }}
-                  >
-                    About me
-                  </div>
-                )}
+                <div
+                  style={{
+                    transform: `rotate(${rotation}deg)`
+                  }}
+                >
+                  <Planet
+                    size={object.size + 'vh'}
+                    color={object.color}
+                    type={object.size}
+                    inputRef={(el: any) =>
+                      ((planets.current[index] as any) = el)
+                    }
+                  />
+                  <Scanner
+                    startDelay={(scanDelay / data.planets.length) * index}
+                    isVisible={object.isLargest}
+                  />
+                  {object.isLargest && (
+                    <div
+                      className={styles['help-text']}
+                      style={{ transform: `rotate(${inversedRotation}deg)` }}
+                    >
+                      About me
+                    </div>
+                  )}
+                </div>
               </div>
             );
           }
