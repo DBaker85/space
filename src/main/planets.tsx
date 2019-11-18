@@ -118,10 +118,10 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                   type={object.size}
                   inputRef={(el: any) => ((planets.current[index] as any) = el)}
                 />
-                {/* <Scanner
-                  startDelay={(scanDelay / data.planets) * index}
+                <Scanner
+                  startDelay={(scanDelay / data.planets.length) * index}
                   isVisible={object.isLargest}
-                /> */}
+                />
                 {object.isLargest && (
                   <div
                     className={styles['help-text']}
