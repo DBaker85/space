@@ -32,16 +32,18 @@ const Scanner: FunctionComponent<ScannerProps> = ({
 
   const [show, setVisibility] = useState(true);
 
-  const ringrotate = (ref: MutableRefObject<null>) =>
-    gsap.to(ref.current as any, 1, {
-      rotation: () => random(180),
-      transformOrigin: '50%',
-      ease: 'power1.inOut',
-      onComplete: () => {
-        ringrotate(ref);
-      }
-    });
-
+  const ringrotate = (ref: MutableRefObject<null>) => {
+    if (ref.current) {
+      gsap.to(ref.current as any, 1, {
+        rotation: () => random(180),
+        transformOrigin: '50%',
+        ease: 'power1.inOut',
+        onComplete: () => {
+          ringrotate(ref);
+        }
+      });
+    }
+  };
   const initInnerRing = (ref: MutableRefObject<null>) => {
     innerRingRotate = gsap.fromTo(
       ref.current as any,

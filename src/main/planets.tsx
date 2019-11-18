@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
+import React, {
+  FunctionComponent,
+  useRef,
+  useEffect,
+  Fragment,
+  useState
+} from 'react';
 import { uid, randomNegative } from '../shared/utils/utils';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -32,9 +38,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
 
+  const [zoomed, setZoomed] = useState(false);
+
   // TODO: handle analytics
   const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
-    console.log(isLargest, planetWrappers.current[planetIndex]);
+    isLargest ? setZoomed(true) : null;
 
   useEffect(() => {
     let floatAnimations: GSAPStatic.Tween[];
@@ -133,6 +141,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                       About me
                     </div>
                   )}
+                  {zoomed && <div>Zoomed</div>}
                 </div>
               </div>
             );
