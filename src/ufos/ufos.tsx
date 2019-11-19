@@ -4,9 +4,11 @@ import React, { FunctionComponent, useRef, useEffect } from 'react';
 import styles from './ufos.module.scss';
 
 import rocket2 from '../assets/images/rocket/color2.svg';
+import rocket1 from '../assets/images/rocket/color.svg';
 
 const Ufos: FunctionComponent = () => {
   const rocketEl = useRef(null);
+  const rocketEl2 = useRef(null);
   useEffect(() => {
     // TweenMax.to(rocketEl.current as any, 5, {
     //   bezier: {
@@ -31,7 +33,8 @@ const Ufos: FunctionComponent = () => {
 
   return (
     <div className={styles['ufo-wrapper']}>
-      <img src={rocket2} alt="" ref={rocketEl}></img>
+      <img src={rocket2} alt="" ref={rocketEl2}></img>
+      <img src={rocket1} alt="" ref={rocketEl2}></img>
     </div>
   );
 };

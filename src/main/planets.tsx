@@ -14,6 +14,7 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 import Planet from './planet';
 import styles from './planets.module.scss';
 import Scanner from '../shared/scanner/scanner';
+import AboutME from './about-me/about-me';
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -45,7 +46,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     isLargest ? setZoomed(true) : null;
 
   useEffect(() => {
-    let floatAnimations: GSAPStatic.Tween[];
+    // let floatAnimations: GSAPStatic.Tween[];
     if (data) {
       console.log('any data', data);
       if (data.planets.length > 0) {
@@ -57,7 +58,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         planets.current = planets.current.slice(0, data.planets.length);
 
         // assign animations to array to allow for killing them if necessary
-        floatAnimations = planets.current.map(element => {
+        planets.current.map(element => {
           const randomX = random(5, 10, 1);
           const randomY = random(10, 20, 1);
           return gsap.to(element, {
@@ -141,12 +142,13 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                       About me
                     </div>
                   )}
-                  {zoomed && <div>Zoomed</div>}
                 </div>
               </div>
             );
           }
         )}
+        {/* TODO popup text, zoom planet animation, overlay, reomve scanners */}
+        {zoomed && <AboutME />}
       </div>
     </Fragment>
   ) : null;
