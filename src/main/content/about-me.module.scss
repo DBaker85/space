@@ -1,0 +1,23 @@
+@import '../../scss/variables';
+
+.about-me {
+  height: 40vh;
+  width: 60vw;
+  display: flex;
+  position: fixed;
+  top: 30vh;
+  left: 0;
+  padding: 40px;
+  background-color: $color-gray-dark;
+  animation: enter 1s ease-in-out;
+  z-index: 20;
+}
+
+@keyframes enter {
+  0% {
+    transform: translateX(-70vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

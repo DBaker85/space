@@ -21,7 +21,7 @@ const Hud: FunctionComponent<HudProps> = ({ scanDelay, targets }) => {
         <img src={hudImg} alt="" />
         <span>
           {scanComplete
-            ? `found ${targets} target${targets === 1 ? '' : 's'}`
+            ? `Found ${targets} target${targets === 1 ? '' : 's'}`
             : `Scanning Targets`}
         </span>
       </div>
