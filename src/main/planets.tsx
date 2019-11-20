@@ -23,6 +23,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         size
         orbit
         orbit2
+        rotation
         type
         color
         isLargest
@@ -111,15 +112,17 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
               size: number;
               orbit: number;
               orbit2: number;
+              rotation: number;
               isLargest: boolean;
               color: number;
               type: number;
             },
             index: number
           ) => {
-            const rotation = randomNegative(Math.floor(Math.random() * 40));
             const inversedRotation =
-              rotation < 0 ? Math.abs(rotation) : -rotation;
+              object.rotation < 0
+                ? Math.abs(object.rotation)
+                : -object.rotation;
             return (
               <div
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
@@ -136,7 +139,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
               >
                 <div
                   style={{
-                    transform: `rotate(${rotation}deg)`
+                    transform: `rotate(${object.rotation}deg)`
                   }}
                 >
                   <Planet

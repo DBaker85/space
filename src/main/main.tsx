@@ -48,6 +48,7 @@ const Main: FunctionComponent = () => {
         ...{
           orbit: random(1, 75, 1),
           orbit2: random(1, 75, 1),
+          rotation: random(-40, 40, 1),
           type: random(0, 8, 1),
           color: random(0, css.planetColors.length - 1, 1)
         }

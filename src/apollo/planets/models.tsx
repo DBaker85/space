@@ -4,6 +4,7 @@ export interface Planet {
   color: string;
   orbit: number;
   orbit2: number;
+  rotation: number;
 }
 
 export interface PlanetState {
