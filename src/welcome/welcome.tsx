@@ -3,7 +3,11 @@ import { RouteComponentProps } from 'react-router';
 import gsap from 'gsap';
 
 import { useStarToggle } from '../apollo/stars/cacheOperations';
-import { analyticsEvent, eventCategories, eventActions } from '../analytics';
+import {
+  analyticsEvent,
+  eventCategories,
+  eventActions
+} from '../shared/analytics/events';
 
 import rocketIcon from '../assets/images/rocket/bw.svg';
 import rocketColorIcon from '../assets/images/rocket/color.svg';

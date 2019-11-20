@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
-import { withRouteTracker } from './analytics';
+import { withRouteTracker } from './shared/analytics/analytics';
 import Loader from './shared/loader/loader';
 
 import { idleCallback } from './shared/utils/idleCallback';

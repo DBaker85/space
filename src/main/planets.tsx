@@ -5,7 +5,11 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import { uid } from '../shared/utils/utils';
 import { useContentState } from '../apollo/content/cacheOperations';
-import { analyticsEvent, eventCategories, eventActions } from '../analytics';
+import {
+  analyticsEvent,
+  eventCategories,
+  eventActions
+} from '../shared/analytics/events';
 
 import Planet from './planet';
 import styles from './planets.module.scss';
