@@ -5,6 +5,7 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import { uid } from '../shared/utils/utils';
 import { useContentState } from '../apollo/content/cacheOperations';
+import { analyticsEvent, eventCategories, eventActions } from '../analytics';
 
 import Planet from './planet';
 import styles from './planets.module.scss';
@@ -38,28 +39,23 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planetWrapperEL = useRef(null);
   // const zoomTimeline = gsap.timeline({ paused: true });
 
-  // TODO: handle analytics
   const handleClick = (
     isLargest: boolean,
     planetIndex: number,
     size: number
   ) => {
-    // if (isLargest) {
-    //   zoomTimeline
-    //     .to(planetWrappers.current as any, {
-    //       scale: `1vh`,
-    //       duration: 1
-    //     })
-    //     .to(planetWrappers.current[planetIndex] as any, {
-    //       scale: `${100 / size}vh`,
-    //       duration: 1
-    //       // onComplete: ()=>{
-    //       //   setZoomed(true)
-    //       // }
-    //     })
-    //     .play();
-    // }
-    setContent(true, 'about');
+    if (isLargest) {
+      analyticsEvent({
+        category: eventCategories.user,
+        action: eventActions.clicked('about me')
+      });
+      setContent(true, 'about');
+    } else {
+      analyticsEvent({
+        category: eventCategories.user,
+        action: eventActions.clicked(`planet ${planetIndex} of size ${size}`)
+      });
+    }
   };
   useEffect(() => {
     // let floatAnimations: GSAPStatic.Tween[];

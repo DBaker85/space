@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import gsap from 'gsap';
 
 import { useStarToggle } from '../apollo/stars/cacheOperations';
+import { analyticsEvent, eventCategories, eventActions } from '../analytics';
 
 import rocketIcon from '../assets/images/rocket/bw.svg';
 import rocketColorIcon from '../assets/images/rocket/color.svg';
@@ -23,6 +24,14 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
 
   const launchTimeline = gsap.timeline({ paused: true });
   const arriveTimeline = gsap.timeline({ paused: true });
+
+  const handleClick = () => {
+    analyticsEvent({
+      category: eventCategories.user,
+      action: eventActions.clicked('launch button')
+    });
+    launchTimeline.play();
+  };
 
   useEffect(() => {
     gsap.to(flameEl.current as any, 0.05, {
@@ -92,7 +101,7 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
     <div
       className={styles['launch-button']}
       ref={launchButtonEl}
-      onClick={() => launchTimeline.play()}
+      onClick={handleClick}
     >
       <div ref={launchTextEl} className={styles['launch-text']}>
         Launch
