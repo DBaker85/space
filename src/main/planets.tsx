@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
-import { uid, randomNegative } from '../shared/utils/utils';
+import { uid } from '../shared/utils/utils';
 import { useContentState } from '../apollo/content/cacheOperations';
 
 import Planet from './planet';
