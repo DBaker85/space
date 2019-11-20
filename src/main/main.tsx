@@ -46,7 +46,8 @@ const Main: FunctionComponent = () => {
       const mappedPlanets = data.neo.objects.map((object: any) => ({
         ...object,
         ...{
-          orbit: random(-40, 40, 1),
+          orbit: random(1, 75, 1),
+          orbit2: random(1, 75, 1),
           type: random(0, 8, 1),
           color: random(0, css.planetColors.length - 1, 1)
         }

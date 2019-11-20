@@ -8,5 +8,6 @@ export const planetTypes = gql`
     type: Float
     color: String
     orbit: Float
+    orbit2: Float
   }
 `;

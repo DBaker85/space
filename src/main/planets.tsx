@@ -22,6 +22,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
       planets @client {
         size
         orbit
+        orbit2
         type
         color
         isLargest
@@ -109,6 +110,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
             object: {
               size: number;
               orbit: number;
+              orbit2: number;
               isLargest: boolean;
               color: number;
               type: number;
@@ -125,7 +127,9 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                   handleClick(object.isLargest, index, object.size)
                 }
                 style={{
-                  transform: `translateX(${object.orbit}vw)`
+                  left: `${object.orbit}vw`,
+                  top: `${object.orbit2}vh`,
+                  zIndex: object.isLargest ? 10 : 2
                 }}
                 key={`planet-${uid(3)}`}
                 className={styles['planets']}

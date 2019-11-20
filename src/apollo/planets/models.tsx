@@ -3,6 +3,7 @@ export interface Planet {
   type: number;
   color: string;
   orbit: number;
+  orbit2: number;
 }
 
 export interface PlanetState {

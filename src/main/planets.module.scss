@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  align-items: center;
+  position: relative;
 }
 
 .help-text {
@@ -14,6 +14,9 @@
 }
 
 .planets {
+  position: absolute;
+  top: 0;
+  left: 0;
   &:hover {
     .help-text {
       opacity: 1;
