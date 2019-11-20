@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-// import Loadable from 'react-loadable';
+import Loadable from 'react-loadable';
 import { gsap, MotionPathPlugin, random } from 'gsap/all';
 
 import { usePlanetState } from '../apollo/planets/cacheOperations';
@@ -18,7 +18,13 @@ gsap.registerPlugin(MotionPathPlugin);
 //   loading: () => null
 // });
 
-const scanDelay = 4;
+// TODO: delegate to idlecallback
+const LazyContent = Loadable({
+  loader: () => import('./content/about-me'),
+  loading: () => null
+});
+
+const scanDelay = 2;
 
 const Main: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
@@ -40,7 +46,7 @@ const Main: FunctionComponent = () => {
       const mappedPlanets = data.neo.objects.map((object: any) => ({
         ...object,
         ...{
-          orbit: `${random(-40, 40, 1)}vw`,
+          orbit: random(-40, 40, 1),
           type: random(0, 8, 1),
           color: random(0, css.planetColors.length - 1, 1)
         }
@@ -61,6 +67,7 @@ const Main: FunctionComponent = () => {
           <Planets scanDelay={scanDelay} />
         </Fragment>
       )}
+      <LazyContent />
     </Fragment>
   );
 };

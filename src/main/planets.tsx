@@ -1,20 +1,14 @@
-import React, {
-  FunctionComponent,
-  useRef,
-  useEffect,
-  Fragment,
-  useState
-} from 'react';
-import { uid, randomNegative } from '../shared/utils/utils';
+import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-
 import { gsap, MotionPathPlugin, random } from 'gsap/all';
+
+import { uid, randomNegative } from '../shared/utils/utils';
+import { useContentState } from '../apollo/content/cacheOperations';
 
 import Planet from './planet';
 import styles from './planets.module.scss';
 import Scanner from '../shared/scanner/scanner';
-import AboutME from './about-me/about-me';
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -35,22 +29,40 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     }
   `) as any;
 
+  const setContent = useContentState();
+
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
-
-  const [zoomed, setZoomed] = useState(false);
+  // const zoomTimeline = gsap.timeline({ paused: true });
 
   // TODO: handle analytics
-  const handleLargestClick = (isLargest: boolean, planetIndex: number) =>
-    isLargest ? setZoomed(true) : null;
-
+  const handleClick = (
+    isLargest: boolean,
+    planetIndex: number,
+    size: number
+  ) => {
+    // if (isLargest) {
+    //   zoomTimeline
+    //     .to(planetWrappers.current as any, {
+    //       scale: `1vh`,
+    //       duration: 1
+    //     })
+    //     .to(planetWrappers.current[planetIndex] as any, {
+    //       scale: `${100 / size}vh`,
+    //       duration: 1
+    //       // onComplete: ()=>{
+    //       //   setZoomed(true)
+    //       // }
+    //     })
+    //     .play();
+    // }
+    setContent(true, 'about');
+  };
   useEffect(() => {
     // let floatAnimations: GSAPStatic.Tween[];
     if (data) {
-      console.log('any data', data);
       if (data.planets.length > 0) {
-        console.log('planets', data);
         planetWrappers.current = planetWrappers.current.slice(
           0,
           data.planets.length
@@ -74,7 +86,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
               ]
             },
             ease: 'none',
-            immediateRender: true,
             duration: random(15, 20, 1),
             repeat: -1
           });
@@ -110,9 +121,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
             return (
               <div
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
-                onClick={() => handleLargestClick(object.isLargest, index)}
+                onClick={() =>
+                  handleClick(object.isLargest, index, object.size)
+                }
                 style={{
-                  transform: `translateX(${object.orbit})`
+                  transform: `translateX(${object.orbit}vw)`
                 }}
                 key={`planet-${uid(3)}`}
                 className={styles['planets']}
@@ -130,10 +143,12 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                       ((planets.current[index] as any) = el)
                     }
                   />
+
                   <Scanner
                     startDelay={(scanDelay / data.planets.length) * index}
                     isVisible={object.isLargest}
                   />
+
                   {object.isLargest && (
                     <div
                       className={styles['help-text']}
@@ -147,8 +162,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
             );
           }
         )}
-        {/* TODO popup text, zoom planet animation, overlay, reomve scanners */}
-        {zoomed && <AboutME />}
       </div>
     </Fragment>
   ) : null;
