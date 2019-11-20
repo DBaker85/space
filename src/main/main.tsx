@@ -7,7 +7,7 @@ import { gsap, MotionPathPlugin, random } from 'gsap/all';
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 import Planets from './planets';
 import Hud from './hud/hud';
-import Content from './content/about-me';
+import Content from './content/content';
 
 import { cssConstants as css } from '../shared/constants';
 

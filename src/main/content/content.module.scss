@@ -1,6 +1,6 @@
 @import '../../scss/variables';
 
-.about-me {
+.content {
   height: 40vh;
   width: 60vw;
   display: flex;
@@ -10,7 +10,24 @@
   padding: 40px;
   background-color: $color-gray-dark;
   animation: enter 1s ease-in-out;
+  border-radius: 0 10px 10px 0;
   z-index: 20;
+  .title {
+    flex: 0 0 5vw;
+    padding-right: 30px;
+  }
+  .links {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    div {
+      display: flex;
+      flex-direction: row;
+      svg {
+        padding: 10px;
+      }
+    }
+  }
 }
 
 @keyframes enter {

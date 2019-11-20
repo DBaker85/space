@@ -64,3 +64,32 @@ h4 {
 }
 // min - 1.125em
 // max - 1.125em
+
+// Text modifiers
+
+.text-title {
+  font-family: $font-family-cursive;
+  color: $color-header;
+  margin-bottom: 20px;
+}
+.text-large {
+  @include fluid-type(
+    $fluid-min,
+    $fluid-max,
+    $base-font-size * 1.375,
+    $base-font-size * 1.75
+  );
+}
+// min - 1.625em
+// max - 2.25em
+
+.text-medium {
+  @include fluid-type(
+    $fluid-min,
+    $fluid-max,
+    $base-font-size * 1.375,
+    $base-font-size * 1.75
+  );
+}
+// min - 1.375em
+// max - 1.75em

@@ -5,7 +5,7 @@ import CodepenIcon from '../../icons/codepen-icon';
 import GithubIcon from '../../icons/github-icon';
 import LinkedInIcon from '../../icons/linkedin-icon';
 
-import styles from './about-me.module.scss';
+import styles from './content.module.scss';
 
 const AboutME: FunctionComponent = () => {
   const [showAboutMe, setShowAboutMe] = useState(false);
@@ -21,7 +21,6 @@ const AboutME: FunctionComponent = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       if (data.content.active) {
         switch (data.content.type) {
           case 'about':
@@ -38,17 +37,29 @@ const AboutME: FunctionComponent = () => {
   if (loading) return null;
   // TODO: handle error state
   if (error) return null;
-
+  // TODO: about this site
+  // TODO: easter egg?
   if (showAboutMe) {
     return (
-      <div className={styles['about-me']}>
-        <div>
-          I am a frontend developer who loves performance, electronics and
-          coding in general.
+      <div className={styles['content']}>
+        <div className={`${styles['title']} text-large text-title`}>
+          About me
         </div>
-        <CodepenIcon />
-        <GithubIcon />
-        <LinkedInIcon />
+        <div className={styles['text-holder']}>
+          <div className={`${styles['sub-title']} text-medium`}>
+            I am a frontend developer who loves performance, electronics and
+            CSS.
+          </div>
+          <div className={styles['links']}>
+            Find out more about me:
+            <div>
+              {/* TODO nice icons plus links */}
+              <CodepenIcon />
+              <GithubIcon />
+              <LinkedInIcon />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

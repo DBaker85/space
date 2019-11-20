@@ -48,6 +48,8 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     planetIndex: number,
     size: number
   ) => {
+    // TODO: About this site
+    // TODO: easter eggs
     if (isLargest) {
       analyticsEvent({
         category: eventCategories.user,
@@ -145,7 +147,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                   <Planet
                     size={object.size + 'vh'}
                     color={object.color}
-                    type={object.size}
+                    type={object.type}
                     inputRef={(el: any) =>
                       ((planets.current[index] as any) = el)
                     }
