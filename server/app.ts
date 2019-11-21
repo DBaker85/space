@@ -6,13 +6,13 @@ import graphqlHTTP from 'koa-graphql';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
-import { createSecureServer, constants } from 'http2';
+import { constants } from 'http2';
 
 import { Db, MongoClient } from 'mongodb';
 import chalk from 'chalk';
 
 import { resolve } from 'path';
-import { readFileSync, readJSONSync } from 'fs-extra';
+import { readJSONSync } from 'fs-extra';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
@@ -22,7 +22,7 @@ import { getInitialFiles } from './utils/getInitialFiles';
 import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
-const mongo = '';
+const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 
