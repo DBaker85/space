@@ -65,7 +65,7 @@ const Notifications: FunctionComponent = () => {
       setNetworkStatus(onlineStatus);
       setTimeout(() => showNotification(false), 5000);
     }
-  }, [data]);
+  }, [data, notification]);
 
   if (loading) return null;
   if (error) return null;
