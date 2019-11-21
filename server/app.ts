@@ -6,13 +6,13 @@ import graphqlHTTP from 'koa-graphql';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
-import { createSecureServer, constants } from 'http2';
+import { constants } from 'http2';
 
 import { Db, MongoClient } from 'mongodb';
 import chalk from 'chalk';
 
 import { resolve } from 'path';
-import { readFileSync, readJSONSync } from 'fs-extra';
+import { readJSONSync } from 'fs-extra';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
