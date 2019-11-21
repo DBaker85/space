@@ -22,7 +22,7 @@ import { getInitialFiles } from './utils/getInitialFiles';
 import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
-const mongo = 'mongodb://space-admin:spaceDB12!@ds018839.mlab.com:18839';
+const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 
