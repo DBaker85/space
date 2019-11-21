@@ -10,6 +10,11 @@ const LazyStarfield = Loadable({
   loading: () => null
 });
 
+const LazyNotifications = Loadable({
+  loader: () => import('./shared/notifications/notifications'),
+  loading: () => null
+});
+
 const LazyNetworkStatus = Loadable({
   loader: () => import('./shared/utils/network-status'),
   loading: () => null
@@ -19,6 +24,7 @@ const App: FunctionComponent = () => {
   return (
     <Fragment>
       <LazyStarfield />
+      <LazyNotifications />
       <LazyNetworkStatus />
       <div className={styles.content}>
         <BrowserRouter>

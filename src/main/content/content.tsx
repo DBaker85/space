@@ -7,9 +7,12 @@ import LinkedInIcon from '../../icons/linkedin-icon';
 
 import styles from './content.module.scss';
 import { cssConstants as css } from '../../shared/constants';
+import { useContentState } from '../../apollo/content/cacheOperations';
 
 const AboutME: FunctionComponent = () => {
   const [showAboutMe, setShowAboutMe] = useState(false);
+
+  const setContent = useContentState();
 
   const { loading, error, data } = useQuery(gql`
     {
@@ -21,7 +24,7 @@ const AboutME: FunctionComponent = () => {
   `) as any;
 
   const handleClick = () => {
-    setShowAboutMe(false);
+    setContent(false, 'about');
   };
 
   useEffect(() => {
@@ -35,6 +38,9 @@ const AboutME: FunctionComponent = () => {
           default:
             break;
         }
+      }
+      if (!data.content.active) {
+        setShowAboutMe(false);
       }
     }
   }, [data, showAboutMe]);
