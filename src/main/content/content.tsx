@@ -6,6 +6,7 @@ import GithubIcon from '../../icons/github-icon';
 import LinkedInIcon from '../../icons/linkedin-icon';
 
 import styles from './content.module.scss';
+import { cssConstants as css } from '../../shared/constants';
 
 const AboutME: FunctionComponent = () => {
   const [showAboutMe, setShowAboutMe] = useState(false);
@@ -18,6 +19,10 @@ const AboutME: FunctionComponent = () => {
       }
     }
   `) as any;
+
+  const handleClick = () => {
+    setShowAboutMe(false);
+  };
 
   useEffect(() => {
     if (data) {
@@ -41,7 +46,7 @@ const AboutME: FunctionComponent = () => {
   // TODO: easter egg?
   if (showAboutMe) {
     return (
-      <div className={styles['content']}>
+      <div className={styles['content']} onClick={handleClick}>
         <div className={`${styles['title']} text-large text-title`}>
           About me
         </div>
@@ -54,9 +59,9 @@ const AboutME: FunctionComponent = () => {
             Find out more about me:
             <div>
               {/* TODO nice icons plus links */}
-              <CodepenIcon />
-              <GithubIcon />
-              <LinkedInIcon />
+              <CodepenIcon color={css.colors.colorGray} />
+              <GithubIcon color={css.colors.colorGray} />
+              <LinkedInIcon color={css.colors.colorGray} />
             </div>
           </div>
         </div>
