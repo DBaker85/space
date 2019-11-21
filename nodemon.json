@@ -1,0 +1,7 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/**/node_modules", "src/**/"],
+  "verbose": false,
+
+  "ext": "js,json,ts,tsx"
+}

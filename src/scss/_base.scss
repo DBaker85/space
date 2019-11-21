@@ -1,0 +1,14 @@
+@import './variables';
+
+body {
+  background-color: $color-body;
+  * {
+    box-sizing: border-box;
+  }
+}
+
+#root {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}

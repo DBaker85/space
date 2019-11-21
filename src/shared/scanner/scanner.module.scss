@@ -1,0 +1,20 @@
+.scanner {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  img {
+    opacity: 0.7;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &:hover {
+    .inner-ring {
+      opacity: 0.5 !important;
+    }
+  }
+}
