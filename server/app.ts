@@ -76,6 +76,7 @@ app.use(
 // TODO: refactor to different file.
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
+  console.log('push request', ctx.request);
   if (
     !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
       ctx.request.url
