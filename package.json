@@ -76,7 +76,7 @@
   },
   "scripts": {
     "start": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
-    "build": "npm-run-all --parallel build:server build:frontend --serial generate:initial",
+    "build": "npm-run-all --parallel build:server build:frontend --parallel generate:initial copy:keys",
     "build:frontend": "npm-run-all --parallel generate:first-styles generate:variables --serial build:react",
     "start:dev-server": "nodemon --exec ts-node --project server/tsconfig.json  server/dev-server.ts",
     "start:server": "pm2 start ecosystem.config.js --env production",
@@ -89,7 +89,8 @@
     "eject": "react-scripts eject",
     "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
     "generate:variables": "ts-node --skip-project scripts/compile-variables.ts",
-    "generate:initial": "ts-node --skip-project scripts/compress-initial-files.ts"
+    "generate:initial": "ts-node --skip-project scripts/compress-initial-files.ts",
+    "copy:keys": "ts-node --skip-project scripts/move-keys.ts"
   },
   "proxy": "https://localhost:5055",
   "eslintConfig": {

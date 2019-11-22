@@ -5,7 +5,7 @@ import {
   flattenDiagnosticMessageText
 } from 'typescript';
 import { resolve } from 'path';
-import { readJSON, writeFileSync } from 'fs-extra';
+import { readJSON, writeFileSync, copy } from 'fs-extra';
 import chalk from 'chalk';
 
 const entryFile = resolve(__dirname, '..', 'server', 'dev-server.ts');
@@ -81,6 +81,7 @@ const BuildServer = () => {
 
       console.log(`✔️  Server Compiled
       `);
+
       process.exit(0);
     });
 };
