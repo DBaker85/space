@@ -28,6 +28,8 @@ const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 let db: Db;
 
+console.log(process.env);
+
 const mongoClient = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -44,8 +46,8 @@ const clientPath = resolve(__dirname, '..', 'build');
       db = mongoClient.db('space');
       break;
     } catch (err) {
-      assert.equal(null, err);
       console.log(chalk.red('Connection to database failed'));
+      console.log(err);
     }
   }
 })();
