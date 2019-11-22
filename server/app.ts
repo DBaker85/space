@@ -55,27 +55,27 @@ if (process.env.DEBUG) {
   console.log('Debug mode active');
   app.use(logger());
 }
-app.use(compress());
+// app.use(compress());
 
 // const fileList: PushManifest = readJSONSync(
 //   resolve(__dirname, '..', 'build', 'push_manifest.json')
 // );
 // const initialFiles = getInitialFiles(fileList.initial);
 
-const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
-const indexStat = fstatSync(indexFd);
+// const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
+// const indexStat = fstatSync(indexFd);
 
-app.use(
-  mount(
-    '/graphql',
-    graphqlHTTP({
-      schema: buildSchema(typeDefs),
-      rootValue: resolvers,
-      graphiql: true,
-      context: () => ({ db })
-    })
-  )
-);
+// app.use(
+//   mount(
+//     '/graphql',
+//     graphqlHTTP({
+//       schema: buildSchema(typeDefs),
+//       rootValue: resolvers,
+//       graphiql: true,
+//       context: () => ({ db })
+//     })
+//   )
+// );
 
 // TODO: check if this regex can be better
 // TODO: refactor to different file.
@@ -118,6 +118,9 @@ app.use(
 //   }
 // });
 
-app.use(mount('/', serve(clientPath)));
+// app.use(mount('/', serve(clientPath)));
+app.use(ctx => {
+  ctx.body = 'Hello Koa';
+});
 
 export { app };
