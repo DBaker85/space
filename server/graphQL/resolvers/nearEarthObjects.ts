@@ -42,8 +42,7 @@ export const nearEarthObjectsQueries = {
 
       jsonResp = (await response.json()) as ApiResponse;
       const { code, error } = jsonResp;
-      // FIXME: This is not working
-      if (code && code < 400 && !error && db) {
+      if (!code && !error && db) {
         db.collection('near-earth-objects').insertOne({
           ...{
             date: today
