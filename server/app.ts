@@ -3,6 +3,7 @@ import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
+import assert from 'assert';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
@@ -22,10 +23,9 @@ import { getInitialFiles } from './utils/getInitialFiles';
 import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
-const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839`;
+const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839/space`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
-
 let db: Db;
 
 const mongoClient = new MongoClient(MONGO_URL, {
@@ -44,6 +44,7 @@ const clientPath = resolve(__dirname, '..', 'build');
       db = mongoClient.db('space');
       break;
     } catch (err) {
+      assert.equal(null, err);
       console.log(chalk.red('Connection to database failed'));
     }
   }
