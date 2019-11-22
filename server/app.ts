@@ -3,6 +3,7 @@ import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
+import logger from 'koa-logger';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
@@ -50,6 +51,9 @@ const clientPath = resolve(__dirname, '..', 'build');
 })();
 
 const app = new Koa();
+if (process.env.DEBUG) {
+  app.use(logger());
+}
 app.use(compress());
 
 const fileList: PushManifest = readJSONSync(
@@ -76,7 +80,6 @@ app.use(
 // TODO: refactor to different file.
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
-  console.log('push request', ctx.request);
   if (
     !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
       ctx.request.url
