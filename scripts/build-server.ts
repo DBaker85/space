@@ -8,7 +8,7 @@ import { resolve } from 'path';
 import { readJSON, writeFileSync } from 'fs-extra';
 import chalk from 'chalk';
 
-const entryFile = resolve(__dirname, '..', 'server', 'server.ts');
+const entryFile = resolve(__dirname, '..', 'server', 'dev-server.ts');
 const tsConfig = resolve(__dirname, '..', 'server', 'tsconfig.json');
 
 let tsErrors = 0;

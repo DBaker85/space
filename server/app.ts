@@ -3,7 +3,6 @@ import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
-import assert from 'assert';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
@@ -27,8 +26,6 @@ const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 let db: Db;
-
-console.log(process.env);
 
 const mongoClient = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
