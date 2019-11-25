@@ -3,6 +3,7 @@ import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
+import logger from 'koa-logger';
 
 import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
@@ -22,10 +23,9 @@ import { getInitialFiles } from './utils/getInitialFiles';
 import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
-const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839`;
+const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839/space`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
-
 let db: Db;
 
 const mongoClient = new MongoClient(MONGO_URL, {
@@ -45,11 +45,16 @@ const clientPath = resolve(__dirname, '..', 'build');
       break;
     } catch (err) {
       console.log(chalk.red('Connection to database failed'));
+      console.log(err);
     }
   }
 })();
 
 const app = new Koa();
+if (process.env.DEBUG) {
+  console.log('Debug mode active');
+  app.use(logger());
+}
 app.use(compress());
 
 const fileList: PushManifest = readJSONSync(
@@ -97,7 +102,7 @@ app.use(async (ctx: Context, next) => {
           });
 
           pushStream.on('close', () => {
-            // console.log('push stream closed');
+            console.log('push stream closed');
           });
         }
       );
@@ -107,6 +112,7 @@ app.use(async (ctx: Context, next) => {
       'last-modified': indexStat.mtime.toUTCString(),
       'content-type': 'text/html'
     });
+    await next();
   } else {
     await next();
   }
