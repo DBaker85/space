@@ -77,11 +77,11 @@
     "name": "David Baker"
   },
   "scripts": {
-    "start": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
+    "start:local": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
     "build": "npm-run-all --parallel build:server build:frontend --parallel generate:initial",
     "build:frontend": "npm-run-all --parallel generate:first-styles generate:variables --serial build:react",
     "start:dev-server": "nodemon --exec ts-node --project server/tsconfig.json  server/dev-server.ts ",
-    "start:server": "pm2 start ecosystem.config.js --env production",
+    "start": "pm2 start ecosystem.config.js --env production",
     "start:react": "react-scripts start",
     "build:react": "react-app-rewired build",
     "build:server": "ts-node --skip-project scripts/build-server.ts",
