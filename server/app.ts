@@ -1,26 +1,26 @@
-import Koa, { Context } from 'koa';
+import Koa from 'koa';
 import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
 import logger from 'koa-logger';
 
-import { openSync, fstatSync } from 'fs-extra';
+// import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
-import { constants } from 'http2';
+// import { constants } from 'http2';
 
 import { Db, MongoClient } from 'mongodb';
 import chalk from 'chalk';
 
 import { resolve } from 'path';
-import { readJSONSync } from 'fs-extra';
+// import { readJSONSync } from 'fs-extra';
 
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
 
-import { getInitialFiles } from './utils/getInitialFiles';
+// import { getInitialFiles } from './utils/getInitialFiles';
 
-import { PushManifest } from './models/models';
+// import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
 const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839/space`;
@@ -57,13 +57,13 @@ if (process.env.DEBUG) {
 }
 app.use(compress());
 
-const fileList: PushManifest = readJSONSync(
-  resolve(__dirname, '..', 'build', 'push_manifest.json')
-);
-const initialFiles = getInitialFiles(fileList.initial);
+// const fileList: PushManifest = readJSONSync(
+//   resolve(__dirname, '..', 'build', 'push_manifest.json')
+// );
+// const initialFiles = getInitialFiles(fileList.initial);
 
-const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
-const indexStat = fstatSync(indexFd);
+// const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
+// const indexStat = fstatSync(indexFd);
 
 app.use(
   mount(
