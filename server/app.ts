@@ -1,13 +1,13 @@
-import Koa, { Context } from 'koa';
+import Koa from 'koa';
 import serve from 'koa-static';
 import compress from 'koa-compress';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
 import logger from 'koa-logger';
 
-import { openSync, fstatSync } from 'fs-extra';
+// import { openSync, fstatSync } from 'fs-extra';
 import { buildSchema } from 'graphql';
-import { constants } from 'http2';
+// import { constants } from 'http2';
 
 import { Db, MongoClient } from 'mongodb';
 import chalk from 'chalk';
@@ -18,7 +18,7 @@ import { readJSONSync } from 'fs-extra';
 import { resolvers } from './graphQL/resolvers';
 import { typeDefs } from './graphQL/typeDefs';
 
-import { getInitialFiles } from './utils/getInitialFiles';
+// import { getInitialFiles } from './utils/getInitialFiles';
 
 import { PushManifest } from './models/models';
 
@@ -60,10 +60,10 @@ app.use(compress());
 const fileList: PushManifest = readJSONSync(
   resolve(__dirname, '..', 'build', 'push_manifest.json')
 );
-const initialFiles = getInitialFiles(fileList.initial);
+// const initialFiles = getInitialFiles(fileList.initial);
 
-const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
-const indexStat = fstatSync(indexFd);
+// const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
+// const indexStat = fstatSync(indexFd);
 
 app.use(
   mount(
@@ -80,43 +80,43 @@ app.use(
 // // TODO: check if this regex can be better
 // // TODO: refactor to different file.
 // // FIXME: Fix CTX types
-app.use(async (ctx: Context, next) => {
-  if (
-    !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
-      ctx.request.url
-    )
-  ) {
-    initialFiles.forEach(file => {
-      (ctx.res as any).stream.pushStream(
-        { [constants.HTTP2_HEADER_PATH]: file.path },
-        (err: any, pushStream: any) => {
-          if (err) {
-            console.error('push stream callback error: ', err);
-            return;
-          }
-          if (pushStream.pushAllowed) {
-            pushStream.respondWithFD(file.file, file.fd);
-          }
-          pushStream.on('error', (err: any) => {
-            console.error('push stream error: ', err);
-          });
+// app.use(async (ctx: Context, next) => {
+//   if (
+//     !/([a-z0-9_\-]{1,5}:\/\/)?(([a-z0-9_\-]{1,}):([a-z0-9_\-]{1,})\@)?((www\.)|([a-z0-9_\-]{1,}\.)+)?([a-z0-9_\-]{3,})(\.[a-z]{2,4})(\/([a-z0-9_\-]{1,}\/)+)?([a-z0-9_\-]{1,})?(\.[a-z]{2,})?(\?)?(((\&)?[a-z0-9_\-]{1,}(\=[a-z0-9_\-]{1,})?)+)?/.test(
+//       ctx.request.url
+//     )
+//   ) {
+//     initialFiles.forEach(file => {
+//       (ctx.res as any).stream.pushStream(
+//         { [constants.HTTP2_HEADER_PATH]: file.path },
+//         (err: any, pushStream: any) => {
+//           if (err) {
+//             console.error('push stream callback error: ', err);
+//             return;
+//           }
+//           if (pushStream.pushAllowed) {
+//             pushStream.respondWithFD(file.file, file.fd);
+//           }
+//           pushStream.on('error', (err: any) => {
+//             console.error('push stream error: ', err);
+//           });
 
-          pushStream.on('close', () => {
-            console.log('push stream closed');
-          });
-        }
-      );
-    });
-    (ctx.res as any).stream.respondWithFD(indexFd, {
-      'content-length': indexStat.size,
-      'last-modified': indexStat.mtime.toUTCString(),
-      'content-type': 'text/html'
-    });
-    await next();
-  } else {
-    await next();
-  }
-});
+//           pushStream.on('close', () => {
+//             console.log('push stream closed');
+//           });
+//         }
+//       );
+//     });
+//     (ctx.res as any).stream.respondWithFD(indexFd, {
+//       'content-length': indexStat.size,
+//       'last-modified': indexStat.mtime.toUTCString(),
+//       'content-type': 'text/html'
+//     });
+//     await next();
+//   } else {
+//     await next();
+//   }
+// });
 
 app.use(mount('/', serve(clientPath)));
 
