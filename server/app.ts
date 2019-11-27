@@ -34,6 +34,7 @@ const mongoClient = new MongoClient(MONGO_URL, {
 });
 
 const clientPath = resolve(__dirname, '..', 'build');
+const wellKnownPath = resolve(__dirname, '..', 'build', '.well-known');
 
 (async () => {
   let i;
@@ -57,9 +58,9 @@ if (process.env.DEBUG) {
 }
 app.use(compress());
 
-const fileList: PushManifest = readJSONSync(
-  resolve(__dirname, '..', 'build', 'push_manifest.json')
-);
+// const fileList: PushManifest = readJSONSync(
+//   resolve(__dirname, '..', 'build', 'push_manifest.json')
+// );
 // const initialFiles = getInitialFiles(fileList.initial);
 
 // const indexFd = openSync(resolve(__dirname, '..', 'build', 'index.html'), 'r');
@@ -119,5 +120,6 @@ app.use(
 // });
 
 app.use(mount('/', serve(clientPath)));
+app.use(mount('/.well-known/', serve(wellKnownPath)));
 
 export { app };
