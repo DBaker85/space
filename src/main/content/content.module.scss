@@ -1,8 +1,9 @@
 @import '../../scss/variables';
 
 .content {
-  height: 40vh;
-  width: 60vw;
+  min-height: 40vh;
+  width: 90vw;
+  max-width: 1024px;
   display: flex;
   position: fixed;
   top: 30vh;
