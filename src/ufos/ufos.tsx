@@ -8,12 +8,24 @@ import styles from './ufos.module.scss';
 import rocket2 from '../assets/images/rocket/color2.svg';
 import rocket1 from '../assets/images/rocket/color.svg';
 import flameIcon from '../assets/images/rocket/fire.svg';
+import {
+  analyticsEvent,
+  eventActions,
+  eventCategories
+} from '../shared/analytics/events';
 
 const Ufos: FunctionComponent = () => {
   const rocketEl = useRef(null);
   const rocketEl2 = useRef(null);
   const flameEl = useRef(null);
   const flameEl2 = useRef(null);
+
+  const handleClick = () => {
+    analyticsEvent({
+      action: eventActions.clicked('rocket'),
+      category: eventCategories.user
+    });
+  };
 
   useEffect(() => {
     //
@@ -75,6 +87,7 @@ const Ufos: FunctionComponent = () => {
       <div
         className={`${styles['rocket-holder']} ${styles['type1']}`}
         ref={rocketEl}
+        onClick={handleClick}
       >
         <Scanner startDelay={0} isVisible={true} />
         <img src={rocket2} className={styles['rocket']} alt=""></img>
