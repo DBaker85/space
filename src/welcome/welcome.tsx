@@ -53,7 +53,10 @@ const Welcome: FunctionComponent<WelcomeProps> = ({ history }) => {
     launchTimeline
       .set(flameEl.current as any, { rotation: 180 })
       .to(launchTextEl.current as any, 0.3, { opacity: 0 })
-      .to(launchButtonEl.current as any, 0.3, { 'box-shadow': '0', padding: 0 })
+      .to(launchButtonEl.current as any, 0.3, {
+        boxShadow: '0px 0px 0 0 rgba(0, 0, 0, 0)',
+        padding: 0
+      })
       .to(
         launchButtonEl.current as any,
         1,

@@ -64,7 +64,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     }
   };
   useEffect(() => {
-    // let floatAnimations: GSAPStatic.Tween[];
+    let floatAnimations: GSAPStatic.Tween[];
     if (data) {
       if (data.planets.length > 0) {
         planetWrappers.current = planetWrappers.current.slice(
@@ -97,9 +97,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
       }
     }
     // cleanup
-    // return () => {
-    //   floatAnimations.forEach(animation => animation.kill());
-    // };
+    return () => {
+      if (floatAnimations && floatAnimations.length > 0) {
+        floatAnimations.forEach(animation => animation.kill());
+      }
+    };
   });
 
   if (loading) return null;

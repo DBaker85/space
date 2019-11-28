@@ -33,7 +33,8 @@ const NetworkStatus: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    return function cleanup() {
+    // cleanup
+    return () => {
       window.removeEventListener('online', handleConnectionChange);
       window.removeEventListener('offline', handleConnectionChange);
     };
