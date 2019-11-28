@@ -79,6 +79,7 @@ const Ufos: FunctionComponent = () => {
       duration: random(15, 20, 1),
       repeat: -1
     });
+    // FIXME: remove this
     MotionPathHelper.create(element.current);
   };
 
