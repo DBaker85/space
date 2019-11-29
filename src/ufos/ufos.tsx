@@ -20,16 +20,16 @@ const Ufos: FunctionComponent = () => {
   const flameEl = useRef(null);
   const flameEl2 = useRef(null);
 
-  const handleClick = () => {
-    console.log('clicked rocky');
+  const handleClick = (type: number) => {
+    console.log(`clicked rocket ${type}`);
     analyticsEvent({
-      action: eventActions.clicked('rocket'),
+      action: eventActions.clicked(`rocket ${type}`),
       category: eventCategories.user
     });
   };
 
   useEffect(() => {
-    // generateShipMotion(rocketEl);
+    generateShipMotion(rocketEl);
   });
 
   const generateShipMotion = (element: any) => {
@@ -59,8 +59,7 @@ const Ufos: FunctionComponent = () => {
       },
       ease: 'power1',
 
-      duration: random(15, 20, 1),
-      repeat: -1
+      duration: random(15, 20, 1)
     });
     // FIXME: remove this
     MotionPathHelper.create(element.current);
@@ -71,7 +70,7 @@ const Ufos: FunctionComponent = () => {
       <div
         className={`${styles['rocket-holder']} ${styles['type1']}`}
         ref={rocketEl}
-        onClick={handleClick}
+        onClick={() => handleClick(1)}
       >
         <img src={rocket2} className={styles['rocket']} alt=""></img>
         <img
@@ -82,7 +81,10 @@ const Ufos: FunctionComponent = () => {
         ></img>
         <Scanner startDelay={0} isVisible={true} />
       </div>
-      <div className={`${styles['rocket-holder']} ${styles['type2']}`}>
+      <div
+        className={`${styles['rocket-holder']} ${styles['type2']}`}
+        onClick={() => handleClick(2)}
+      >
         <img
           src={rocket1}
           alt=""
