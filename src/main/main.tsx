@@ -1,23 +1,24 @@
 import React, { FunctionComponent, useEffect, Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-// import Loadable from 'react-loadable';
-import { gsap, MotionPathPlugin, random } from 'gsap/all';
+import Loadable from 'react-loadable';
+import { gsap, MotionPathPlugin, random, MotionPathHelper } from 'gsap/all';
 
 import { usePlanetState } from '../apollo/planets/cacheOperations';
 import Planets from './planets';
-import Hud from './hud/hud';
+// import Hud from './hud/hud';
 import Content from './content/content';
 
 import { cssConstants as css } from '../shared/constants';
 
 gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(MotionPathHelper);
 
 // TODO: delegate to idlecallback
-// const LazyUfos = Loadable({
-//   loader: () => import('../ufos/ufos'),
-//   loading: () => null
-// });
+const LazyUfos = Loadable({
+  loader: () => import('../ufos/ufos'),
+  loading: () => null
+});
 
 const scanDelay = 2;
 
@@ -57,13 +58,14 @@ const Main: FunctionComponent = () => {
 
   return (
     <Fragment>
-      {/* <LazyUfos /> */}
       {data && (
         <Fragment>
-          <Hud scanDelay={scanDelay} targets={1} />
+          {/* <Hud scanDelay={scanDelay} targets={1} /> */}
           <Planets scanDelay={scanDelay} />
+          <LazyUfos delay={scanDelay} />
         </Fragment>
       )}
+
       <Content />
     </Fragment>
   );

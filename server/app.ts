@@ -34,7 +34,6 @@ const mongoClient = new MongoClient(MONGO_URL, {
 });
 
 const clientPath = resolve(__dirname, '..', 'build');
-const wellKnownPath = resolve(__dirname, '..', 'build', '.well-known');
 
 (async () => {
   let i;
@@ -120,6 +119,5 @@ app.use(
 // });
 
 app.use(mount('/', serve(clientPath)));
-app.use(mount('/.well-known/', serve(wellKnownPath)));
 
 export { app };

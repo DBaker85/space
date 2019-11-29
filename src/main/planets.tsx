@@ -41,7 +41,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
-  // const zoomTimeline = gsap.timeline({ paused: true });
 
   const handleClick = (
     isLargest: boolean,
@@ -59,12 +58,12 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     } else {
       analyticsEvent({
         category: eventCategories.user,
-        action: eventActions.clicked(`planet ${planetIndex} of size ${size}`)
+        action: eventActions.clicked(`random planet`)
       });
     }
   };
   useEffect(() => {
-    // let floatAnimations: GSAPStatic.Tween[];
+    let floatAnimations: GSAPStatic.Tween[];
     if (data) {
       if (data.planets.length > 0) {
         planetWrappers.current = planetWrappers.current.slice(
@@ -97,9 +96,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
       }
     }
     // cleanup
-    // return () => {
-    //   floatAnimations.forEach(animation => animation.kill());
-    // };
+    return () => {
+      if (floatAnimations && floatAnimations.length > 0) {
+        floatAnimations.forEach(animation => animation.kill());
+      }
+    };
   });
 
   if (loading) return null;

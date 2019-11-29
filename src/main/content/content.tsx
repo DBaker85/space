@@ -52,7 +52,13 @@ const AboutME: FunctionComponent = () => {
   // TODO: easter egg?
   if (showAboutMe) {
     return (
-      <div className={styles['content']} onClick={handleClick}>
+      <div className={styles['content']}>
+        <div
+          className={`${styles['close']} text-medium text-title clickable`}
+          onClick={handleClick}
+        >
+          X
+        </div>
         <div className={`${styles['title']} text-large text-title`}>
           About me
         </div>
