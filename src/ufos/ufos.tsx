@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useRef, useEffect } from 'react';
+import React, {
+  FunctionComponent,
+  useRef,
+  useEffect,
+  MutableRefObject
+} from 'react';
 import { random } from 'gsap/all';
 import gsap from 'gsap';
 
@@ -44,8 +49,8 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
   const generateShipMotion = (type: number) => {
     let travelLength = 0;
     let travelHeight = 0;
-    let element;
-    let flame;
+    let element: MutableRefObject<null>;
+    let flame: MutableRefObject<null>;
 
     if (type === 2) {
       element = rocketEl2;
@@ -88,6 +93,9 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
       repeat: 0,
       duration: random(15, 20, 1),
       onComplete: () => {
+        gsap.set(element.current as any, {
+          opacity: 0
+        });
         activeFlameAnim.kill();
         activeRocketAnim.kill();
         setTimeout(
