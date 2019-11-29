@@ -29,7 +29,7 @@ const Ufos: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    generateShipMotion(rocketEl);
+    // generateShipMotion(rocketEl);
   });
 
   const generateShipMotion = (element: any) => {
@@ -38,7 +38,7 @@ const Ufos: FunctionComponent = () => {
 
     if (typeof window !== 'undefined') {
       travelLength = Math.round(window.innerWidth + 100);
-      travelHeight = Math.round(window.innerHeight);
+      travelHeight = Math.round(window.innerHeight) / 2;
     }
     gsap.set(element.current as any, {
       xPercent: -50,
@@ -48,8 +48,11 @@ const Ufos: FunctionComponent = () => {
     gsap.to(element.current as any, {
       motionPath: {
         path: [
-          { x: travelLength, y: random(travelHeight / 6, travelHeight / 3, 1) },
-          { x: travelLength, y: random(travelHeight / 2, travelHeight, 1) }
+          {
+            x: travelLength,
+            y: random(-travelHeight / 2, travelHeight / 2, 1)
+          },
+          { x: travelLength, y: random(-travelHeight, travelHeight, 1) }
         ],
         autoRotate: 90,
         curviness: 1
@@ -60,7 +63,7 @@ const Ufos: FunctionComponent = () => {
       repeat: -1
     });
     // FIXME: remove this
-    // MotionPathHelper.create(element.current);
+    MotionPathHelper.create(element.current);
   };
 
   return (
@@ -70,7 +73,6 @@ const Ufos: FunctionComponent = () => {
         ref={rocketEl}
         onClick={handleClick}
       >
-        <Scanner startDelay={0} isVisible={true} />
         <img src={rocket2} className={styles['rocket']} alt=""></img>
         <img
           alt="flame"
@@ -78,9 +80,9 @@ const Ufos: FunctionComponent = () => {
           ref={flameEl}
           src={flameIcon}
         ></img>
+        <Scanner startDelay={0} isVisible={true} />
       </div>
       <div className={`${styles['rocket-holder']} ${styles['type2']}`}>
-        <Scanner startDelay={0} isVisible={true} />
         <img
           src={rocket1}
           alt=""
@@ -93,6 +95,7 @@ const Ufos: FunctionComponent = () => {
           ref={flameEl2}
           src={flameIcon}
         />
+        <Scanner startDelay={0} isVisible={true} />
       </div>
     </div>
   );

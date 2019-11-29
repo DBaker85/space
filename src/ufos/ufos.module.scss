@@ -7,12 +7,11 @@
 
   .rocket-holder {
     position: relative;
-    width: 40px;
-    height: 80px;
+    width: 2.5vw;
+    height: 7vw;
     .rocket {
       z-index: 2;
       top: 0;
-
       position: absolute;
       height: auto;
       width: 100%;
@@ -20,26 +19,25 @@
     .flame {
       position: absolute;
       transform: rotate(180deg);
-      top: 60px;
-      left: 4px;
+      top: 4vw;
       z-index: 1;
-      width: 35px;
+      width: 2.6vw;
       height: auto;
     }
   }
   .type1 {
-    height: 100px;
+    height: 7vw;
 
     .flame {
-      top: 48px;
+      top: 3vw;
     }
   }
 
   .type2 {
-    height: 115px;
+    height: 7vw;
 
     .flame {
-      top: 60px;
+      top: 3.9vw;
     }
   }
 }
