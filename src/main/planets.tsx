@@ -41,7 +41,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
-  // const zoomTimeline = gsap.timeline({ paused: true });
 
   const handleClick = (
     isLargest: boolean,
@@ -59,7 +58,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     } else {
       analyticsEvent({
         category: eventCategories.user,
-        action: eventActions.clicked(`planet ${planetIndex} of size ${size}`)
+        action: eventActions.clicked(`random planet`)
       });
     }
   };

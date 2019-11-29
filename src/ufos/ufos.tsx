@@ -28,7 +28,6 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
   let activeRocketAnim: GSAPStatic.Tween;
 
   const handleClick = (type: number) => {
-    console.log(`clicked rocket ${type}`);
     analyticsEvent({
       action: eventActions.clicked(`rocket ${type}`),
       category: eventCategories.user
@@ -43,7 +42,6 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
   });
 
   const generateShipMotion = (type: number) => {
-    console.log('motion', type);
     let travelLength = 0;
     let travelHeight = 0;
     let element;

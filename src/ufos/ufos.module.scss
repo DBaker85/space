@@ -10,7 +10,6 @@
     left: -5vw;
     width: 2.5vw;
     height: 7vw;
-    // opacity:0;
     .rocket {
       z-index: 2;
       top: 0;
@@ -22,8 +21,9 @@
       position: absolute;
       transform: rotate(180deg);
       top: 4vw;
+      left: calc(0.4vw - 2px);
       z-index: 1;
-      width: 2.6vw;
+      width: 1.8vw;
       height: auto;
     }
   }
@@ -39,7 +39,7 @@
     height: 7vw;
 
     .flame {
-      top: 3.9vw;
+      top: 3.8vw;
     }
   }
 }
