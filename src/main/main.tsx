@@ -62,7 +62,7 @@ const Main: FunctionComponent = () => {
         <Fragment>
           {/* <Hud scanDelay={scanDelay} targets={1} /> */}
           <Planets scanDelay={scanDelay} />
-          <LazyUfos />
+          <LazyUfos delay={scanDelay} />
         </Fragment>
       )}
 
