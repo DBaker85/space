@@ -3,12 +3,12 @@
   height: 100vh;
   position: fixed;
   display: flex;
+  align-items: center;
 
   .rocket-holder {
     position: relative;
-    width: 50px;
-    height: 100px;
-    // transform: rotate(90deg);
+    width: 40px;
+    height: 80px;
     .rocket {
       z-index: 2;
       top: 0;
@@ -21,7 +21,7 @@
       position: absolute;
       transform: rotate(180deg);
       top: 60px;
-      left: 7px;
+      left: 4px;
       z-index: 1;
       width: 35px;
       height: auto;
@@ -31,7 +31,7 @@
     height: 100px;
 
     .flame {
-      top: 55px;
+      top: 48px;
     }
   }
 
@@ -39,7 +39,7 @@
     height: 115px;
 
     .flame {
-      top: 75px;
+      top: 60px;
     }
   }
 }

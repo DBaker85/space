@@ -21,6 +21,7 @@ const Ufos: FunctionComponent = () => {
   const flameEl2 = useRef(null);
 
   const handleClick = () => {
+    console.log('clicked rocky');
     analyticsEvent({
       action: eventActions.clicked('rocket'),
       category: eventCategories.user
@@ -28,32 +29,16 @@ const Ufos: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    //
     generateShipMotion(rocketEl);
-    //   gsap.to(flameEl.current as any, 0.05, {
-    //     x: '+=2',
-    //     repeat: -1,
-    //     yoyo: true
-    //   });
-
-    //   gsap.to(flameEl2.current as any, 0.05, {
-    //     x: '+=2',
-    //     repeat: -1,
-    //     yoyo: true
-    //   });
   });
-
-  // Math.random() > 0.5 ? ship one, ship 2
-  // function that randomly chooses between a ship.
-  // random ship
-  // random path up or down, left right is same 4 steps at 25% each
-  // random timer
 
   const generateShipMotion = (element: any) => {
     let travelLength = 0;
+    let travelHeight = 0;
 
     if (typeof window !== 'undefined') {
-      travelLength = Math.round(window.innerWidth + 200);
+      travelLength = Math.round(window.innerWidth + 100);
+      travelHeight = Math.round(window.innerHeight);
     }
     gsap.set(element.current as any, {
       xPercent: -50,
@@ -63,16 +48,11 @@ const Ufos: FunctionComponent = () => {
     gsap.to(element.current as any, {
       motionPath: {
         path: [
-          { x: travelLength / 4, y: 0 },
-          { x: travelLength / 3, y: 10 },
-          {
-            x: travelLength / 2,
-            y: 0
-          },
-          { x: travelLength, y: -10 }
+          { x: travelLength, y: random(travelHeight / 6, travelHeight / 3, 1) },
+          { x: travelLength, y: random(travelHeight / 2, travelHeight, 1) }
         ],
         autoRotate: 90,
-        curviness: 2
+        curviness: 1
       },
       ease: 'power1',
 
@@ -80,7 +60,7 @@ const Ufos: FunctionComponent = () => {
       repeat: -1
     });
     // FIXME: remove this
-    MotionPathHelper.create(element.current);
+    // MotionPathHelper.create(element.current);
   };
 
   return (

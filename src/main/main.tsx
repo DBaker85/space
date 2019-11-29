@@ -58,13 +58,14 @@ const Main: FunctionComponent = () => {
 
   return (
     <Fragment>
-      <LazyUfos />
       {data && (
         <Fragment>
           {/* <Hud scanDelay={scanDelay} targets={1} /> */}
           <Planets scanDelay={scanDelay} />
+          <LazyUfos />
         </Fragment>
       )}
+
       <Content />
     </Fragment>
   );
