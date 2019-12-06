@@ -6,6 +6,11 @@ import Button from '../shared/elements/button';
 import styles from './notFoundPage.module.scss';
 
 import rocketColorIcon from '../assets/images/rocket/color.svg';
+import {
+  analyticsEvent,
+  eventActions,
+  eventCategories
+} from '../shared/analytics/events';
 
 interface NotFoundProps extends RouteComponentProps {}
 
@@ -15,6 +20,14 @@ const NotFoundPage: FunctionComponent<NotFoundProps> = ({
   history
 }) => {
   const rocketEl = useRef(null);
+
+  const handleClick = () => {
+    analyticsEvent({
+      action: eventActions.clicked('404 - Back home button'),
+      category: eventCategories.user
+    });
+    history.push('/main');
+  };
 
   useEffect(() => {
     gsap.to(rocketEl.current as any, {
@@ -44,7 +57,7 @@ const NotFoundPage: FunctionComponent<NotFoundProps> = ({
           Looks like we got lost in the{' '}
           <span className="text-title">{location.pathname}</span> sector
         </p>
-        <Button type="normal" onClick={() => history.push('/main')}>
+        <Button type="normal" onClick={handleClick}>
           Back to the main sector
         </Button>
       </div>
