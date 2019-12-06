@@ -4,13 +4,17 @@ import styles from './button.module.scss';
 
 interface ButtonProps {
   type?: 'normal' | 'round';
+  onClick?: () => void;
 }
 
 const Button: FunctionComponent<ButtonProps> = ({
   children,
-  type = 'normal'
+  type = 'normal',
+  onClick
 }) => (
-  <button className={`${styles.button} ${styles[type]}`}>{children}</button>
+  <button onClick={onClick} className={`${styles.button} ${styles[type]}`}>
+    {children}
+  </button>
 );
 
 export default Button;

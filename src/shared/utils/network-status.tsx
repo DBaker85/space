@@ -33,6 +33,8 @@ const NetworkStatus: FunctionComponent = () => {
   };
 
   useEffect(() => {
+    // TODO: Rename this or make more flexible
+    handleConnectionChange();
     // cleanup
     return () => {
       window.removeEventListener('online', handleConnectionChange);
