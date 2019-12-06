@@ -4,6 +4,7 @@
   "verbose": false,
   "ext": "js,json,ts,tsx",
   "env": {
-    "DEBUG": "true"
+    "DEBUG": "true",
+    "SERVER_PUSH": "true"
   }
 }

@@ -79,9 +79,8 @@ app.use(
 app.use(mount('/', serve(clientPath)));
 
 // FIXME: Fix CTX types
-
 app.use(async (ctx: Context, next) => {
-  if (process.env.H2) {
+  if (process.env.SERVER_PUSH) {
     initialFiles.forEach(file => {
       (ctx.res as any).stream.pushStream(
         { [constants.HTTP2_HEADER_PATH]: file.path },
