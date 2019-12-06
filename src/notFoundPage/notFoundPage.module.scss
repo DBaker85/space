@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  div {
+    padding: 5vw;
+  }
+  .rocket {
+    height: 100%;
+    width: auto;
+    position: relative;
+    z-index: 5;
+  }
+}

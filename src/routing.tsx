@@ -6,14 +6,16 @@ import { idleCallback } from './shared/utils/idleCallback';
 import { withRouteTracker } from './shared/analytics/analytics';
 import Loader from './shared/loader/loader';
 
-import NotFoundPage from './notFoundPage/notFoundPage';
-
 const LazyWelcome = Loadable({
   loader: () => import('./welcome/welcome'),
   loading: () => <Loader />
 });
 const LazyMain = Loadable({
   loader: () => import('./main/main'),
+  loading: () => <Loader />
+});
+const LazyNotFound = Loadable({
+  loader: () => import('./notFoundPage/notFoundPage'),
   loading: () => <Loader />
 });
 
@@ -31,7 +33,7 @@ const Routing: FunctionComponent = () => {
           return <TrackedLazyWelcome {...routeProps} />;
         }}
       />
-      <Route path="*" component={withRouteTracker(NotFoundPage as any)} />
+      <Route path="*" component={withRouteTracker(LazyNotFound as any)} />
     </Switch>
   );
 };
