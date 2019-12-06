@@ -55,7 +55,10 @@ const NotFoundPage: FunctionComponent<NotFoundProps> = ({
         <h1>Oops!</h1>
         <p>
           Looks like we got lost in the{' '}
-          <span className="text-title">{location.pathname}</span> sector
+          <span className="text-title">
+            {location.pathname.replace('/', '')}
+          </span>{' '}
+          sector
         </p>
         <Button type="normal" onClick={handleClick}>
           Back to the main sector
