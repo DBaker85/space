@@ -10,7 +10,6 @@ const fileList: PushManifest = readJSONSync(
   resolve(__dirname, '..', 'build', 'push_manifest.json')
 );
 
-// TODO: is this really the best way to do it?
 const compressInitialFiles = (files: ManifestFile[]) => {
   return files.map(file => {
     const fileContents = createReadStream(file.filePath);
