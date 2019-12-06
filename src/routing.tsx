@@ -2,10 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
+import { idleCallback } from './shared/utils/idleCallback';
 import { withRouteTracker } from './shared/analytics/analytics';
 import Loader from './shared/loader/loader';
 
-import { idleCallback } from './shared/utils/idleCallback';
+import NotFoundPage from './notFoundPage/notFoundPage';
 
 const LazyWelcome = Loadable({
   loader: () => import('./welcome/welcome'),
@@ -23,12 +24,14 @@ const Routing: FunctionComponent = () => {
       <Route path="/main" component={withRouteTracker(LazyMain as any)} />
       <Route
         path="/"
+        exact
         render={routeProps => {
           idleCallback(() => LazyMain.preload());
           const TrackedLazyWelcome = withRouteTracker(LazyWelcome);
           return <TrackedLazyWelcome {...routeProps} />;
         }}
       />
+      <Route path="*" component={withRouteTracker(NotFoundPage as any)} />
     </Switch>
   );
 };
