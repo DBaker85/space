@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import { random } from 'gsap/all';
 import gsap from 'gsap';
-import Scanner from '../shared/scanner/scanner';
 import styles from './ufos.module.scss';
 
 import rocket2 from '../assets/images/rocket/color2.svg';
@@ -119,7 +118,6 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
           ref={flameEl}
           src={flameIcon}
         ></img>
-        <Scanner startDelay={0} isVisible={true} />
       </div>
       <div
         className={`${styles['rocket-holder']} ${styles['type2']}`}
@@ -133,7 +131,6 @@ const Ufos: FunctionComponent<UfoProps> = ({ delay = 0 }) => {
           ref={flameEl2}
           src={flameIcon}
         />
-        <Scanner startDelay={0} isVisible={true} />
       </div>
     </div>
   );

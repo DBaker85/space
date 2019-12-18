@@ -47,9 +47,12 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
-  let planetCount = 0;
 
-  const handleClick = (planetIndex: number, size: number) => {
+  const handleClick = (
+    planetIndex: number,
+    size: number,
+    planetCount: number
+  ) => {
     // TODO: easter eggs
     switch (planetIndex) {
       case 0:
@@ -70,19 +73,17 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         analyticsEvent({
           category: eventCategories.user,
           action: eventActions.clicked(
-            `planet ${planetIndex} of ${planetCount - 2}`
+            `planet ${planetIndex} of ${planetCount}`
           )
         });
         break;
     }
   };
 
-  const handleDrag = (planetIndex: number) => {
+  const handleDrag = (planetIndex: number, planetCount: number) => {
     analyticsEvent({
       category: eventCategories.user,
-      action: eventActions.dragged(
-        `planet ${planetIndex} of ${planetCount - 2}`
-      )
+      action: eventActions.dragged(`planet ${planetIndex} of ${planetCount}`)
     });
   };
 
@@ -90,21 +91,22 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     let floatAnimations: GSAPTween[];
     if (data) {
       if (data.planets.length > 0) {
-        planetCount = data.planets.length;
         planetWrappers.current = planetWrappers.current.slice(
           0,
           data.planets.length
         );
         planets.current = planets.current.slice(0, data.planets.length);
-
+        planetWrappers.current.map((element, index) => {
+          Draggable.create(element, {
+            bounds: planetWrapperEL.current,
+            inertia: true,
+            onDragEnd: () => handleDrag(index, data.planets.length)
+          });
+        });
         // assign animations to array to allow for killing them if necessary
-        floatAnimations = planets.current.map((element, index) => {
+        planets.current.map(element => {
           const randomX = random(5, 10, 1);
           const randomY = random(10, 20, 1);
-          Draggable.create(element, {
-            inertia: true,
-            onDragEnd: () => handleDrag(index)
-          });
           return gsap.to(element, {
             motionPath: {
               path: [
@@ -137,7 +139,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
 
   return data.planets.length > 0 ? (
     <Fragment>
-      <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
+      <div
+        ref={planetWrapperEL}
+        id="container"
+        className={styles['planet-wrapper']}
+      >
         {data.planets.map(
           (
             object: {
@@ -158,7 +164,9 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
             return (
               <div
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
-                onClick={() => handleClick(index, object.size)}
+                onClick={() =>
+                  handleClick(index, object.size, data.planets.length)
+                }
                 style={{
                   left: `${object.orbit}vw`,
                   top: `${object.orbit2}vh`,
