@@ -1,8 +1,13 @@
 import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { gsap, MotionPathPlugin, random } from 'gsap/all';
-
+import {
+  gsap,
+  MotionPathPlugin,
+  random,
+  Draggable,
+  InertiaPlugin
+} from 'gsap/all';
 import { uid } from '../shared/utils/utils';
 import { useContentState } from '../apollo/content/cacheOperations';
 import {
@@ -16,6 +21,8 @@ import styles from './planets.module.scss';
 import Scanner from '../shared/scanner/scanner';
 
 gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(Draggable);
+gsap.registerPlugin(InertiaPlugin);
 
 interface MainProps {
   scanDelay: number;
@@ -42,7 +49,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planetWrapperEL = useRef(null);
 
   const handleClick = (planetIndex: number, size: number) => {
-    // TODO: About this site
     // TODO: easter eggs
     switch (planetIndex) {
       case 0:
@@ -78,9 +84,10 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         planets.current = planets.current.slice(0, data.planets.length);
 
         // assign animations to array to allow for killing them if necessary
-        planets.current.map(element => {
+        floatAnimations = planets.current.map(element => {
           const randomX = random(5, 10, 1);
           const randomY = random(10, 20, 1);
+          Draggable.create(element, { inertia: true });
           return gsap.to(element, {
             motionPath: {
               path: [

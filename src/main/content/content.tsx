@@ -86,7 +86,6 @@ const AboutME: FunctionComponent = () => {
   if (loading) return null;
   // TODO: handle error state
   if (error) return null;
-  // TODO: about this site
   // TODO: easter egg?
   if (showContent) {
     return (
