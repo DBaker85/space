@@ -1,4 +1,4 @@
-export type ContentType = 'about';
+export type ContentType = 'about' | 'tech';
 
 export interface ContentState {
   active: boolean;

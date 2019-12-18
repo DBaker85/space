@@ -24,7 +24,7 @@ const Scanner: FunctionComponent<ScannerProps> = ({
   startDelay = 0,
   isVisible = false
 }) => {
-  let innerRingRotate: GSAPStatic.Tween;
+  let innerRingRotate: GSAPTween;
   const innerEl = useRef(null);
   const ringEl = useRef(null);
   const wrapperEl = useRef(null);

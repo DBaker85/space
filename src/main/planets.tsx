@@ -63,7 +63,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
     }
   };
   useEffect(() => {
-    let floatAnimations: GSAPStatic.Tween[];
+    let floatAnimations: GSAPTween[];
     if (data) {
       if (data.planets.length > 0) {
         planetWrappers.current = planetWrappers.current.slice(
