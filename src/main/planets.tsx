@@ -96,7 +96,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
           data.planets.length
         );
         planets.current = planets.current.slice(0, data.planets.length);
-        planetWrappers.current.map((element, index) => {
+        planetWrappers.current.forEach((element, index) => {
           Draggable.create(element, {
             bounds: planetWrapperEL.current,
             inertia: true,
