@@ -9,7 +9,6 @@ interface ApiResponse extends NearEarthObjectList, ApiErrorResponse {}
 interface NearEarthObject {
   size: number;
   orbit: number;
-  isLargest: boolean;
 }
 
 interface QueryResponse {
@@ -84,8 +83,7 @@ export const nearEarthObjectsQueries = {
 
     const rangedObjects = objects.map(object => ({
       size: mapSizeRange(object.size, smallestSize, largestSize),
-      orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit),
-      isLargest: object.size === largestSize
+      orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit)
     }));
 
     neos = {

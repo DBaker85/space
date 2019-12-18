@@ -31,7 +31,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         rotation
         type
         color
-        isLargest
       }
     }
   `) as any;
@@ -42,14 +41,10 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
 
-  const handleClick = (
-    isLargest: boolean,
-    planetIndex: number,
-    size: number
-  ) => {
+  const handleClick = (planetIndex: number, size: number) => {
     // TODO: About this site
     // TODO: easter eggs
-    if (isLargest) {
+    if (true) {
       analyticsEvent({
         category: eventCategories.user,
         action: eventActions.clicked('about me')
@@ -129,9 +124,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
             return (
               <div
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
-                onClick={() =>
-                  handleClick(object.isLargest, index, object.size)
-                }
+                onClick={() => handleClick(index, object.size)}
                 style={{
                   left: `${object.orbit}vw`,
                   top: `${object.orbit2}vh`,

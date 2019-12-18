@@ -53,7 +53,7 @@ const AboutME: FunctionComponent = () => {
             </div>
           </Fragment>
         );
-      case 'about':
+      case 'tech':
         return (
           <Fragment>
             <div className={`${styles['title']} text-large text-title`}>
