@@ -47,6 +47,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planets = useRef([]);
   let planetWrappers = useRef([]);
   let planetWrapperEL = useRef(null);
+  let planetCount = 0;
 
   const handleClick = (planetIndex: number, size: number) => {
     // TODO: easter eggs
@@ -68,15 +69,28 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
       default:
         analyticsEvent({
           category: eventCategories.user,
-          action: eventActions.clicked(`random planet`)
+          action: eventActions.clicked(
+            `planet ${planetIndex} of ${planetCount - 2}`
+          )
         });
         break;
     }
   };
+
+  const handleDrag = (planetIndex: number) => {
+    analyticsEvent({
+      category: eventCategories.user,
+      action: eventActions.dragged(
+        `planet ${planetIndex} of ${planetCount - 2}`
+      )
+    });
+  };
+
   useEffect(() => {
     let floatAnimations: GSAPTween[];
     if (data) {
       if (data.planets.length > 0) {
+        planetCount = data.planets.length;
         planetWrappers.current = planetWrappers.current.slice(
           0,
           data.planets.length
@@ -84,10 +98,13 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         planets.current = planets.current.slice(0, data.planets.length);
 
         // assign animations to array to allow for killing them if necessary
-        floatAnimations = planets.current.map(element => {
+        floatAnimations = planets.current.map((element, index) => {
           const randomX = random(5, 10, 1);
           const randomY = random(10, 20, 1);
-          Draggable.create(element, { inertia: true });
+          Draggable.create(element, {
+            inertia: true,
+            onDragEnd: () => handleDrag(index)
+          });
           return gsap.to(element, {
             motionPath: {
               path: [
