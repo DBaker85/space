@@ -86,9 +86,11 @@ export const nearEarthObjectsQueries = {
       orbit: mapOrbitRange(object.orbit, smallestOrbit, largestOrbit)
     }));
 
+    const sortedObjects = rangedObjects.sort((a, b) => b.size - a.size);
+
     neos = {
       elements: element_count,
-      objects: rangedObjects
+      objects: sortedObjects
     };
 
     return neos;

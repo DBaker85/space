@@ -28,7 +28,6 @@ const Main: FunctionComponent = () => {
         elements
         objects {
           size
-          isLargest
         }
       }
     }

@@ -44,17 +44,27 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   const handleClick = (planetIndex: number, size: number) => {
     // TODO: About this site
     // TODO: easter eggs
-    if (true) {
-      analyticsEvent({
-        category: eventCategories.user,
-        action: eventActions.clicked('about me')
-      });
-      setContent(true, 'about');
-    } else {
-      analyticsEvent({
-        category: eventCategories.user,
-        action: eventActions.clicked(`random planet`)
-      });
+    switch (planetIndex) {
+      case 0:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked('about me')
+        });
+        setContent(true, 'about');
+        break;
+      case 1:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked('tech')
+        });
+        setContent(true, 'tech');
+        break;
+      default:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked(`random planet`)
+        });
+        break;
     }
   };
   useEffect(() => {
@@ -128,7 +138,7 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
                 style={{
                   left: `${object.orbit}vw`,
                   top: `${object.orbit2}vh`,
-                  zIndex: object.isLargest ? 10 : 2
+                  zIndex: index <= 1 ? 10 : 2
                 }}
                 key={`planet-${uid(3)}`}
                 className={styles['planets']}
@@ -149,15 +159,23 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
 
                   <Scanner
                     startDelay={(scanDelay / data.planets.length) * index}
-                    isVisible={object.isLargest}
+                    isVisible={index <= 1}
                   />
 
-                  {object.isLargest && (
+                  {index === 0 && (
                     <div
                       className={styles['help-text']}
                       style={{ transform: `rotate(${inversedRotation}deg)` }}
                     >
                       About me
+                    </div>
+                  )}
+                  {index === 1 && (
+                    <div
+                      className={styles['help-text']}
+                      style={{ transform: `rotate(${inversedRotation}deg)` }}
+                    >
+                      About this site
                     </div>
                   )}
                 </div>
