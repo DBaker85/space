@@ -31,7 +31,7 @@ const compressInitialFiles = (files: ManifestFile[]) =>
       writeStream.on('finish', () => {
         finishedfiles.push(index);
         if (finishedfiles.length === fileCount) {
-          resolve();
+          resolve(files);
         }
       });
       writeStream.on('error', () => {
@@ -62,4 +62,6 @@ const logStats = (files: ManifestFile[]) => {
   });
 };
 
-compressInitialFiles(fileList.initial).then(() => logStats(fileList.initial));
+compressInitialFiles(fileList.initial).then((files: ManifestFile[]) =>
+  logStats(files)
+);
