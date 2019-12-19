@@ -61,7 +61,7 @@ const AboutME: FunctionComponent = () => {
             </div>
             <div className={styles['text-holder']}>
               <div className={`${styles['sub-title']} text-medium`}>
-                Rejoice in the stack and the performance
+                This is built on React with grapQL and MongoDB
               </div>
             </div>
           </Fragment>
