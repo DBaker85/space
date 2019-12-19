@@ -38,14 +38,11 @@ const compressInitialFiles = (files: ManifestFile[]) =>
         reject();
       });
     });
-    console.log(`✔️  Initial files compressed
-      `);
   });
 
 const logStats = (files: ManifestFile[]) => {
+  console.log('File sizes after Gzip:');
   console.log('');
-  console.log(`${chalk.gray('---')} Gzipped file sizes ${chalk.gray('---')}
-  `);
   files.forEach(file => {
     const fd = openSync(`${file.filePath}`, 'r');
     const stat = fstatSync(fd);
@@ -60,6 +57,9 @@ const logStats = (files: ManifestFile[]) => {
       `\t ${filePath.join('/')}/${chalk.cyan(filename)}.gz`
     );
   });
+  console.log('');
+  console.log(`✔️  Initial files compressed
+      `);
 };
 
 compressInitialFiles(fileList.initial).then((files: ManifestFile[]) =>
