@@ -9,7 +9,8 @@ const port = process.env.PORT || localPort;
 
 const h2Options = {
   key: readFileSync(resolve(__dirname, 'keys', 'key.pem')),
-  cert: readFileSync(resolve(__dirname, 'keys', 'cert.pem'))
+  cert: readFileSync(resolve(__dirname, 'keys', 'cert.pem')),
+  allowHTTP1: true
 };
 
 createSecureServer(h2Options, app.callback()).listen(port, () =>

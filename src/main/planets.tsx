@@ -1,8 +1,13 @@
 import React, { FunctionComponent, useRef, useEffect, Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { gsap, MotionPathPlugin, random } from 'gsap/all';
-
+import {
+  gsap,
+  MotionPathPlugin,
+  random,
+  Draggable,
+  InertiaPlugin
+} from 'gsap/all';
 import { uid } from '../shared/utils/utils';
 import { useContentState } from '../apollo/content/cacheOperations';
 import {
@@ -16,6 +21,8 @@ import styles from './planets.module.scss';
 import Scanner from '../shared/scanner/scanner';
 
 gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(Draggable);
+gsap.registerPlugin(InertiaPlugin);
 
 interface MainProps {
   scanDelay: number;
@@ -31,7 +38,6 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
         rotation
         type
         color
-        isLargest
       }
     }
   `) as any;
@@ -43,27 +49,46 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
   let planetWrapperEL = useRef(null);
 
   const handleClick = (
-    isLargest: boolean,
     planetIndex: number,
-    size: number
+    size: number,
+    planetCount: number
   ) => {
-    // TODO: About this site
     // TODO: easter eggs
-    if (isLargest) {
-      analyticsEvent({
-        category: eventCategories.user,
-        action: eventActions.clicked('about me')
-      });
-      setContent(true, 'about');
-    } else {
-      analyticsEvent({
-        category: eventCategories.user,
-        action: eventActions.clicked(`random planet`)
-      });
+    switch (planetIndex) {
+      case 0:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked('about me')
+        });
+        setContent(true, 'about');
+        break;
+      case 1:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked('tech')
+        });
+        setContent(true, 'tech');
+        break;
+      default:
+        analyticsEvent({
+          category: eventCategories.user,
+          action: eventActions.clicked(
+            `planet ${planetIndex} of ${planetCount}`
+          )
+        });
+        break;
     }
   };
+
+  const handleDrag = (planetIndex: number, planetCount: number) => {
+    analyticsEvent({
+      category: eventCategories.user,
+      action: eventActions.dragged(`planet ${planetIndex} of ${planetCount}`)
+    });
+  };
+
   useEffect(() => {
-    let floatAnimations: GSAPStatic.Tween[];
+    let floatAnimations: GSAPTween[];
     if (data) {
       if (data.planets.length > 0) {
         planetWrappers.current = planetWrappers.current.slice(
@@ -71,7 +96,13 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
           data.planets.length
         );
         planets.current = planets.current.slice(0, data.planets.length);
-
+        planetWrappers.current.forEach((element, index) => {
+          Draggable.create(element, {
+            bounds: planetWrapperEL.current,
+            inertia: true,
+            onDragEnd: () => handleDrag(index, data.planets.length)
+          });
+        });
         // assign animations to array to allow for killing them if necessary
         planets.current.map(element => {
           const randomX = random(5, 10, 1);
@@ -108,7 +139,11 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
 
   return data.planets.length > 0 ? (
     <Fragment>
-      <div ref={planetWrapperEL} className={styles['planet-wrapper']}>
+      <div
+        ref={planetWrapperEL}
+        id="container"
+        className={styles['planet-wrapper']}
+      >
         {data.planets.map(
           (
             object: {
@@ -130,12 +165,12 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
               <div
                 ref={(el: any) => ((planetWrappers.current[index] as any) = el)}
                 onClick={() =>
-                  handleClick(object.isLargest, index, object.size)
+                  handleClick(index, object.size, data.planets.length)
                 }
                 style={{
                   left: `${object.orbit}vw`,
                   top: `${object.orbit2}vh`,
-                  zIndex: object.isLargest ? 10 : 2
+                  zIndex: index <= 1 ? 10 : 2
                 }}
                 key={`planet-${uid(3)}`}
                 className={styles['planets']}
@@ -156,15 +191,23 @@ const Main: FunctionComponent<MainProps> = ({ scanDelay = 0 }) => {
 
                   <Scanner
                     startDelay={(scanDelay / data.planets.length) * index}
-                    isVisible={object.isLargest}
+                    isVisible={index <= 1}
                   />
 
-                  {object.isLargest && (
+                  {index === 0 && (
                     <div
                       className={styles['help-text']}
                       style={{ transform: `rotate(${inversedRotation}deg)` }}
                     >
                       About me
+                    </div>
+                  )}
+                  {index === 1 && (
+                    <div
+                      className={styles['help-text']}
+                      style={{ transform: `rotate(${inversedRotation}deg)` }}
+                    >
+                      About this site
                     </div>
                   )}
                 </div>

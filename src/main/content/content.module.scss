@@ -12,7 +12,7 @@
   background-color: $color-gray-dark;
   animation: enter 1s ease-in-out;
   border-radius: 0 10px 10px 0;
-  z-index: 20;
+  z-index: 9999;
   .title {
     flex: 0 0 5vw;
     padding-right: 30px;

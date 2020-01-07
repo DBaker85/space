@@ -7,7 +7,7 @@ import { idleCallback } from '../utils/idleCallback';
 const config = [
   {
     trackingId: 'UA-141677330-1',
-    debug: process.env.NODE_ENV === 'production' ? false : true
+    debug: process.env.DEBUG ? true : false
   }
 ];
 
@@ -25,6 +25,8 @@ export const withRouteTracker = <P extends RouteComponentProps>(
     if (process.env.NODE_ENV === 'production') {
       ReactGA.set({ page, ...options });
       ReactGA.pageview(page);
+    } else {
+      console.log(`Analytics Page => ${page}`);
     }
   };
 
