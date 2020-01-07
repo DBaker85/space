@@ -44,10 +44,27 @@ const AboutME: FunctionComponent = () => {
               <div className={styles['links']}>
                 Find out more about me:
                 <div>
-                  {/* TODO nice icons plus links */}
-                  <CodepenIcon color={css.colors.colorGray} />
-                  <GithubIcon color={css.colors.colorGray} />
-                  <LinkedInIcon color={css.colors.colorGray} />
+                  <a
+                    href="https://codepen.io/DBaker85"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <CodepenIcon color={css.colors.colorGray} />
+                  </a>
+                  <a
+                    href="https://github.com/DBaker85"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <GithubIcon color={css.colors.colorGray} />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/davidbakerfront"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LinkedInIcon color={css.colors.colorGray} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -61,7 +78,24 @@ const AboutME: FunctionComponent = () => {
             </div>
             <div className={styles['text-holder']}>
               <div className={`${styles['sub-title']} text-medium`}>
-                This is built on React with grapQL and MongoDB
+                <p>
+                  This Progressive Web App is built on React, GraphQL, MongoDB
+                  and NodeJS. It is also running on Azure with a ton of custom
+                  build tasks
+                </p>
+              </div>
+              <div>
+                <p>
+                  Checkout the{' '}
+                  <a
+                    href="https://github.com/DBaker85/space"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    code
+                  </a>{' '}
+                  if you want to know more
+                </p>
               </div>
             </div>
           </Fragment>
