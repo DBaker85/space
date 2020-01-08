@@ -9,9 +9,9 @@ import gsap from 'gsap';
 
 import { random } from '../utils/utils';
 
-import inner from '../../assets/images/hud/scanner-inner.svg';
-import outer from '../../assets/images/hud/scanner-outer.svg';
-import ring from '../../assets/images/hud/scanner-ring.svg';
+import inner from '../../assets/images/scanner/scanner-inner.svg';
+import outer from '../../assets/images/scanner/scanner-outer.svg';
+import ring from '../../assets/images/scanner/scanner-ring.svg';
 
 import styles from './scanner.module.scss';
 
