@@ -91,6 +91,7 @@
     "test": "npm-run-all --serial test:backend test:frontend",
     "eject": "react-scripts eject",
     "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
+    "generate:loader": "ts-node --skip-project scripts/create-loading-text.ts",
     "generate:variables": "ts-node --skip-project scripts/compile-variables.ts",
     "generate:initial": "ts-node --skip-project scripts/compress-initial-files.ts",
     "copy:keys": "ts-node --skip-project scripts/move-keys.ts"

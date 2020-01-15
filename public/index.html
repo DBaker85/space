@@ -36,16 +36,7 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
-      <div class="fullscreen-loader-wrapper">
-        <div class="loader">
-          <div class="circle-wrapper">
-            <div class="circle-top"></div>
-            <div class="circle-right"></div>
-            <div class="circle-bottom"></div>
-            <div class="circle-left"></div>
-          </div>
-        </div>
-      </div>
+      <div id="loader"></div>
     </div>
     <!--
       This HTML file is a template.
@@ -58,4 +49,12 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script id="first-load">
+  const loadingTexts = ["Calibrating dilithium chamber","Stabilizing heisenberg magnaspanners","Initializing subspace analyzer","Correcting isolinear warp trajectory","Calibrating Altonian subspace detectors","Inverting quartz warp bubble","Compressing battle scanners"];
+  window.loadingTimeout = setInterval(
+    ()=>{
+      // console.log(loadingTexts[Math.floor(Math.random()*7)]);
+    }
+  , 1000)
+</script>
 </html>

@@ -14,7 +14,7 @@ const Generate = () => {
   const sassfile = resolve(__dirname, '..', 'src', 'scss', '_first-load.scss');
   readFile(indexFile, 'utf8').then(
     file => {
-      var rx = new RegExp('<style id="first-load"[\\d\\D]*?/style>', 'g');
+      const rx = new RegExp('<style id="first-load"[\\d\\D]*?/style>', 'g');
 
       render(
         {
