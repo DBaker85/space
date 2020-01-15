@@ -1,30 +1,46 @@
 import { readFile, writeFile } from 'fs-extra';
 import { resolve } from 'path';
 import { loadingText } from '../src/shared/loader/loading-texts';
-
+import { minify } from 'uglify-js';
 import chalk from 'chalk';
 
 const loader = `
-  const loadingTexts = ${JSON.stringify(loadingText)};
-  window.loadingTimeout = setInterval(
-    ()=>{
-      console.log(loadingTexts[Math.floor(Math.random()*${
-        loadingText.length
-      })]);
+  var loadingTexts = ${JSON.stringify(loadingText)};
+
+  function docReady(fn) {
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
     }
-  , 1000)
+  }
+
+  function textLoader() {
+    var loadingElement = document.getElementById("loader");
+    window.loadingTimeout = setInterval(
+      function(){
+       loadingElement.innerHTML = loadingTexts[Math.floor(Math.random()*${
+         loadingText.length
+       })];
+      }
+      , 2000)
+  }
+
+  docReady(textLoader)
 `;
+
+const minifiedLoaderCode = minify(loader);
 
 const Generate = () => {
   console.log(`${chalk.gray('---')} Generating loader ${chalk.gray('---')}
   `);
   const indexFile = resolve(__dirname, '..', 'public', 'index.html');
-
+  // FIXME: Add error handling
   readFile(indexFile, 'utf8').then(file => {
     const rx = new RegExp('<script id="first-load"[\\d\\D]*?/script>', 'g');
     const newFile = file.replace(
       rx,
-      `<script id="first-load">${loader}</script>`
+      `<script id="first-load">${minifiedLoaderCode.code}</script>`
     );
     writeFile(indexFile, newFile).then(
       () => {
