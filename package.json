@@ -58,7 +58,7 @@
     "@types/react-transition-group": "^2.9.2",
     "autoprefixer": "^9.7.1",
     "chalk": "^2.4.2",
-    "customize-cra": "^0.8.0",
+    "customize-cra": "^0.9.1",
     "husky": "^2.7.0",
     "json-ts": "^1.6.4",
     "node-sass": "^4.13.0",
@@ -72,15 +72,16 @@
     "sass-extract": "^2.1.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.5.2",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "uglify-js": "^3.7.5"
   },
   "author": {
     "name": "David Baker"
   },
   "scripts": {
-    "start:local": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
+    "start:local": "npm-run-all --parallel generate:first-styles generate:loader generate:variables --serial start:react",
     "build": "npm-run-all --parallel build:server build:frontend --parallel generate:initial",
-    "build:frontend": "npm-run-all --parallel generate:first-styles generate:variables --serial build:react",
+    "build:frontend": "npm-run-all --parallel generate:first-styles generate:loader generate:variables --serial build:react",
     "start:dev-server": "nodemon --exec ts-node --project server/tsconfig.json  server/dev-server.ts ",
     "start": "node dist/server.js",
     "start:react": "react-scripts start",
@@ -91,6 +92,7 @@
     "test": "npm-run-all --serial test:backend test:frontend",
     "eject": "react-scripts eject",
     "generate:first-styles": "ts-node --skip-project scripts/first-load-css.ts",
+    "generate:loader": "ts-node --skip-project scripts/create-loading-text.ts",
     "generate:variables": "ts-node --skip-project scripts/compile-variables.ts",
     "generate:initial": "ts-node --skip-project scripts/compress-initial-files.ts",
     "copy:keys": "ts-node --skip-project scripts/move-keys.ts"
