@@ -3,8 +3,6 @@
 @import './variables';
 @import './reset';
 @import './base';
-@import './fonts';
-@import '../shared/loader/loader.module';
 
 .fullscreen-loader-wrapper {
   height: 100vh;
@@ -13,4 +11,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: $font-family-sans;
+  font-size: $base-font-size;
+  line-height: 1.5;
+  color: $color-text;
 }
