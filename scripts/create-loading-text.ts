@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'fs-extra';
 import { resolve } from 'path';
-import { loadingText } from '../src/shared/loader/loading-texts';
+import { getRandomText, loadingText } from '../src/shared/loader/loading-texts';
 import { minify, MinifyOptions } from 'uglify-js';
 import chalk from 'chalk';
 
@@ -49,9 +49,7 @@ const Generate = minifiedLoaderCode => {
         )
         .replace(
           rxLoading,
-          `<div id="first-load-text">${
-            loadingText[Math.floor(Math.random() * loadingText.length)]
-          }...</div>`
+          `<div id="first-load-text">${getRandomText()}...</div>`
         );
       writeFile(indexFile, newFile).then(
         () => {

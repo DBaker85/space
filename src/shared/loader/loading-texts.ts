@@ -17,3 +17,6 @@ export const loadingText: String[] = [
   'Recalculating transwarp trajectory',
   'Power overwhelming'
 ];
+
+export const getRandomText = () =>
+  loadingText[Math.floor(Math.random() * loadingText.length)];

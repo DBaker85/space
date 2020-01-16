@@ -1,19 +1,15 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import styles from './loader.module.scss';
-import { loadingText } from './loading-texts';
+import { getRandomText } from './loading-texts';
 
 const Loader: FunctionComponent = () => {
-  const [loadingMsg, setLoadingMsg] = useState(
-    loadingText[Math.floor(Math.random() * loadingText.length)]
-  );
+  const [loadingMsg, setLoadingMsg] = useState(getRandomText());
 
   let LoadingInterval: any;
 
   useEffect(() => {
     LoadingInterval = setInterval(() => {
-      setLoadingMsg(
-        loadingText[Math.floor(Math.random() * loadingText.length)]
-      );
+      setLoadingMsg(getRandomText());
     }, 2000);
     return () => {
       if (LoadingInterval) {
