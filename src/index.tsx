@@ -9,6 +9,11 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { createApolloClient } from './apollo';
 
+// clear html loader timeout
+if (window.loadingTimeout) {
+  clearInterval(window.loadingTimeout);
+}
+
 createApolloClient.then(client => {
   ReactDOM.render(
     <ApolloProvider client={client}>

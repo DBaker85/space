@@ -4,7 +4,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Montserrat'),
-    url('./assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+    url('./assets/fonts/Montserrat/Montserrat-Regular.woff2') format('woff2');
 }
 
 // @font-face {
@@ -29,5 +29,5 @@
   font-weight: 400;
   font-display: swap;
   src: local('Bungee'), local('Bungee'),
-    url('./assets/fonts/Bungee/Bungee-Regular.ttf') format('truetype');
+    url('./assets/fonts/Bungee/Bungee-Regular.woff2') format('woff2');
 }
