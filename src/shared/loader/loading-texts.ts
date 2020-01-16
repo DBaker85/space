@@ -13,5 +13,6 @@ export const loadingText: String[] = [
   'Disentagling quantum matrix',
   'Engaging matroxian converters',
   'Priming transwarp nexus',
-  'Initializing technobabble engine'
+  'Initializing technobabble engine',
+  'Recalculating transwarp trajectory'
 ];

@@ -7,26 +7,19 @@ import chalk from 'chalk';
 const loader = `
   var loadingTexts = ${JSON.stringify(loadingText)};
 
-  function docReady(fn) {
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-        setTimeout(fn, 1);
-    } else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
-  }
-
   function textLoader() {
     var loadingElement = document.getElementById("loader");
     window.loadingTimeout = setInterval(
       function(){
+        if (loadingElement){
        loadingElement.innerHTML = loadingTexts[Math.floor(Math.random()*${
          loadingText.length
-       })+"..."];
-      }
+       })]+"...";
+      }}
       , 2000)
-  }
+  };
 
-  docReady(textLoader)
+  textLoader();
 `;
 
 const options: MinifyOptions = {
@@ -44,11 +37,25 @@ const Generate = () => {
   // FIXME: Add error handling
   readFile(indexFile, 'utf8').then(
     file => {
-      const rx = new RegExp('<script id="first-load"[\\d\\D]*?/script>', 'g');
-      const newFile = file.replace(
-        rx,
-        `<script id="first-load">${minifiedLoaderCode.code}</script>`
+      const rx = new RegExp(
+        '<script id="first-load-script"[\\d\\D]*?/script>',
+        'g'
       );
+      const rxLoading = new RegExp(
+        '<div id="first-load-text"[\\d\\D]*?/div>',
+        'g'
+      );
+      const newFile = file
+        .replace(
+          rx,
+          `<script id="first-load-script">${minifiedLoaderCode.code}</script>`
+        )
+        .replace(
+          rxLoading,
+          `<div id="first-load-text">${
+            loadingText[Math.floor(Math.random() * loadingText.length)]
+          }...</div>`
+        );
       writeFile(indexFile, newFile).then(
         () => {
           console.log(`✔️  Loader written to ${chalk.green('index.html')}`);
