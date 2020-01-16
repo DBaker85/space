@@ -14,5 +14,6 @@ export const loadingText: String[] = [
   'Engaging matroxian converters',
   'Priming transwarp nexus',
   'Initializing technobabble engine',
-  'Recalculating transwarp trajectory'
+  'Recalculating transwarp trajectory',
+  'Power overwhelming'
 ];

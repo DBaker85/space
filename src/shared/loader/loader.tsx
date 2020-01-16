@@ -1,18 +1,28 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import styles from './loader.module.scss';
+import { loadingText } from './loading-texts';
 
-// TODO: Add cool text to give user something to read
 const Loader: FunctionComponent = () => {
-  return (
-    <div className={styles['loader']}>
-      <div className={styles['circle-wrapper']}>
-        <div className={styles['circle-top']}></div>
-        <div className={styles['circle-right']}></div>
-        <div className={styles['circle-bottom']}></div>
-        <div className={styles['circle-left']}></div>
-      </div>
-    </div>
+  const [loadingMsg, setLoadingMsg] = useState(
+    loadingText[Math.floor(Math.random() * loadingText.length)]
   );
+
+  let LoadingInterval: any;
+
+  useEffect(() => {
+    LoadingInterval = setInterval(() => {
+      setLoadingMsg(
+        loadingText[Math.floor(Math.random() * loadingText.length)]
+      );
+    }, 2000);
+    return () => {
+      if (LoadingInterval) {
+        clearTimeout(LoadingInterval);
+      }
+    };
+  }, []);
+
+  return <div className={styles['loader']}>{loadingMsg}...</div>;
 };
 
 export default Loader;

@@ -79,7 +79,7 @@
     "name": "David Baker"
   },
   "scripts": {
-    "start:local": "npm-run-all --parallel generate:first-styles generate:variables --serial start:react",
+    "start:local": "npm-run-all --parallel generate:first-styles generate:loader generate:variables --serial start:react",
     "build": "npm-run-all --parallel build:server build:frontend --parallel generate:initial",
     "build:frontend": "npm-run-all --parallel generate:first-styles generate:loader generate:variables --serial build:react",
     "start:dev-server": "nodemon --exec ts-node --project server/tsconfig.json  server/dev-server.ts ",
