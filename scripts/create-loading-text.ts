@@ -8,7 +8,7 @@ const loader = `
   var loadingTexts = ${JSON.stringify(loadingText)};
 
   function textLoader() {
-    var loadingElement = document.getElementById("loader");
+    var loadingElement = document.getElementById("first-load-text");
     window.loadingTimeout = setInterval(
       function(){
         if (loadingElement){

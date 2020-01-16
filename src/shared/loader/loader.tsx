@@ -5,18 +5,17 @@ import { getRandomText } from './loading-texts';
 const Loader: FunctionComponent = () => {
   const [loadingMsg, setLoadingMsg] = useState(getRandomText());
 
-  let LoadingInterval: any;
+  let LoadingInterval = setInterval(() => {
+    setLoadingMsg(getRandomText());
+  }, 2000);
 
   useEffect(() => {
-    LoadingInterval = setInterval(() => {
-      setLoadingMsg(getRandomText());
-    }, 2000);
     return () => {
       if (LoadingInterval) {
         clearTimeout(LoadingInterval);
       }
     };
-  }, []);
+  });
 
   return <div className={styles['loader']}>{loadingMsg}...</div>;
 };
