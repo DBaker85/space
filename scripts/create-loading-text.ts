@@ -28,13 +28,10 @@ const options: MinifyOptions = {
   }
 };
 
-const minifiedLoaderCode = minify(loader, options);
-
-const Generate = () => {
+const Generate = minifiedLoaderCode => {
   console.log(`${chalk.gray('---')} Generating loader ${chalk.gray('---')}
   `);
   const indexFile = resolve(__dirname, '..', 'public', 'index.html');
-  // FIXME: Add error handling
   readFile(indexFile, 'utf8').then(
     file => {
       const rx = new RegExp(
@@ -48,7 +45,7 @@ const Generate = () => {
       const newFile = file
         .replace(
           rx,
-          `<script id="first-load-script">${minifiedLoaderCode.code}</script>`
+          `<script id="first-load-script">${minifiedLoaderCode}</script>`
         )
         .replace(
           rxLoading,
@@ -73,4 +70,13 @@ const Generate = () => {
   );
 };
 
-Generate();
+const minifiedLoaderCode = minify(loader, options);
+
+if (minifiedLoaderCode.error) {
+  console.log(minifiedLoaderCode.error);
+  console.log(
+    `❌  ${chalk.red('Error')} compressing loading script. See stacktrace above`
+  );
+} else {
+  Generate(minifiedLoaderCode.code);
+}
