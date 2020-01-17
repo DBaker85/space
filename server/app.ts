@@ -76,7 +76,8 @@ app.use(
   )
 );
 
-app.use(mount('/', serve(clientPath)));
+// Set another value for the index so that the next middleware can handle it.
+app.use(mount('/', serve(clientPath, { index: 'none' })));
 
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {

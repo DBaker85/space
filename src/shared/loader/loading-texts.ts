@@ -15,7 +15,8 @@ export const loadingText: String[] = [
   'Priming transwarp nexus',
   'Initializing technobabble engine',
   'Recalculating transwarp trajectory',
-  'Power overwhelming'
+  'Power overwhelming',
+  'Loading speed of light'
 ];
 
 export const getRandomText = () =>
