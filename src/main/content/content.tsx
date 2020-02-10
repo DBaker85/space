@@ -24,6 +24,7 @@ const AboutME: FunctionComponent = () => {
     }
   `) as any;
 
+  // TODO: Animate content out
   const handleClick = (type: ContentType) => {
     setContent(false, type);
   };

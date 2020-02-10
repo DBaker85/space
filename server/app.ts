@@ -59,6 +59,7 @@ if (process.env.DEBUG) {
 
 app.use(compress());
 
+// TODO: dockerize
 const fileList: PushManifest = readJSONSync(
   resolve(__dirname, '..', 'build', 'push_manifest.json')
 );
