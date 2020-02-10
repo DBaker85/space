@@ -20,7 +20,7 @@ const LazyUfos = Loadable({
 });
 
 const scanDelay = 2;
-
+// TODO: Instructions after a few minutes
 const Main: FunctionComponent = () => {
   const { loading, error, data } = useQuery(gql`
     {
