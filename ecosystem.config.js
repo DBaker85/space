@@ -13,7 +13,8 @@ module.exports = {
         PRODUCTION: false
       },
       env_production: {
-        PRODUCTION: true
+        PRODUCTION: true,
+        SERVER_PUSH: true
       }
     }
   ],
