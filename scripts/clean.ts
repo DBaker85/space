@@ -1,14 +1,17 @@
 import { emptyDir } from 'fs-extra';
 import { resolve } from 'path';
+import chalk from 'chalk';
 
 const clean = () => {
+  console.log(`${chalk.gray('---')} Cleaning previous build ${chalk.gray('---')}
+  `);
   emptyDir(resolve(__dirname, '..', 'dist'), function(err) {
-    console.log('cleaning previous build');
     if (err) {
-      console.log('An error occured while cleaning the folder.');
-      return console.error(err);
+      return console.log(
+        `❌  ${chalk.red('Error')} cleaning previous build: ${err}`
+      );
     }
-    console.log('Clean completed!');
+    console.log(`✔️  Previous build cleaned`);
   });
 };
 
