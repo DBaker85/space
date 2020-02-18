@@ -5,7 +5,7 @@ import { resolve } from 'path';
 
 const localPort = 5055;
 
-const port = process.env.PORT || localPort;
+const port = localPort;
 
 const h2Options = {
   key: readFileSync(resolve(__dirname, 'keys', 'www_davidbaker_space_key.pem')),
