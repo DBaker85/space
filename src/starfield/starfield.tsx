@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import Particles from 'react-particles-js';
+import Particles, { IParticlesParams } from 'react-particles-js';
 import clone from 'lodash.clonedeep';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo';
@@ -27,54 +27,54 @@ import { toHex } from '../shared/utils/hsl';
 const styles = {
   left: 0,
   top: 0,
-  position: 'fixed' as 'fixed',
+  position: 'fixed',
   zIndex: -1,
-  background: `linear-gradient(${css.colors.colorBlack} , ${css.colors.colorBlueDark})`
+  background: `linear-gradient(${css.colors.colorBlack} , ${css.colors.colorBlueDark})`,
 };
 
-const stars = {
+const stars: IParticlesParams = {
   particles: {
     number: {
       value: 200,
       max: 250,
-      density: { enable: true, value_area: 600 }
+      density: { enable: true, value_area: 600 },
     },
     color: { value: toHex(css.colors.colorWhite) },
     shape: {
-      type: 'circle' as 'circle',
+      type: 'circle',
       stroke: { width: 0, color: '#000000' },
       polygon: { nb_sides: 5 },
-      image: { src: 'img/github.svg', width: 100, height: 100 }
+      image: { src: 'img/github.svg', width: 100, height: 100 },
     },
     opacity: {
       value: 1,
       random: true,
-      anim: { enable: true, speed: 1, opacity_min: 0, sync: false }
+      anim: { enable: true, speed: 1, opacity_min: 0, sync: false },
     },
     size: {
       value: 2,
       random: true,
-      anim: { enable: false, speed: 4, size_min: 0.3, sync: false }
+      anim: { enable: false, speed: 4, size_min: 0.3, sync: false },
     },
     line_linked: {
       enable: false,
       distance: 150,
       color: '#ffffff',
       opacity: 0.4,
-      width: 1
+      width: 1,
     },
     move: {
       enable: true,
       speed: 1,
-      direction: 'none' as 'none',
+      direction: 'none',
       random: false,
       straight: false,
-      out_mode: 'out' as 'out',
+      out_mode: 'out',
       bounce: false,
-      attract: { enable: false, rotateX: 600, rotateY: 600 }
-    }
+      attract: { enable: false, rotateX: 600, rotateY: 600 },
+    },
   },
-  retina_detect: true
+  retina_detect: true,
 };
 
 const movingStars = clone(stars);
@@ -85,8 +85,8 @@ movingStars.particles.move = {
     speed: 100,
     direction: 'bottom' as any,
     random: false,
-    straight: true
-  }
+    straight: true,
+  },
 };
 
 const Starfield: FunctionComponent = () => {
