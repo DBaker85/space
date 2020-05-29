@@ -2,11 +2,11 @@ import {
   createProgram,
   CompilerOptions,
   getPreEmitDiagnostics,
-  flattenDiagnosticMessageText
+  flattenDiagnosticMessageText,
 } from 'typescript';
 import { resolve } from 'path';
 import { readJSON, writeFileSync, copy } from 'fs-extra';
-import chalk from 'chalk';
+import { gray, red, cyan, yellow } from 'chalk';
 
 const entryFile = resolve(__dirname, '..', 'server', 'server.ts');
 const tsConfig = resolve(__dirname, '..', 'server', 'tsconfig.json');
@@ -15,19 +15,19 @@ let tsErrors = 0;
 
 const BuildServer = () => {
   console.log('');
-  console.log(`${chalk.gray('---')} Compiling server ${chalk.gray('---')}
+  console.log(`${gray('---')} Compiling server ${gray('---')}
   `);
 
   readJSON(tsConfig)
-    .catch(err => {
-      console.log(`❌  ${chalk.red('Error')} reading config file: ${err}
+    .catch((err) => {
+      console.log(`❌  ${red('Error')} reading config file: ${err}
       `);
       process.exit(1);
     })
     .then(({ compilerOptions }) => {
       const mappedOptions: CompilerOptions = {
         ...compilerOptions,
-        ...{ moduleResolution: 2, outDir: resolve(__dirname, '..', 'dist') }
+        ...{ moduleResolution: 2, outDir: resolve(__dirname, '..', 'dist') },
       };
 
       let program = createProgram([entryFile], mappedOptions);
@@ -39,11 +39,11 @@ const BuildServer = () => {
         emitResult.diagnostics
       );
 
-      allDiagnostics.forEach(diagnostic => {
+      allDiagnostics.forEach((diagnostic) => {
         if (diagnostic.file) {
           let {
             line,
-            character
+            character,
           } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
 
           let message = flattenDiagnosticMessageText(
@@ -51,11 +51,11 @@ const BuildServer = () => {
             '\n'
           );
           console.log(
-            `${chalk.cyan(diagnostic.file.fileName)}:${chalk.yellow(
+            `${cyan(diagnostic.file.fileName)}:${yellow(
               (line + 1).toString()
-            )}:${chalk.yellow((character + 1).toString())} - ${chalk.red(
-              'error'
-            )} ${chalk.gray('TS' + diagnostic.code + ':')} ${message} \n`
+            )}:${yellow((character + 1).toString())} - ${red('error')} ${gray(
+              'TS' + diagnostic.code + ':'
+            )} ${message} \n`
           );
 
           tsErrors++;
@@ -74,7 +74,7 @@ const BuildServer = () => {
       }
 
       if (emitResult.emitSkipped) {
-        console.log(`❌  ${chalk.red('Error')} compiling typescript
+        console.log(`❌  ${red('Error')} compiling typescript
         `);
         process.exit(1);
       }

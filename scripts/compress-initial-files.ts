@@ -3,10 +3,10 @@ import {
   createWriteStream,
   readJSONSync,
   openSync,
-  fstatSync
+  fstatSync,
 } from 'fs-extra';
 import { resolve } from 'path';
-import chalk from 'chalk';
+import { gray, green, cyan } from 'chalk';
 import { createGzip } from 'zlib';
 import { ManifestFile, PushManifest } from '../server/models/models';
 
@@ -17,9 +17,7 @@ const fileList: PushManifest = readJSONSync(
 const compressInitialFiles = (files: ManifestFile[]) =>
   new Promise((resolve, reject) => {
     console.log('');
-    console.log(`${chalk.gray('---')} Compressing main bundles ${chalk.gray(
-      '---'
-    )}
+    console.log(`${gray('---')} Compressing main bundles ${gray('---')}
   `);
     const fileCount = files.length;
     let finishedfiles = [];
@@ -43,7 +41,7 @@ const compressInitialFiles = (files: ManifestFile[]) =>
 const logStats = (files: ManifestFile[]) => {
   console.log('File sizes after Gzip:');
   console.log('');
-  files.forEach(file => {
+  files.forEach((file) => {
     const fd = openSync(`${file.filePath}`, 'r');
     const stat = fstatSync(fd);
     const zipFd = openSync(`${file.filePath}.gz`, 'r');
@@ -51,10 +49,10 @@ const logStats = (files: ManifestFile[]) => {
     const filePath = file.filePath.split('/');
     const filename = filePath.pop();
     console.log(
-      `${(stat.size / 1024).toFixed(2)} Kb \t> \t${chalk.green(
+      `${(stat.size / 1024).toFixed(2)} Kb \t> \t${green(
         (zipStat.size / 1024).toFixed(2)
       )} Kb`,
-      `\t ${filePath.join('/')}/${chalk.cyan(filename)}.gz`
+      `\t ${filePath.join('/')}/${cyan(filename)}.gz`
     );
   });
   console.log('');

@@ -3,27 +3,25 @@ import { resolve } from 'path';
 import { render } from 'node-sass';
 import * as postcss from 'postcss';
 import * as autoprefixer from 'autoprefixer';
-import chalk from 'chalk';
+import { gray, red, green } from 'chalk';
 
 const Generate = () => {
-  console.log(`${chalk.gray('---')} Generating above fold styles ${chalk.gray(
-    '---'
-  )}
+  console.log(`${gray('---')} Generating above fold styles ${gray('---')}
   `);
   const indexFile = resolve(__dirname, '..', 'public', 'index.html');
   const sassfile = resolve(__dirname, '..', 'src', 'scss', '_first-load.scss');
   readFile(indexFile, 'utf8').then(
-    file => {
+    (file) => {
       const rx = new RegExp('<style id="first-load"[\\d\\D]*?/style>', 'g');
 
       render(
         {
           file: sassfile,
-          outputStyle: 'compressed'
+          outputStyle: 'compressed',
         },
         (err, result) => {
           if (err) {
-            console.log(`❌  ${chalk.red('Error')} compiling SASS')}
+            console.log(`❌  ${red('Error')} compiling SASS')}
             ${err.file} :
             ${err.line} - ${err.column})}
             ${err.message}
@@ -33,7 +31,7 @@ const Generate = () => {
             postcss([autoprefixer])
               .process(result.css.toString(), { from: undefined })
               .then(
-                prefixedResult => {
+                (prefixedResult) => {
                   console.log('✔️  Styles autoprefixed');
                   const newFile = file.replace(
                     rx,
@@ -42,20 +40,18 @@ const Generate = () => {
                   writeFile(indexFile, newFile).then(
                     () => {
                       console.log(
-                        `✔️  Styles written to ${chalk.green('index.html')}`
+                        `✔️  Styles written to ${green('index.html')}`
                       );
                     },
-                    err => {
+                    (err) => {
                       console.log(
-                        `❌  ${chalk.red(
-                          'Error'
-                        )} writing inlining styles: ${err}`
+                        `❌  ${red('Error')} writing inlining styles: ${err}`
                       );
                     }
                   );
                 },
-                error => {
-                  console.log(`❌  ${chalk.red('Error')} autoprefixing styles:
+                (error) => {
+                  console.log(`❌  ${red('Error')} autoprefixing styles:
                   ${error}
                   `);
                 }
@@ -64,8 +60,8 @@ const Generate = () => {
         }
       );
     },
-    rejected => {
-      console.log(`❌ Error reading ${chalk.green('index.html')}
+    (rejected) => {
+      console.log(`❌ Error reading ${green('index.html')}
       ${rejected}
       `);
     }
