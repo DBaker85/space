@@ -1,5 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import Particles, { IParticlesParams } from 'react-particles-js';
+import Particles, {
+  IParticlesParams,
+  OutMode,
+  MoveDirection,
+  ShapeType,
+} from 'react-particles-js';
 import clone from 'lodash.clonedeep';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo';
@@ -41,7 +46,7 @@ const stars: IParticlesParams = {
     },
     color: { value: toHex(css.colors.colorWhite) },
     shape: {
-      type: 'circle',
+      type: ShapeType.circle,
       stroke: { width: 0, color: '#000000' },
       polygon: { nb_sides: 5 },
       image: { src: 'img/github.svg', width: 100, height: 100 },
@@ -66,10 +71,10 @@ const stars: IParticlesParams = {
     move: {
       enable: true,
       speed: 1,
-      direction: 'none',
+      direction: MoveDirection.none,
       random: false,
       straight: false,
-      out_mode: 'out',
+      out_mode: OutMode.out,
       bounce: false,
       attract: { enable: false, rotateX: 600, rotateY: 600 },
     },
@@ -83,7 +88,7 @@ movingStars.particles.move = {
   ...movingStars.particles.move,
   ...{
     speed: 100,
-    direction: 'bottom' as any,
+    direction: MoveDirection.none,
     random: false,
     straight: true,
   },
