@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Particles, {
   IParticlesParams,
-  OutMode,
   MoveDirection,
+  OutMode,
   ShapeType,
 } from 'react-particles-js';
 import clone from 'lodash.clonedeep';
@@ -32,7 +32,7 @@ import { toHex } from '../shared/utils/hsl';
 const styles = {
   left: 0,
   top: 0,
-  position: 'fixed',
+  position: 'fixed' as 'fixed',
   zIndex: -1,
   background: `linear-gradient(${css.colors.colorBlack} , ${css.colors.colorBlueDark})`,
 };
@@ -83,16 +83,17 @@ const stars: IParticlesParams = {
 };
 
 const movingStars = clone(stars);
-
-movingStars.particles.move = {
-  ...movingStars.particles.move,
-  ...{
-    speed: 100,
-    direction: MoveDirection.none,
-    random: false,
-    straight: true,
-  },
-};
+if (movingStars.particles) {
+  movingStars.particles.move = {
+    ...movingStars.particles.move,
+    ...{
+      speed: 100,
+      direction: 'bottom' as any,
+      random: false,
+      straight: true,
+    },
+  };
+}
 
 const Starfield: FunctionComponent = () => {
   const { data } = useQuery(gql`
