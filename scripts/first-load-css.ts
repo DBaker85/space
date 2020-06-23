@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'fs-extra';
 import { resolve } from 'path';
-import { render } from 'node-sass';
+import { render } from 'sass';
 import * as postcss from 'postcss';
 import * as autoprefixer from 'autoprefixer';
 import { gray, red, green } from 'chalk';

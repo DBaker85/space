@@ -1,17 +1,25 @@
-import { outputFile } from 'fs-extra';
+import { outputFile, readFile } from 'fs-extra';
 import { resolve } from 'path';
-import { gray, green, red } from 'chalk';
-import * as sassExtract from 'sass-extract';
+import { green, red, gray } from 'chalk';
 import { format, resolveConfig } from 'prettier';
 
-import { hyphenToCamel, RGBToHSL } from './utils/tools';
+import { hyphenToCamel } from './utils/tools';
 
 import { json2ts } from 'json-ts';
 
-let constants = {
+const vars = {
   colors: {},
   planetColors: [],
 };
+
+const indexFile = resolve(
+  __dirname,
+  '..',
+  'src',
+  'scss',
+  'variables',
+  '_base-colors.scss'
+);
 
 const jsonParser = (items) => {
   let state = ``;
@@ -63,88 +71,50 @@ const variableFileOut = resolve(
   'shared',
   'css-constants.ts'
 );
-const CompileColors = () => {
+
+const Generate = async () => {
   console.log('');
   console.log(`${gray('---')} Generating JS friendly CSS colors ${gray('---')}
   `);
-  const indexFile = resolve(
-    __dirname,
-    '..',
-    'src',
-    'scss',
-    'variables',
-    '_base-colors.scss'
-  );
 
-  sassExtract
-    .render({
-      file: indexFile,
-    })
-    .then(
-      (rendered) => {
-        Object.keys(rendered.vars).forEach((variableType) => {
-          Object.keys(rendered.vars[variableType]).forEach((variable) => {
-            // filter out colors
-            if (
-              rendered.vars[variableType][variable].value.hex !== undefined &&
-              !variable.includes('-space-')
-            ) {
-              const values = rendered.vars[variableType][variable].value;
-              Object.assign(constants.colors, {
-                [hyphenToCamel(variable.replace('$', ''))]: RGBToHSL(
-                  values.r,
-                  values.g,
-                  values.b
-                ),
-              });
-            }
-            if (
-              rendered.vars[variableType][variable].value.hex !== undefined &&
-              variable.includes('-space-')
-            ) {
-              const values = rendered.vars[variableType][variable].value;
-              constants.planetColors.push(
-                RGBToHSL(values.r, values.g, values.b)
-              );
-            }
-          });
-        });
-        resolveConfig(resolve(__dirname, '..')).then(
-          (options) => {
-            outputFile(
-              variableFileOut,
-              format(constantsTemplate(constants), {
-                ...options,
-                parser: 'typescript',
-              }),
-              'utf8'
-            ).then(
-              () => {
-                console.log(
-                  `✔️  Variables written to ${green('css-constants.ts')}
-              `
-                );
-              },
-              (err) => {
-                console.log(
-                  `❌  ${red('Error')} writing css variables: ${err}`
-                );
-              }
-            );
-          },
-          (err) => {
-            console.log(
-              `❌  ${red('Error')} resolving prettier config: ${err}`
-            );
-          }
+  try {
+    const file = await readFile(indexFile);
+    const variables = file
+      .toString()
+      .match(/(^\$.+;)/gm)
+      .map((variable) =>
+        variable.replace(/;/g, '').replace(/\$/g, '').split(': ')
+      );
+    variables
+      .filter((variable) => !variable[0].includes('-space-'))
+      .forEach((variable) => {
+        vars.colors[hyphenToCamel(variable[0])] = variable[1];
+      });
+    variables
+      .filter((variable) => variable[0].includes('-space-'))
+      .forEach((variable) => {
+        vars.planetColors.push(
+          vars.colors[hyphenToCamel(variable[1])]
+            ? vars.colors[hyphenToCamel(variable[1])]
+            : variable[1]
         );
-      },
-      (rejected) => {
-        console.log(`❌  ${red('Error')} reading ${green('_variables.scss')}
-      ${rejected}
-      `);
-      }
+      });
+    const prettierOptions = await resolveConfig(resolve(__dirname, '..'));
+    await outputFile(
+      variableFileOut,
+      format(constantsTemplate(vars), {
+        ...prettierOptions,
+        parser: 'typescript',
+      }),
+      'utf8'
     );
+    console.log(
+      `✔️  Variables written to ${green('css-constants.ts')}
+    `
+    );
+  } catch (err) {
+    console.log(`❌  ${red('Error')} writing css variables: ${err}`);
+  }
 };
 
-CompileColors();
+Generate();
