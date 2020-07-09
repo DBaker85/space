@@ -10,9 +10,9 @@ My personal fun website that is a super overkill MERN stack
 
 ## Based on
 
-- NodeJS hosted on HEROKU
+- NodeJS hosted on Azure
 - MongoDB hosted on MONGOLAB
-- ExpressJS
+- Koa
 - GraphQL
 - ReactJS
 - GSAP
