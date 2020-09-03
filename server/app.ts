@@ -23,14 +23,14 @@ import { getInitialFiles } from './utils/getInitialFiles';
 import { PushManifest } from './models/models';
 
 const localMongo = 'mongodb://localhost:27017';
-const mongo = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds018839.mlab.com:18839/space`;
+const mongo = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@space.npaeb.azure.mongodb.net/space?retryWrites=true&w=majority`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 let db: Db;
 
 const mongoClient = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 const clientPath = resolve(__dirname, '..', 'build');
@@ -71,7 +71,7 @@ app.use(
       schema: buildSchema(typeDefs),
       rootValue: resolvers,
       graphiql: true,
-      context: () => ({ db })
+      context: () => ({ db }),
     })
   )
 );
@@ -82,7 +82,7 @@ app.use(mount('/', serve(clientPath, { index: 'none' })));
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
   if (process.env.SERVER_PUSH) {
-    initialFiles.forEach(file => {
+    initialFiles.forEach((file) => {
       (ctx.res as any).stream.pushStream(
         { [constants.HTTP2_HEADER_PATH]: file.path },
         (err: any, pushStream: any) => {
