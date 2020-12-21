@@ -49,7 +49,7 @@
     "@types/node": "12.12.7",
     "@types/node-fetch": "2.5.3",
     "@types/node-sass": "4.11.0",
-    "@types/prettier": "1.18.3",
+    "@types/prettier": "1.19.1",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.8.4",
     "@types/react-loadable": "5.5.2",
