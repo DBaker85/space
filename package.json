@@ -67,7 +67,7 @@
     "postcss": "7.0.21",
     "prettier": "1.19.1",
     "pretty-quick": "1.11.1",
-    "react-app-rewired": "2.1.5",
+    "react-app-rewired": "2.1.8",
     "react-scripts": "3.0.1",
     "sass-extract": "2.1.0",
     "ts-jest": "24.1.0",
