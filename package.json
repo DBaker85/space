@@ -2,13 +2,10 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.3",
+    
     "@types/jest": "^26.0.20",
     "@types/node": "^12.20.5",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
+    
     "husky": "^5.1.3",
     "lerna": "^4.0.0",
     "prettier": "^2.2.1",
@@ -18,5 +15,10 @@
   "dependencies": {
     "client": "file:client",
     "server": "file:server"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

@@ -1,4 +1,5 @@
 {
   "appService.defaultWebAppToDeploy": "/subscriptions/107a7462-13f9-4cc1-8acc-aa99cce061d3/resourceGroups/space/providers/Microsoft.Web/sites/dbspace",
-  "appService.deploySubpath": ""
+  "appService.deploySubpath": "",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
