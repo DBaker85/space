@@ -71,7 +71,7 @@
     "react-scripts": "3.0.1",
     "sass-extract": "2.1.0",
     "ts-jest": "24.1.0",
-    "ts-node": "8.5.2",
+    "ts-node": "8.10.2",
     "typescript": "3.7.2",
     "uglify-js": "3.7.5"
   },
