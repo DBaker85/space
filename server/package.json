@@ -20,8 +20,6 @@
     "mongodb": "^3.6.4"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.8",
-    "@types/graphql": "^14.5.0",
     "@types/koa": "^2.13.1",
     "@types/koa-compress": "^4.0.1",
     "@types/koa-graphql": "^0.8.4",
