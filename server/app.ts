@@ -59,11 +59,6 @@ if (process.env.DEBUG) {
 
 app.use(compress());
 
-const fileList: PushManifest = readJSONSync(
-  resolve(__dirname, '..', 'build', 'push_manifest.json')
-);
-const initialFiles = getInitialFiles(fileList.initial);
-
 app.use(
   mount(
     '/graphql',
@@ -82,6 +77,12 @@ app.use(mount('/', serve(clientPath, { index: 'none' })));
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
   if (process.env.SERVER_PUSH) {
+    
+const fileList: PushManifest = readJSONSync(
+  resolve(__dirname, '..', 'build', 'push_manifest.json')
+);
+const initialFiles = getInitialFiles(fileList.initial);
+
     initialFiles.forEach((file) => {
       (ctx.res as any).stream.pushStream(
         { [constants.HTTP2_HEADER_PATH]: file.path },
