@@ -4,7 +4,8 @@
   "description": "Server for my personal website",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config jest.config.js"
+    "test": "jest --config jest.config.js",
+    "start": "webpack --config=webpack.dev.js"
   },
   "author": "",
   "license": "ISC",
