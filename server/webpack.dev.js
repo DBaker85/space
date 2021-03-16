@@ -5,20 +5,21 @@ const { merge } = require("webpack-merge");
 const nodeExternals = require('webpack-node-externals');
 const { resolve } = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const StartServerPlugin = require('start-server-webpack-plugin');
-
+const StartServerPlugin = require('start-server-nestjs-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   context: resolve(__dirname),
-  entry: [   'webpack/hot/poll?1000',// bundle the client for hot reloading, only- means to only hot reload for successful updates
+  entry: [   
+    'webpack/hot/poll?1000',// bundle the client for hot reloading, only- means to only hot reload for successful updates
     "./server.ts",
   ],
   watch: true,
   mode: "development",
   output: {
-    path: resolve(__dirname, 'dist'),
+    path: resolve(__dirname,  'dist'),
     filename: 'server.js',
-    publicPath: '/assets/',
+    // publicPath: '/assets/',
     libraryTarget: 'commonjs2',
     
 },
@@ -50,7 +51,17 @@ module.exports = {
   },
   devtool: "cheap-module-source-map",
   plugins: [
-    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve(process.cwd(), '..', "client", "build"),
+          to: resolve(__dirname,  'dist', 'public'),
+        },
+      ],
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*', '!public*']
+    }),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
     new webpack.DefinePlugin({
       "process.env": {

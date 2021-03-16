@@ -75,37 +75,37 @@ app.use(
 app.use(mount('/', serve(clientPath, { index: 'none' })));
 
 // FIXME: Fix CTX types
-app.use(async (ctx: Context, next) => {
-  if (process.env.SERVER_PUSH) {
+// app.use(async (ctx: Context, next) => {
+//   if (process.env.SERVER_PUSH) {
     
-const fileList: PushManifest = readJSONSync(
-  resolve(__dirname, '..', 'build', 'push_manifest.json')
-);
-const initialFiles = getInitialFiles(fileList.initial);
+// const fileList: PushManifest = readJSONSync(
+//   resolve(__dirname, '..', 'build', 'push_manifest.json')
+// );
+// const initialFiles = getInitialFiles(fileList.initial);
 
-    initialFiles.forEach((file) => {
-      (ctx.res as any).stream.pushStream(
-        { [constants.HTTP2_HEADER_PATH]: file.path },
-        (err: any, pushStream: any) => {
-          if (err) {
-            console.error('push stream callback error: ', err);
-            return;
-          }
-          if (pushStream.pushAllowed) {
-            pushStream.respondWithFD(file.file, file.fd);
-          }
-          pushStream.on('error', (err: any) => {
-            console.error('push stream error: ', err);
-          });
+//     initialFiles.forEach((file) => {
+//       (ctx.res as any).stream.pushStream(
+//         { [constants.HTTP2_HEADER_PATH]: file.path },
+//         (err: any, pushStream: any) => {
+//           if (err) {
+//             console.error('push stream callback error: ', err);
+//             return;
+//           }
+//           if (pushStream.pushAllowed) {
+//             pushStream.respondWithFD(file.file, file.fd);
+//           }
+//           pushStream.on('error', (err: any) => {
+//             console.error('push stream error: ', err);
+//           });
 
-          pushStream.on('close', () => {
-            console.log('push stream closed');
-          });
-        }
-      );
-    });
-  }
-  await send(ctx, './build/index.html');
-});
+//           pushStream.on('close', () => {
+//             console.log('push stream closed');
+//           });
+//         }
+//       );
+//     });
+//   }
+//   await send(ctx, './build/index.html');
+// });
 
 export { app };
