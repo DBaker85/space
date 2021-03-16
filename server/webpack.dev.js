@@ -12,7 +12,7 @@ module.exports = {
   context: resolve(__dirname),
   entry: [   
     'webpack/hot/poll?1000',// bundle the client for hot reloading, only- means to only hot reload for successful updates
-    "./server.ts",
+    "./server.tsx",
   ],
   watch: true,
   mode: "development",
@@ -39,10 +39,16 @@ module.exports = {
         test: [/\.jsx?$/, /\.tsx?$/],
         use: {loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-typescript"]
+          presets: ["@babel/preset-typescript","@babel/preset-react"]
         }},
         exclude: /node_modules/,
-      }
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+   
+
      
     ],
   },

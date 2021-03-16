@@ -1,5 +1,27 @@
 import { createServer } from "http";
 const destroyable = require("server-destroy");
+
+
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { ServerStyleSheet } from "styled-components";
+
+import App from '../client/src/App';
+
+const sheet = new ServerStyleSheet();
+
+const html = renderToString(
+  sheet.collectStyles(
+   
+    
+        <App />
+      
+    
+  )
+);
+const styleTags = sheet.getStyleTags();
+
+
 // import { app } from './app';
 declare const module: any;
 
@@ -15,7 +37,7 @@ const server = createServer(app.callback()).listen(port, () =>
 destroyable(server);
 
 app.use(async (ctx: any) => {
-  ctx.body = "Hello there again, yuppiedee";
+  ctx.body = `styles: ${styleTags}`;
 });
 
 if (process.env.NODE_ENV === "development") {
