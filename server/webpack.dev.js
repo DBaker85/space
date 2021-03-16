@@ -4,25 +4,31 @@ const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const nodeExternals = require('webpack-node-externals');
 const { resolve } = require("path");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const StartServerPlugin = require('start-server-webpack-plugin');
+
 
 module.exports = {
   context: resolve(__dirname),
   entry: [   'webpack/hot/poll?1000',// bundle the client for hot reloading, only- means to only hot reload for successful updates
-    "./dev-server.ts",
+    "./server.ts",
   ],
+  watch: true,
   mode: "development",
   output: {
     path: resolve(__dirname, 'dist'),
-    // path: "/",
     filename: 'server.js',
     publicPath: '/assets/',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
+    
 },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   target: 'node',
+  node:{
+    __dirname: false
+  }, 
   externals: [nodeExternals({
     allowlist: ['webpack/hot/poll?1000']
 })],
@@ -44,13 +50,14 @@ module.exports = {
   },
   devtool: "cheap-module-source-map",
   plugins: [
-    new StartServerPlugin({'name': 'server.js', nodeArgs: ['--inspect']}),
+    new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development"),
       },
     }),
+    new StartServerPlugin({name:'server.js', nodeArgs: ['--inspect']}),
   ],
 
   performance: {
