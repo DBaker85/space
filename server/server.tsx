@@ -37,7 +37,7 @@ const server = createServer(app.callback()).listen(port, () =>
 destroyable(server);
 
 app.use(async (ctx: any) => {
-  ctx.body = `styles: ${styleTags}`;
+  ctx.body = `styles: ${styleTags}, html: ${html}`;
 });
 
 if (process.env.NODE_ENV === "development") {
