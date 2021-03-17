@@ -1,6 +1,12 @@
 import { createServer } from "http";
 const destroyable = require("server-destroy");
 
+import {readFile} from 'fs-extra';
+import {resolve} from 'path';
+
+import serve from 'koa-static';
+import compress from 'koa-compress';
+import mount from 'koa-mount';
 
 import React from "react";
 import { renderToString } from "react-dom/server";
@@ -21,6 +27,20 @@ const html = renderToString(
 );
 const styleTags = sheet.getStyleTags();
 
+const indexFile = resolve(__dirname, 'public', 'index.html');
+ let index;
+  readFile(indexFile, 'utf8').then(
+    file => {
+      const rx = new RegExp('<div id="root"></div>', 'g');
+      index = file.replace(
+        rx,
+        `<div id="root">
+        ${styleTags}
+        ${html}
+        </div>`
+      );
+    })
+
 
 // import { app } from './app';
 declare const module: any;
@@ -36,8 +56,12 @@ const server = createServer(app.callback()).listen(port, () =>
 ) as any;
 destroyable(server);
 
+const clientPath = resolve(__dirname, 'public');
+app.use(compress());
+app.use(mount('/', serve(clientPath, { index: 'none' })));
+
 app.use(async (ctx: any) => {
-  ctx.body = `styles: ${styleTags}, html: ${html}`;
+  ctx.body = index;
 });
 
 if (process.env.NODE_ENV === "development") {

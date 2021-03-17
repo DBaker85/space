@@ -33,10 +33,13 @@
   },
   "dependencies": {
     "client": "file:client",
-    "server": "file:server",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "server": "file:server",
     "styled-components": "^5.2.1"
+  },
+  "scripts": {
+    "start:server": "lerna run build --scope client && lerna run start --scope server --stream"
   },
   "husky": {
     "hooks": {
