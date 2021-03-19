@@ -3,18 +3,19 @@
   "version": "3.0.0",
   "private": true,
   "dependencies": {
-    "react-scripts": "4.0.3",
     "redux-persist": "^6.0.0",
-    "redux-toolkit": "^1.1.2",
-    "web-vitals": "^1.1.0"
+    "redux-toolkit": "^1.1.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.3"
+    "@testing-library/user-event": "^12.8.3",
+    "compression-webpack-plugin": "^7.1.2",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "webpack --config=webpack.common.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
