@@ -15,8 +15,8 @@
     "webpack-bundle-analyzer": "^4.4.0"
   },
   "scripts": {
-    "start": "webpack --config=webpack.common.js",
-    "build": "webpack --config=webpack.common.js",
+    "start": "webpack --config=webpack.dev.js",
+    "build": "webpack --config=webpack.prod.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

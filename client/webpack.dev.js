@@ -17,21 +17,8 @@ module.exports = {
   devtool: "source-map",
   context: resolve(__dirname),
   entry: resolve(__dirname,"src","index.tsx"),
-  mode: "production",
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
+  mode: "development",
 
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        extractComments: true,
-        exclude: excludedFolders,
-      }),
-    ],
-  },
   output: {
     filename: "[name].[fullhash].min.js",
     path: resolve(__dirname, "dist", "static"),
@@ -81,7 +68,7 @@ module.exports = {
   },
 
   performance: {
-    hints: false,
+    hints: 'error',
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -90,12 +77,10 @@ module.exports = {
    
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify("production"),
+        NODE_ENV: JSON.stringify("development"),
       },
     }),
-    new CompressionPlugin({
-      test: /\.js(\?.*)?$/i,
-    }),
+   
     new HtmlWebpackPlugin({
       template:resolve(__dirname, "public", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
@@ -111,7 +96,7 @@ module.exports = {
           },
           process: {
             ...process,
-            env: { ...process.env, NODE_ENV: "production" },
+            env: { ...process.env, NODE_ENV: "development" },
           },
         };
       },
