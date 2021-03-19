@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "webpack --config=webpack.common.js",
-    "build": "react-scripts build",
+    "build": "webpack --config=webpack.common.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

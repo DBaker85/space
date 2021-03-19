@@ -34,7 +34,7 @@ module.exports = {
   },
   output: {
     filename: "[name].[fullhash].min.js",
-    path: resolve(__dirname, "dist"),
+    path: resolve(__dirname, "dist", "static"),
     publicPath: "/",
   },
   module: {
@@ -50,19 +50,19 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: {
           loader: "file-loader",
           options: {
             name: "[name].[fullhash].[ext]",
-            outputPath: "astern/fonts/",
+            outputPath: "/fonts/",
           },
         },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
-          "file-loader?hash=sha512&digest=hex&name=img/[contenthash].[ext]",
+          "file-loader?hash=sha512&digest=hex&name=/img/[contenthash].[ext]",
           "image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false",
         ],
       },
@@ -96,14 +96,19 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*"],
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: "public",
-    //       to: resolve(__dirname, "..", "..", ".docs", "astern", "favicons"),
-    //     },
-    //   ],
-    // }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "public",
+          to: resolve(__dirname, "dist"),
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ["**/index.html"],
+          },
+        },
+      ],
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production"),
@@ -111,6 +116,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "public/index.html",
+      filename: resolve(__dirname, "dist", "index.html"),
+      publicPath: "/static/",
       templateParameters(compilation, assets, options) {
         return {
           compilation,
