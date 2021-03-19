@@ -87,33 +87,14 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*"],
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      reportFilename: resolve(
-        __dirname,
-        "reports",
-        "docs-analysis-report.html"
-      ),
-      openAnalyzer: false,
-    }),
-    
-    new CopyPlugin({
-      patterns: [
-        {
-          from: resolve(__dirname, "public"),
-          to: resolve(__dirname, "dist"),
-          globOptions: {
-            dot: true,
-            gitignore: true,
-            ignore: ["**/index.html"],
-          },
-        },
-      ],
-    }),
+   
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production"),
       },
+    }),
+    new CompressionPlugin({
+      test: /\.js(\?.*)?$/i,
     }),
     new HtmlWebpackPlugin({
       template:resolve(__dirname, "public", "index.html"),
@@ -135,8 +116,30 @@ module.exports = {
         };
       },
     }),
-    new CompressionPlugin({
-      test: /\.js(\?.*)?$/i,
+   
+   
+    
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve(__dirname, "public"),
+          to: resolve(__dirname, "dist"),
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ["**/index.html"],
+          },
+        },
+      ],
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+      reportFilename: resolve(
+        __dirname,
+        "reports",
+        "docs-analysis-report.html"
+      ),
+      openAnalyzer: false,
     }),
   ],
 };
