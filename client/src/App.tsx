@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledApp = styled.div`
-  background-color: red;
+  background-color: '#CCCCC';
 `;
 
 function App() {

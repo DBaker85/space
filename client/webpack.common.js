@@ -16,7 +16,7 @@ module.exports = {
   },
   devtool: "source-map",
   context: resolve(__dirname),
-  entry: "./src/index.tsx",
+  entry: resolve(__dirname,"src","index.tsx"),
   mode: "production",
   optimization: {
     splitChunks: {
@@ -84,6 +84,9 @@ module.exports = {
     hints: false,
   },
   plugins: [
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*"],
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
       reportFilename: resolve(
@@ -93,13 +96,11 @@ module.exports = {
       ),
       openAnalyzer: false,
     }),
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["**/*"],
-    }),
+    
     new CopyPlugin({
       patterns: [
         {
-          from: "public",
+          from: resolve(__dirname, "public"),
           to: resolve(__dirname, "dist"),
           globOptions: {
             dot: true,
@@ -115,7 +116,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      template: "public/index.html",
+      template:resolve(__dirname, "public", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
       publicPath: "/static/",
       templateParameters(compilation, assets, options) {
