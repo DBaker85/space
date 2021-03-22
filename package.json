@@ -39,8 +39,10 @@
     "styled-components": "^5.2.1"
   },
   "scripts": {
+    "bootstrap": "npm i && lerna bootstrap",
     "start:server": "lerna run build --scope client && lerna run start --scope server --stream",
-    "start:client": "lerna run start --scope client --stream"
+    "start:client": "lerna run start --scope client --stream",
+    "test": "lerna run test"
   },
   "husky": {
     "hooks": {
