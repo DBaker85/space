@@ -1,5 +1,6 @@
 //   const { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const excludedFolders = /(__mocks__|node_modules)/;
@@ -16,9 +17,16 @@ module.exports = {
   },
   devtool: "source-map",
   context: resolve(__dirname),
-  entry: resolve(__dirname,"src","index.tsx"),
+  entry: [
+    require.resolve('webpack-dev-server/client') + '?/',
+            require.resolve('webpack/hot/dev-server'),
+  resolve(__dirname,"src","index.tsx")
+],
   mode: "development",
-
+  watch: true,
+  devServer: {
+    hot: true, // enable HMR on the server
+  },
   output: {
     filename: "[name].[fullhash].min.js",
     path: resolve(__dirname, "dist", "static"),
@@ -32,6 +40,9 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-typescript", "@babel/preset-react"],
+            plugins: [
+              require.resolve('react-refresh/babel'),
+            ]
           },
         },
         exclude: /node_modules/,
@@ -71,9 +82,7 @@ module.exports = {
     hints: 'error',
   },
   plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["**/*"],
-    }),
+   
    
     new webpack.DefinePlugin({
       "process.env": {
@@ -104,27 +113,7 @@ module.exports = {
    
    
     
-    new CopyPlugin({
-      patterns: [
-        {
-          from: resolve(__dirname, "public"),
-          to: resolve(__dirname, "dist"),
-          globOptions: {
-            dot: true,
-            gitignore: true,
-            ignore: ["**/index.html"],
-          },
-        },
-      ],
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      reportFilename: resolve(
-        __dirname,
-        "reports",
-        "docs-analysis-report.html"
-      ),
-      openAnalyzer: false,
-    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin()
   ],
 };
