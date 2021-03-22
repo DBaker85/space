@@ -1,6 +1,6 @@
 //   const { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const excludedFolders = /(__mocks__|node_modules)/;
@@ -18,14 +18,14 @@ module.exports = {
   devtool: "source-map",
   context: resolve(__dirname),
   entry: [
-    require.resolve('webpack-dev-server/client') + '?/',
-            require.resolve('webpack/hot/dev-server'),
-  resolve(__dirname,"src","index.tsx")
-],
+    require.resolve("webpack-dev-server/client") + "?/",
+    require.resolve("webpack/hot/dev-server"),
+    resolve(__dirname, "src", "index.tsx"),
+  ],
   mode: "development",
-  watch: true,
   devServer: {
     hot: true, // enable HMR on the server
+    contentBase: join(__dirname, "public"),
   },
   output: {
     filename: "[name].[fullhash].min.js",
@@ -40,9 +40,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-typescript", "@babel/preset-react"],
-            plugins: [
-              require.resolve('react-refresh/babel'),
-            ]
+            plugins: [require.resolve("react-refresh/babel")],
           },
         },
         exclude: /node_modules/,
@@ -79,19 +77,17 @@ module.exports = {
   },
 
   performance: {
-    hints: 'error',
+    hints: false,
   },
   plugins: [
-   
-   
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development"),
       },
     }),
-   
+
     new HtmlWebpackPlugin({
-      template:resolve(__dirname, "public", "index.html"),
+      template: resolve(__dirname, "public", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
       publicPath: "/static/",
       templateParameters(compilation, assets, options) {
@@ -110,10 +106,8 @@ module.exports = {
         };
       },
     }),
-   
-   
-    
+
     new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin()
+    new ReactRefreshWebpackPlugin(),
   ],
 };
