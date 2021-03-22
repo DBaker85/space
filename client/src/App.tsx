@@ -1,13 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+
+import { globalStyle } from "./styles";
+
+const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
 const StyledApp = styled.div`
-  background-color: '#CCCCC';
+  background-color: #cccccc;
 `;
 
 function App() {
   return (
     <StyledApp className="App">
+      <GlobalStyle />
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.

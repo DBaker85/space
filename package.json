@@ -39,7 +39,8 @@
     "styled-components": "^5.2.1"
   },
   "scripts": {
-    "start:server": "lerna run build --scope client && lerna run start --scope server --stream"
+    "start:server": "lerna run build --scope client && lerna run start --scope server --stream",
+    "start:client": "lerna run start --scope client --stream"
   },
   "husky": {
     "hooks": {
