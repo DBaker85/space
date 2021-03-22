@@ -87,9 +87,9 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
+      inject: true,
       template: resolve(__dirname, "public", "index.html"),
-      filename: resolve(__dirname, "dist", "index.html"),
-      publicPath: "/static/",
+
       templateParameters(compilation, assets, options) {
         return {
           compilation,
