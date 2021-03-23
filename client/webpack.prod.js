@@ -6,7 +6,7 @@ const excludedFolders = /(__mocks__|node_modules)/;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 // const { merge } = require("webpack-merge");
-const { resolve, join } = require("path");
+const { resolve, join, sep } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
@@ -145,7 +145,7 @@ module.exports = {
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map((file) => ({
             path: file.path,
-            filePath: join("/", "static", file.path),
+            filePath: join(sep, "static", file.path),
           }));
 
         // const fonts = files
@@ -168,7 +168,7 @@ module.exports = {
         //     seed
         //   );
 
-        return { initial };
+        return { seperator: sep, initial };
       },
     }),
     new BundleAnalyzerPlugin({
