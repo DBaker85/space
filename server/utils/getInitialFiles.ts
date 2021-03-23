@@ -4,9 +4,9 @@ import { resolve, join } from "path";
 
 export const getInitialFiles = (files: ManifestFile[], seperator: string) => {
   return files.map((file) => {
-   
+    // console.log()
     const fd = openSync(
-      resolve(__dirname, "public", `${file.filePath}.gz`),
+      join(process.cwd(),"dist", "public", `${file.filePath}.gz`),
       "r"
     );
     const stat = fstatSync(fd);

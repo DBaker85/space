@@ -88,6 +88,7 @@ app.use(async (ctx: Context, next) => {
   const initialFiles = getInitialFiles(fileList.initial, fileList.seperator);
 
   initialFiles.forEach((file) => {
+    
     (ctx.res as any).stream.pushStream(
       { [constants.HTTP2_HEADER_PATH]: file.path },
       (err: any, pushStream: any) => {

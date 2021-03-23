@@ -18,10 +18,8 @@ const nameBuilder = (filename) => {
   return name;
 };
 
-
 const fontRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.ttf|.woff|.woff2|.eot)$/i;
 const imgRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.svg|.png|.gif)$/i;
-
 
 module.exports = {
   resolve: {
@@ -147,48 +145,50 @@ module.exports = {
       fileName: resolve(__dirname, "dist", "push_manifest.json"),
       filter: (file) => !file.name.endsWith("map"),
       generate: (seed, files) => {
-        
         const initial = files
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map(({ name, path }) => {
             const splitnames = name.split(sep).pop().split(".");
             const ext = `${splitnames[splitnames.length - 1]}`;
-            return{
-            path: path,
-            filePath: join(sep, "static", path),
-            extension: ext,
-            mimeType: getType(ext)
-          }});
+            return {
+              path: path,
+              filePath: join(sep, "static", path),
+              extension: ext,
+              mimeType: getType(ext),
+            };
+          });
 
         const fonts = files
-          .filter(file => fontRegex.test(file.path))
-          .reduce(
-            (manifest, { name, path }) => {
-             
-              const splitnames = name.split(sep).pop().split(".");
-              const ext = `${splitnames[splitnames.length - 1]}`;
-              return {
+          .filter((file) => fontRegex.test(file.path))
+          .reduce((manifest, { name, path }) => {
+            const splitnames = name.split(sep).pop().split(".");
+            const ext = `${splitnames[splitnames.length - 1]}`;
+            return {
               ...manifest,
-              [nameBuilder(path)]: { path, filePath: `./build${path}`,extension: ext,
-              mimeType: getType(ext) }
-            }},
-            seed
-          );
+              [nameBuilder(path)]: {
+                path,
+                filePath: `./build${path}`,
+                extension: ext,
+                mimeType: getType(ext),
+              },
+            };
+          }, seed);
 
         const images = files
-          .filter(file => imgRegex.test(file.name))
-          .reduce(
-            (manifest, { name, path }) => {
-              
-              const splitnames = name.split(sep).pop().split(".");
+          .filter((file) => imgRegex.test(file.name))
+          .reduce((manifest, { name, path }) => {
+            const splitnames = name.split(sep).pop().split(".");
             const ext = `${splitnames[splitnames.length - 1]}`;
-              return {
+            return {
               ...manifest,
-              [nameBuilder(name)]: { path, filePath: `./build${path}`, extension: ext,
-              mimeType: getType(ext) }
-            }},
-            seed
-          );
+              [nameBuilder(name)]: {
+                path,
+                filePath: `./build${path}`,
+                extension: ext,
+                mimeType: getType(ext),
+              },
+            };
+          }, seed);
 
         return { seperator: sep, initial, fonts, images };
       },
