@@ -11,6 +11,12 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
+const nameBuilder = (filename) => {
+  const splitnames = filename.split("/").pop().split(".");
+  const name = `${splitnames[0]}.${splitnames[splitnames.length - 1]}`;
+  return name;
+};
+
 module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -132,21 +138,37 @@ module.exports = {
       ],
     }),
     new WebpackManifestPlugin({
-      fileName: "asset-manifest.json",
-      publicPath: resolve(__dirname, "dist"),
-      generate: (seed, files, entrypoints) => {
-        const manifestFiles = files.reduce((manifest, file) => {
-          manifest[file.name] = file.path;
-          return manifest;
-        }, seed);
-        const entrypointFiles = entrypoints.main.filter(
-          (fileName) => !fileName.endsWith(".map")
-        );
+      fileName: resolve(__dirname, "dist", "push_manifest.json"),
+      filter: (file) => !file.name.endsWith("map"),
+      generate: (seed, files) => {
+        const initial = files
+          .filter((file) => file.isInitial && !file.name.includes("runtime"))
+          .map((file) => ({
+            path: file.path,
+            filePath: join("/", "static", file.path),
+          }));
 
-        return {
-          files: manifestFiles,
-          entrypoints: entrypointFiles,
-        };
+        // const fonts = files
+        //   .filter(file => fontRegex.test(file.path))
+        //   .reduce(
+        //     (manifest, { path }) => ({
+        //       ...manifest,
+        //       [nameBuilder(path)]: { path, filePath: `./build${path}` }
+        //     }),
+        //     seed
+        //   );
+
+        // const images = files
+        //   .filter(file => imgRegex.test(file.name))
+        //   .reduce(
+        //     (manifest, { name, path }) => ({
+        //       ...manifest,
+        //       [nameBuilder(name)]: { path, filePath: `./build${path}` }
+        //     }),
+        //     seed
+        //   );
+
+        return { initial };
       },
     }),
     new BundleAnalyzerPlugin({
