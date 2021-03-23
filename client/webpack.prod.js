@@ -10,12 +10,18 @@ const { resolve, join, sep } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const { getType } = require("mime");
 
 const nameBuilder = (filename) => {
   const splitnames = filename.split("/").pop().split(".");
   const name = `${splitnames[0]}.${splitnames[splitnames.length - 1]}`;
   return name;
 };
+
+
+const fontRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.ttf|.woff|.woff2|.eot)$/i;
+const imgRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.svg|.png|.gif)$/i;
+
 
 module.exports = {
   resolve: {
@@ -141,34 +147,50 @@ module.exports = {
       fileName: resolve(__dirname, "dist", "push_manifest.json"),
       filter: (file) => !file.name.endsWith("map"),
       generate: (seed, files) => {
+        
         const initial = files
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
-          .map((file) => ({
-            path: file.path,
-            filePath: join(sep, "static", file.path),
-          }));
+          .map(({ name, path }) => {
+            const splitnames = name.split(sep).pop().split(".");
+            const ext = `${splitnames[splitnames.length - 1]}`;
+            return{
+            path: path,
+            filePath: join(sep, "static", path),
+            extension: ext,
+            mimeType: getType(ext)
+          }});
 
-        // const fonts = files
-        //   .filter(file => fontRegex.test(file.path))
-        //   .reduce(
-        //     (manifest, { path }) => ({
-        //       ...manifest,
-        //       [nameBuilder(path)]: { path, filePath: `./build${path}` }
-        //     }),
-        //     seed
-        //   );
+        const fonts = files
+          .filter(file => fontRegex.test(file.path))
+          .reduce(
+            (manifest, { name, path }) => {
+             
+              const splitnames = name.split(sep).pop().split(".");
+              const ext = `${splitnames[splitnames.length - 1]}`;
+              return {
+              ...manifest,
+              [nameBuilder(path)]: { path, filePath: `./build${path}`,extension: ext,
+              mimeType: getType(ext) }
+            }},
+            seed
+          );
 
-        // const images = files
-        //   .filter(file => imgRegex.test(file.name))
-        //   .reduce(
-        //     (manifest, { name, path }) => ({
-        //       ...manifest,
-        //       [nameBuilder(name)]: { path, filePath: `./build${path}` }
-        //     }),
-        //     seed
-        //   );
+        const images = files
+          .filter(file => imgRegex.test(file.name))
+          .reduce(
+            (manifest, { name, path }) => {
+              
+              const splitnames = name.split(sep).pop().split(".");
+            const ext = `${splitnames[splitnames.length - 1]}`;
+              return {
+              ...manifest,
+              [nameBuilder(name)]: { path, filePath: `./build${path}`, extension: ext,
+              mimeType: getType(ext) }
+            }},
+            seed
+          );
 
-        return { seperator: sep, initial };
+        return { seperator: sep, initial, fonts, images };
       },
     }),
     new BundleAnalyzerPlugin({

@@ -5,6 +5,8 @@ export type GraphQLContext = () => { db: Db };
 export type ManifestFile = {
   path: string;
   filePath: string;
+  extension: string;
+  mimeType: string;
 };
 
 export type PushManifest = {

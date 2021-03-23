@@ -19,6 +19,8 @@ import App from "../client/src/App";
 export type ManifestFile = {
   path: string;
   filePath: string;
+  extension: string;
+  mimeType: string;
 };
 
 export type PushManifest = {
