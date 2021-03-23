@@ -14,7 +14,8 @@
     "compression-webpack-plugin": "^7.1.2",
     "html-webpack-plugin": "^5.3.1",
     "react-refresh": "^0.9.0",
-    "webpack-bundle-analyzer": "^4.4.0"
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-manifest-plugin": "^3.1.0"
   },
   "scripts": {
     "start": "webpack serve --config=webpack.dev.js",

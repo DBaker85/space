@@ -9,14 +9,15 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const { resolve, join } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
- 
+
   context: resolve(__dirname),
-  entry: resolve(__dirname,"src","index.tsx"),
+  entry: resolve(__dirname, "src", "index.tsx"),
   mode: "production",
   optimization: {
     splitChunks: {
@@ -87,7 +88,7 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*"],
     }),
-   
+
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production"),
@@ -97,7 +98,7 @@ module.exports = {
       test: /\.js(\?.*)?$/i,
     }),
     new HtmlWebpackPlugin({
-      template:resolve(__dirname, "public", "index.html"),
+      template: resolve(__dirname, "public", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
       publicPath: "/static/",
       templateParameters(compilation, assets, options) {
@@ -116,9 +117,7 @@ module.exports = {
         };
       },
     }),
-   
-   
-    
+
     new CopyPlugin({
       patterns: [
         {
@@ -131,6 +130,24 @@ module.exports = {
           },
         },
       ],
+    }),
+    new WebpackManifestPlugin({
+      fileName: "asset-manifest.json",
+      publicPath: resolve(__dirname, "dist"),
+      generate: (seed, files, entrypoints) => {
+        const manifestFiles = files.reduce((manifest, file) => {
+          manifest[file.name] = file.path;
+          return manifest;
+        }, seed);
+        const entrypointFiles = entrypoints.main.filter(
+          (fileName) => !fileName.endsWith(".map")
+        );
+
+        return {
+          files: manifestFiles,
+          entrypoints: entrypointFiles,
+        };
+      },
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
