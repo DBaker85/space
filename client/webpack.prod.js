@@ -11,6 +11,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { getType } = require("mime");
+const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
 
 const nameBuilder = (filename) => {
   const splitnames = filename.split("/").pop().split(".");
@@ -127,7 +128,14 @@ module.exports = {
         };
       },
     }),
-
+    new HtmlWebpackInjectPreload({
+      files: [
+        {
+          match: /.*\.js$/,
+          attributes: { as: "script" },
+        },
+      ],
+    }),
     new CopyPlugin({
       patterns: [
         {
@@ -149,7 +157,7 @@ module.exports = {
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map(({ name, path }) => {
             const splitnames = name.split(sep).pop().split(".");
-            console.log(splitnames);
+
             const ext = `${splitnames[splitnames.length - 1]}`;
             return {
               path: path.split(sep),
