@@ -17,8 +17,7 @@ import { getInitialFiles } from "./utils/getInitialFiles";
 import App from "../client/src/App";
 
 export type ManifestFile = {
-  path: string;
-  filePath: string;
+  path: string[];
   extension: string;
   mimeType: string;
 };
@@ -75,20 +74,15 @@ const clientPath = resolve(__dirname, "public");
 app.use(compress());
 app.use(mount("/", serve(clientPath, { index: "none" })));
 
-// app.use(async (ctx: any) => {
-//   ctx.body = index;
-// });
+const fileList: PushManifest = readJSONSync(
+  resolve(__dirname, "public", "push_manifest.json")
+);
+
+const initialFiles = getInitialFiles(fileList.initial, fileList.seperator);
 
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {
-  const fileList: PushManifest = readJSONSync(
-    resolve(__dirname, "public", "push_manifest.json")
-  );
-
-  const initialFiles = getInitialFiles(fileList.initial, fileList.seperator);
-
   initialFiles.forEach((file) => {
-    
     (ctx.res as any).stream.pushStream(
       { [constants.HTTP2_HEADER_PATH]: file.path },
       (err: any, pushStream: any) => {
@@ -98,6 +92,7 @@ app.use(async (ctx: Context, next) => {
         }
         if (pushStream.pushAllowed) {
           pushStream.respondWithFD(file.file, file.fd);
+          console.log("file pushed");
         }
         pushStream.on("error", (err: any) => {
           console.error("push stream error: ", err);
@@ -110,7 +105,6 @@ app.use(async (ctx: Context, next) => {
     );
   });
   ctx.body = index;
-  // await send(ctx, index);
 });
 
 if (process.env.NODE_ENV === "development") {

@@ -166,8 +166,7 @@ module.exports = {
             return {
               ...manifest,
               [nameBuilder(path)]: {
-                path,
-                filePath: `./build${path}`,
+                path: path.split(sep),
                 extension: ext,
                 mimeType: getType(ext),
               },
@@ -182,8 +181,7 @@ module.exports = {
             return {
               ...manifest,
               [nameBuilder(name)]: {
-                path,
-                filePath: `./build${path}`,
+                path: path.split(sep),
                 extension: ext,
                 mimeType: getType(ext),
               },

@@ -1,18 +1,16 @@
 import { openSync, fstatSync } from "fs-extra";
 import { ManifestFile } from "../models/models";
-import { resolve, join } from "path";
+import { join, sep } from "path";
 
 export const getInitialFiles = (files: ManifestFile[], seperator: string) => {
   return files.map((file) => {
-    // console.log()
-    const fd = openSync(
-      join(process.cwd(),"dist", "public", `${file.filePath}.gz`),
-      "r"
-    );
+    const filePath = file.path.join(sep);
+
+    const fd = openSync(join("dist", "public", `${filePath}.gz`), "r");
     const stat = fstatSync(fd);
 
     return {
-      path: file.path,
+      path: filePath,
       file: fd,
       fd: {
         "content-length": stat.size,
