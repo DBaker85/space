@@ -6,12 +6,13 @@ const excludedFolders = /(__mocks__|node_modules)/;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 // const { merge } = require("webpack-merge");
-const { resolve, join, sep } = require("path");
+const { resolve, join, sep, extname } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { getType } = require("mime");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
+
 
 const nameBuilder = (filename) => {
   const splitnames = filename.split("/").pop().split(".");
@@ -156,9 +157,7 @@ module.exports = {
         const initial = files
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map(({ name, path }) => {
-            const splitnames = name.split(sep).pop().split(".");
-
-            const ext = `${splitnames[splitnames.length - 1]}`;
+            const ext = extname(name)
             return {
               path: path.split(sep),
               extension: ext,
@@ -169,8 +168,8 @@ module.exports = {
         const fonts = files
           .filter((file) => fontRegex.test(file.path))
           .reduce((manifest, { name, path }) => {
-            const splitnames = name.split(sep).pop().split(".");
-            const ext = `${splitnames[splitnames.length - 1]}`;
+            const ext = extname(name)
+           
             return {
               ...manifest,
               [nameBuilder(path)]: {
@@ -184,8 +183,7 @@ module.exports = {
         const images = files
           .filter((file) => imgRegex.test(file.name))
           .reduce((manifest, { name, path }) => {
-            const splitnames = name.split(sep).pop().split(".");
-            const ext = `${splitnames[splitnames.length - 1]}`;
+            const ext = extname(name)
             return {
               ...manifest,
               [nameBuilder(name)]: {
