@@ -44,8 +44,8 @@ module.exports = {
     ],
   },
   output: {
-    filename: "[name].[fullhash].min.js",
-    path: resolve(__dirname, "dist", "static"),
+    filename: "static/js/[name].[fullhash].min.js",
+    path: resolve(__dirname, "dist"),
     publicPath: "/",
   },
   module: {
@@ -66,14 +66,14 @@ module.exports = {
           loader: "file-loader",
           options: {
             name: "[name].[fullhash].[ext]",
-            outputPath: "/fonts/",
+            outputPath: "/static/fonts/",
           },
         },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
-          "file-loader?hash=sha512&digest=hex&name=/img/[contenthash].[ext]",
+          "file-loader?hash=sha512&digest=hex&name=/static/img/[contenthash].[ext]",
           "image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false",
         ],
       },
@@ -149,10 +149,10 @@ module.exports = {
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map(({ name, path }) => {
             const splitnames = name.split(sep).pop().split(".");
+            console.log(splitnames);
             const ext = `${splitnames[splitnames.length - 1]}`;
             return {
-              path: path,
-              filePath: join(sep, "static", path),
+              path: path.split(sep),
               extension: ext,
               mimeType: getType(ext),
             };
