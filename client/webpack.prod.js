@@ -111,7 +111,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve(__dirname, "public", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
-      publicPath: "/static/",
+      publicPath: "/",
       templateParameters(compilation, assets, options) {
         return {
           compilation,
