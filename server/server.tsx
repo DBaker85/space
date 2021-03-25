@@ -3,7 +3,8 @@ const destroyable = require("server-destroy");
 
 import { readFile, readFileSync, readJSONSync } from "fs-extra";
 import { resolve } from "path";
-
+import { buildSchema } from "graphql";
+import logger from "koa-logger";
 import serve from "koa-static";
 import compress from "koa-compress";
 import mount from "koa-mount";
@@ -13,8 +14,12 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { ServerStyleSheet } from "styled-components";
 import { getInitialFiles } from "./utils/getInitialFiles";
-
+import { resolvers } from "./graphQL/resolvers";
+import { typeDefs } from "./graphQL/typeDefs";
 import App from "../client/src/App";
+import graphqlHTTP from "koa-graphql";
+
+import { Db, MongoClient } from "mongodb";
 
 export type ManifestFile = {
   path: string[];
@@ -23,7 +28,6 @@ export type ManifestFile = {
 };
 
 export type PushManifest = {
-  seperator: string;
   initial: ManifestFile[];
   fonts: {
     [key: string]: ManifestFile;
@@ -34,6 +38,32 @@ export type PushManifest = {
 };
 
 const sheet = new ServerStyleSheet();
+
+const localMongo = "mongodb://localhost:27017";
+const mongo = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@space.npaeb.azure.mongodb.net/space?retryWrites=true&w=majority`;
+const dbRetries = 3;
+const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
+let db: Db;
+
+const mongoClient = new MongoClient(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+(async () => {
+  let i;
+  for (i = 0; i < dbRetries; ++i) {
+    try {
+      await mongoClient.connect();
+      console.log("Connection to database successfull");
+      db = mongoClient.db("space");
+      break;
+    } catch (err) {
+      console.log("Connection to database failed");
+      console.log(err);
+    }
+  }
+})();
 
 const html = renderToString(sheet.collectStyles(<App />));
 const styleTags = sheet.getStyleTags();
@@ -72,13 +102,28 @@ destroyable(server);
 
 const clientPath = resolve(__dirname, "public");
 app.use(compress());
+
+app.use(
+  mount(
+    "/graphql",
+    graphqlHTTP({
+      schema: buildSchema(typeDefs),
+      rootValue: resolvers,
+      graphiql: true,
+      context: () => ({ db }),
+    })
+  )
+);
+
 app.use(mount("/", serve(clientPath, { index: "none" })));
+
+app.use(logger());
 
 const fileList: PushManifest = readJSONSync(
   resolve(__dirname, "public", "push_manifest.json")
 );
 
-const initialFiles = getInitialFiles(fileList.initial, fileList.seperator);
+const initialFiles = getInitialFiles(fileList.initial);
 
 // FIXME: Fix CTX types
 app.use(async (ctx: Context, next) => {

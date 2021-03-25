@@ -6,7 +6,7 @@ const excludedFolders = /(__mocks__|node_modules)/;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 // const { merge } = require("webpack-merge");
-const { resolve, join, sep, extname } = require("path");
+const { resolve, extname } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
@@ -18,6 +18,8 @@ const nameBuilder = (filename) => {
   const name = `${splitnames[0]}.${splitnames[splitnames.length - 1]}`;
   return name;
 };
+
+const splitPath = (path) => path.replace(/\\/g, "/").split("/");
 
 const fontRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.ttf|.woff|.woff2|.eot)$/i;
 const imgRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.svg|.png|.gif)$/i;
@@ -158,7 +160,7 @@ module.exports = {
           .map(({ name, path }) => {
             const ext = extname(name);
             return {
-              path: path.split(sep),
+              path: splitPath(path),
               extension: ext,
               mimeType: getType(ext),
             };
@@ -172,7 +174,7 @@ module.exports = {
             return {
               ...manifest,
               [nameBuilder(path)]: {
-                path: path.split(sep),
+                path: splitPath(path),
                 extension: ext,
                 mimeType: getType(ext),
               },
@@ -186,14 +188,14 @@ module.exports = {
             return {
               ...manifest,
               [nameBuilder(name)]: {
-                path: path.split(sep),
+                path: splitPath(path),
                 extension: ext,
                 mimeType: getType(ext),
               },
             };
           }, seed);
 
-        return { seperator: sep, initial, fonts, images };
+        return { initial, fonts, images };
       },
     }),
     new BundleAnalyzerPlugin({

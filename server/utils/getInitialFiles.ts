@@ -2,7 +2,7 @@ import { openSync, fstatSync } from "fs-extra";
 import { ManifestFile } from "../models/models";
 import { join, sep } from "path";
 
-export const getInitialFiles = (files: ManifestFile[], seperator: string) => {
+export const getInitialFiles = (files: ManifestFile[]) => {
   return files.map((file) => {
     const filePath = file.path.join(sep);
 

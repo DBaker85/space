@@ -10,7 +10,6 @@ export type ManifestFile = {
 };
 
 export type PushManifest = {
-  seperator: string;
   initial: ManifestFile[];
   fonts: {
     [key: string]: ManifestFile;
