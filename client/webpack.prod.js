@@ -13,7 +13,6 @@ const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { getType } = require("mime");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
 
-
 const nameBuilder = (filename) => {
   const splitnames = filename.split("/").pop().split(".");
   const name = `${splitnames[0]}.${splitnames[splitnames.length - 1]}`;
@@ -132,8 +131,8 @@ module.exports = {
     new HtmlWebpackInjectPreload({
       files: [
         {
-          match: /.*\.js$/,
-          attributes: { as: "script" },
+          match: /.*\.woff2?$/,
+          attributes: { as: "font" },
         },
       ],
     }),
@@ -157,7 +156,7 @@ module.exports = {
         const initial = files
           .filter((file) => file.isInitial && !file.name.includes("runtime"))
           .map(({ name, path }) => {
-            const ext = extname(name)
+            const ext = extname(name);
             return {
               path: path.split(sep),
               extension: ext,
@@ -168,8 +167,8 @@ module.exports = {
         const fonts = files
           .filter((file) => fontRegex.test(file.path))
           .reduce((manifest, { name, path }) => {
-            const ext = extname(name)
-           
+            const ext = extname(name);
+
             return {
               ...manifest,
               [nameBuilder(path)]: {
@@ -183,7 +182,7 @@ module.exports = {
         const images = files
           .filter((file) => imgRegex.test(file.name))
           .reduce((manifest, { name, path }) => {
-            const ext = extname(name)
+            const ext = extname(name);
             return {
               ...manifest,
               [nameBuilder(name)]: {
