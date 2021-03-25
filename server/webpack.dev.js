@@ -12,7 +12,7 @@ module.exports = {
   context: resolve(__dirname),
   entry: [
     "webpack/hot/poll?1000", // bundle the client for hot reloading, only- means to only hot reload for successful updates
-    "./server.tsx",
+    "./dev-server.tsx",
   ],
   watch: true,
   mode: "development",

@@ -14,3 +14,21 @@ export const findSmallest = (array: any[], key: string) =>
 
 export const findLargest = (array: any[], key: string) =>
   array.reduce((prev, curr) => (prev[key] > curr[key] ? prev : curr))[key];
+
+export const logger = {
+  log: (message?: any, ...optionalParams: any[]) => {
+    return process.env.PRODUCTION
+      ? null
+      : console.log(message, ...optionalParams);
+  },
+  warn: (message?: any, ...optionalParams: any[]) => {
+    return process.env.PRODUCTION
+      ? null
+      : console.warn(message, ...optionalParams);
+  },
+  error: (message?: any, ...optionalParams: any[]) => {
+    return process.env.PRODUCTION
+      ? null
+      : console.error(message, ...optionalParams);
+  },
+};
