@@ -5,6 +5,6 @@ import { fonts } from "./fonts";
 
 export const globalStyle = css`
   ${reset}
-
+  ${fonts}
   ${global}
 `;
