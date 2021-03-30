@@ -64,21 +64,18 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[fullhash].[ext]",
-            outputPath: "/static/fonts/",
-          },
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "static/img/[name].[hash][ext][query]",
         },
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          "file-loader?hash=sha512&digest=hex&name=/static/img/[contenthash].[ext]",
-          "image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false",
-        ],
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+        type: "asset/resource",
+        generator: {
+          filename: "static/fonts/[name].[hash][ext][query]",
+        },
       },
       {
         test: /\.pug$/,
