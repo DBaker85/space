@@ -167,8 +167,9 @@ module.exports = merge(commonConfig, {
       analyzerMode: "static",
       reportFilename: resolve(
         __dirname,
+        "..",
         "reports",
-        "docs-analysis-report.html"
+        "client-bundle-report.html"
       ),
       openAnalyzer: false,
     }),
