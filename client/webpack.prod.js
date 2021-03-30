@@ -1,17 +1,18 @@
-//   const { merge } = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const excludedFolders = /(__mocks__|node_modules)/;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-// const { merge } = require("webpack-merge");
 const { resolve, extname } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CopyPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { getType } = require("mime");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
+
+const commonConfig = require("./webpack.common.js");
 
 const nameBuilder = (filename) => {
   const splitnames = filename.split("/").pop().split(".");
@@ -24,11 +25,7 @@ const splitPath = (path) => path.replace(/\\/g, "/").split("/");
 const fontRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.ttf|.woff|.woff2|.eot)$/i;
 const imgRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.svg|.png|.gif)$/i;
 
-module.exports = {
-  resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
-  },
-
+module.exports = merge(commonConfig, {
   context: resolve(__dirname),
   entry: resolve(__dirname, "src", "index.tsx"),
   mode: "production",
@@ -46,11 +43,7 @@ module.exports = {
       }),
     ],
   },
-  output: {
-    filename: "static/js/[name].[fullhash].min.js",
-    path: resolve(__dirname, "dist"),
-    publicPath: "/",
-  },
+
   module: {
     rules: [
       {
@@ -62,31 +55,6 @@ module.exports = {
           },
         },
         exclude: /node_modules/,
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
-        generator: {
-          filename: "static/img/[name].[hash][ext][query]",
-        },
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        type: "asset/resource",
-        generator: {
-          filename: "static/fonts/[name].[hash][ext][query]",
-        },
-      },
-      {
-        test: /\.pug$/,
-        use: ["pug-loader"],
-      },
-
-      {
-        test: /\.m?js/,
-        resolve: {
-          fullySpecified: false,
-        },
       },
     ],
   },
@@ -205,4 +173,4 @@ module.exports = {
       openAnalyzer: false,
     }),
   ],
-};
+});
