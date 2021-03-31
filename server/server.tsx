@@ -1,18 +1,19 @@
-// import { createSecureServer } from 'http2';
-// import { readFileSync } from 'fs-extra';
-// import { app } from './app';
-// import { resolve } from 'path';
+import { readFileSync } from "fs-extra";
+import { createSecureServer } from "http2";
+import { resolve } from "path";
 
-// const localPort = 5055;
+import { app } from "./app";
 
-// const port = process.env.PORT || localPort;
+const localPort = 5055;
 
-// const h2Options = {
-//   key: readFileSync(resolve(__dirname, 'keys', 'key.pem')),
-//   cert: readFileSync(resolve(__dirname, 'keys', 'cert.pem')),
-//   allowHTTP1: true
-// };
+const port = process.env.PORT || localPort;
 
-// createSecureServer(h2Options, app.callback()).listen(port, () =>
-//   console.log(`static assets served on ${port}`)
-// );
+const h2Options = {
+  key: readFileSync(resolve(__dirname, "..", "keys", "key.pem")),
+  cert: readFileSync(resolve(__dirname, "..", "keys", "cert.pem")),
+  allowHTTP1: true,
+};
+
+createSecureServer(h2Options, app.callback()).listen(port, () =>
+  console.log(`static assets served on ${port}`)
+) as any;

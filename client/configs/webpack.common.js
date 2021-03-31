@@ -34,7 +34,7 @@ module.exports = {
   },
   output: {
     filename: "static/js/[name].[fullhash].min.js",
-    path: resolve(__dirname, "dist"),
+    path: resolve(process.cwd(), "dist"),
     publicPath: "/",
   },
 };

@@ -12,18 +12,13 @@ const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const { getType } = require("mime");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
 
-const commonConfig = require("./webpack.common.js");
-
-const nameBuilder = (filename) => {
-  const splitnames = filename.split("/").pop().split(".");
-  const name = `${splitnames[0]}.${splitnames[splitnames.length - 1]}`;
-  return name;
-};
-
-const splitPath = (path) => path.replace(/\\/g, "/").split("/");
-
-const fontRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.ttf|.woff|.woff2|.eot)$/i;
-const imgRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.svg|.png|.gif)$/i;
+const commonConfig = require("./configs/webpack.common.js");
+const {
+  fontRegex,
+  splitPath,
+  imgRegex,
+  nameBuilder,
+} = require("./configs/helpers.js");
 
 module.exports = merge(commonConfig, {
   context: resolve(__dirname),
