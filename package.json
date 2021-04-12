@@ -44,6 +44,7 @@
     "bootstrap": "npm i && lerna bootstrap",
     "build": "lerna run build --scope client --stream && lerna run build --scope server --stream",
     "start:server": "lerna run build --scope client && lerna run start --scope server --stream",
+    "start:storybook": "lerna run storybook --stream",
     "start:client": "lerna run start --scope client --stream",
     "test": "lerna run test",
     "prepare": "husky install"
