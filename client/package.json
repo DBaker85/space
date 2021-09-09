@@ -2,31 +2,10 @@
   "name": "client",
   "version": "3.0.0",
   "private": true,
-  "dependencies": {
-    "redux-persist": "^6.0.0",
-    "redux-toolkit": "^1.1.2"
-  },
-  "devDependencies": {
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@principalstudio/html-webpack-inject-preload": "^1.2.7",
-    "@storybook/addon-actions": "^6.3.8",
-    "@storybook/addon-essentials": "^6.3.8",
-    "@storybook/addon-links": "^6.3.8",
-    "@storybook/react": "^6.3.8",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "compression-webpack-plugin": "^7.1.2",
-    "html-webpack-plugin": "^5.3.2",
-    "react-refresh": "^0.9.0",
-    "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-manifest-plugin": "^3.2.0"
-  },
   "scripts": {
     "start": "webpack serve --config=webpack.dev.js",
     "build": "webpack --config=webpack.prod.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -47,5 +26,45 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "redux-persist": "^6.0.0",
+    "redux-toolkit": "^1.1.2",
+    "styled-components": "^5.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.4",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.4",
+    "@principalstudio/html-webpack-inject-preload": "^1.2.7",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/react": "^6.3.8",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@types/styled-components": "^5.1.14",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^8.0.1",
+    "copy-webpack-plugin": "^9.0.1",
+    "html-webpack-plugin": "^5.3.2",
+    "mime": "^2.5.2",
+    "react-refresh": "^0.10.0",
+    "terser-webpack-plugin": "^5.2.3",
+    "typescript": "4.2",
+    "webpack": "^5.52.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.1.1",
+    "webpack-manifest-plugin": "^4.0.2",
+    "webpack-merge": "^5.8.0"
   }
 }

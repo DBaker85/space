@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const { resolve, join } = require("path");
 
-const commonConfig = require("./webpack.common.js");
+const commonConfig = require("./configs/webpack.common.js");
 
 module.exports = merge(commonConfig, {
   devtool: "source-map",
@@ -18,7 +18,7 @@ module.exports = merge(commonConfig, {
   mode: "development",
   devServer: {
     hot: true, // enable HMR on the server
-    contentBase: join(__dirname, "public"),
+    static: join(__dirname, "public"),
   },
 
   module: {
