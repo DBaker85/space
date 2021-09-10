@@ -3950,15 +3950,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@types/node-fetch@npm:3.0.3"
-  dependencies:
-    node-fetch: "*"
-  checksum: db16e29e361e19452148f758a16188dfc9daa8f8f78c3ae0c00d12ba3eae40ab85ab8e082147e92a6421aaa8a9ceeed0e729dcbb770f5f34154363853b904932
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:^16.9.0":
   version: 16.9.0
   resolution: "@types/node@npm:16.9.0"
@@ -7059,13 +7050,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"data-uri-to-buffer@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "data-uri-to-buffer@npm:3.0.1"
-  checksum: 9f28217ba76eaca400a75f4b1a1d0f55058082c8152a3d88ad5feeec5e54b8c7b6d8a7bb210206bfa552a927c1b942b6102ddbb2feaa557321ea94762c4f14e2
-  languageName: node
-  linkType: hard
-
 "data-urls@npm:^2.0.0":
   version: 2.0.0
   resolution: "data-urls@npm:2.0.0"
@@ -8364,15 +8348,6 @@ __metadata:
   dependencies:
     bser: 2.1.1
   checksum: f9ec24592a45026a6a7f54034a4b5efb010cac7d7fbc234fe9ae5d725c13efa9be0ded1ae348473fc42af4e28eea53f8b993857c0c49e6d721f7c9eb5b21217f
-  languageName: node
-  linkType: hard
-
-"fetch-blob@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "fetch-blob@npm:3.1.2"
-  dependencies:
-    web-streams-polyfill: ^3.0.3
-  checksum: cbaf7334d2b21f7d05fcaf84b6cf369d57c8b052c8eaf8a1d8014a9d114cbd58c82e9a7cb365a74d140eebaf053aa2f6edef5916fb21d86da926d6dc5b42bf03
   languageName: node
   linkType: hard
 
@@ -12541,13 +12516,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:*, node-fetch@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "node-fetch@npm:3.0.0"
-  dependencies:
-    data-uri-to-buffer: ^3.0.1
-    fetch-blob: ^3.1.2
-  checksum: eb79c19a3047c99c121a5bcb826698fd6d8e6073cc0322dccdd1dbeb4237ca710c7d251ef166d37e244fa9d1dc91b752232733cd44f43a807148a2b4e07b569f
+"node-fetch@npm:2.6.1":
+  version: 2.6.1
+  resolution: "node-fetch@npm:2.6.1"
+  checksum: cbb171635e538162b977eac5dfe7a1e07a9a02e991924377a6435502291e2f823d306b95aabc455caebf4a118ccf836868462bc70ccc3095af02bb9da61fda37
   languageName: node
   linkType: hard
 
@@ -15119,7 +15091,6 @@ fsevents@^1.2.7:
     "@types/koa-static": ^4.0.2
     "@types/mongodb": ^4.0.7
     "@types/node": ^16.9.0
-    "@types/node-fetch": ^3.0.3
     "@types/react": ^17.0.20
     "@types/react-dom": ^17.0.9
     "@types/styled-components": ^5.1.14
@@ -15137,7 +15108,7 @@ fsevents@^1.2.7:
     koa-send: ^5.0.1
     koa-static: ^5.0.0
     mongodb: ^4.1.1
-    node-fetch: ^3.0.0
+    node-fetch: 2.6.1
     react: ^17.0.2
     react-dom: ^17.0.2
     server-destroy: ^1.0.1
@@ -17168,13 +17139,6 @@ typescript@4.2:
   version: 1.1.4
   resolution: "web-namespaces@npm:1.1.4"
   checksum: 0899d2a4a088b15761b6234ff6610f9598112d58f27adad86f7881ad51631317b47033bfa84cdeb62a37c8b6c3ece618f4ff720fd42c99f4907a1d9390c9dae0
-  languageName: node
-  linkType: hard
-
-"web-streams-polyfill@npm:^3.0.3":
-  version: 3.1.1
-  resolution: "web-streams-polyfill@npm:3.1.1"
-  checksum: 73f7cb030182b34751f20c596df4888985ae3bc5b6bcc1b204436b3f95c77bf25aba329c450c95c1721a7b3868ae1c5b9dae144e5f1853b55405243a537bedfa
   languageName: node
   linkType: hard
 
