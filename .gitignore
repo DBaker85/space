@@ -3,6 +3,7 @@ dist
 *.log
 reports
 .DS_Store
+*.pem
 
 # yarn 0 setups
 .yarn/*
