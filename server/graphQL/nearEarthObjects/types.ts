@@ -10,4 +10,4 @@ export const NeoTypes = `
   }
 `;
 
-export const NeoQuery = `neo: NeoOutputType`;
+export const NeoQuery = `nearEarthObjects: NeoOutputType`;

@@ -40,16 +40,13 @@ export type PushManifest = {
 
 const sheet = new ServerStyleSheet();
 
-const localMongo = "mongodb://localhost:27017";
+const localMongo = "mongodb://127.0.0.1:27017";
 const mongo = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@space.npaeb.azure.mongodb.net/space?retryWrites=true&w=majority`;
 const dbRetries = 3;
 const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 let db: Db;
 
-const mongoClient = new MongoClient(MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const mongoClient = new MongoClient(MONGO_URL);
 
 (async () => {
   let i;
@@ -58,6 +55,7 @@ const mongoClient = new MongoClient(MONGO_URL, {
       await mongoClient.connect();
       console.log("Connection to database successfull");
       db = mongoClient.db("space");
+      db.command({ ping: 1 });
       break;
     } catch (err) {
       console.log("Connection to database failed");
