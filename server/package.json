@@ -48,6 +48,7 @@
     "babel-loader": "8.2.5",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "10.2.4",
+    "dotenv-webpack": "^7.1.0",
     "jest": "27.5.1",
     "start-server-nestjs-webpack-plugin": "2.2.5",
     "typescript": "4.6.3",

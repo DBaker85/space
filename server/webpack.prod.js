@@ -87,6 +87,7 @@ module.exports = {
       ),
       openAnalyzer: false,
     }),
+    new Dotenv(),
   ],
 
   performance: {

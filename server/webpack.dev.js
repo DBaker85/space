@@ -7,6 +7,7 @@ const { resolve } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const StartServerPlugin = require("start-server-nestjs-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   context: resolve(__dirname),
@@ -86,6 +87,7 @@ module.exports = {
       },
     }),
     new StartServerPlugin({ name: "server.js", nodeArgs: ["--inspect"] }),
+    new Dotenv(),
   ],
 
   performance: {
