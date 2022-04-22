@@ -68,7 +68,7 @@ module.exports = merge(commonConfig, {
       },
     }),
 
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
   ],
 });
