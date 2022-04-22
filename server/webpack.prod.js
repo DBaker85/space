@@ -27,7 +27,15 @@ module.exports = {
   node: {
     __dirname: false,
   },
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals(),
+    "mongodb-client-encryption",
+    "aws4",
+    "saslprep",
+    "kerberos",
+    "snappy",
+    "bson-ext",
+  ],
   module: {
     rules: [
       {

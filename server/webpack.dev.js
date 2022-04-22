@@ -33,6 +33,12 @@ module.exports = {
     nodeExternals({
       allowlist: ["webpack/hot/poll?1000"],
     }),
+    "mongodb-client-encryption",
+    "aws4",
+    "saslprep",
+    "kerberos",
+    "snappy",
+    "bson-ext",
   ],
   module: {
     rules: [
@@ -60,6 +66,7 @@ module.exports = {
     hot: true, // enable HMR on the server
   },
   devtool: "cheap-module-source-map",
+
   plugins: [
     new CopyPlugin({
       patterns: [

@@ -4,6 +4,7 @@ dist
 reports
 .DS_Store
 *.pem
+*.env
 
 # yarn 0 setups
 .yarn/*

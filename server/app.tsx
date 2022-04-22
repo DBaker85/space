@@ -10,7 +10,7 @@ import Koa, { Context } from "koa";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { ServerStyleSheet } from "styled-components";
-import graphqlHTTP from "koa-graphql";
+import { graphqlHTTP } from "koa-graphql";
 
 import KoaLogger from "koa-logger";
 import { Db, MongoClient } from "mongodb";
