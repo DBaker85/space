@@ -1,0 +1,74 @@
+{
+  "name": "client",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve --config=webpack.dev.js",
+    "build": "webpack --config=webpack.prod.js",
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "redux-persist": "6.0.0",
+    "redux-toolkit": "1.1.2",
+    "styled-components": "5.3.5"
+  },
+  "devDependencies": {
+    "@babel/core": "7.17.9",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-react": "7.16.7",
+    "@babel/preset-typescript": "7.16.7",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.5",
+    "@principalstudio/html-webpack-inject-preload": "1.2.7",
+    "@storybook/addon-actions": "6.4.22",
+    "@storybook/addon-essentials": "6.4.22",
+    "@storybook/addon-links": "6.4.22",
+    "@storybook/builder-webpack5": "6.4.22",
+    "@storybook/manager-webpack5": "6.4.22",
+    "@storybook/react": "6.4.22",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.1.1",
+    "@testing-library/user-event": "14.1.1",
+    "@types/jest": "27.4.1",
+    "@types/react": "18.0.6",
+    "@types/react-dom": "18.0.2",
+    "@types/styled-components": "5.1.25",
+    "babel-loader": "8.2.5",
+    "clean-webpack-plugin": "4.0.0",
+    "compression-webpack-plugin": "9.2.0",
+    "copy-webpack-plugin": "10.2.4",
+    "html-webpack-plugin": "5.5.0",
+    "jest": "27.5.1",
+    "mime": "3.0.0",
+    "react-refresh": "0.12.0",
+    "terser-webpack-plugin": "5.3.1",
+    "typescript": "4.6.3",
+    "webpack": "5.72.0",
+    "webpack-bundle-analyzer": "4.5.0",
+    "webpack-cli": "4.9.2",
+    "webpack-dev-server": "4.8.1",
+    "webpack-manifest-plugin": "5.0.0",
+    "webpack-merge": "5.8.0"
+  }
+}
