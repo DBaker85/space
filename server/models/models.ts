@@ -1,6 +1,6 @@
 import { Db } from "mongodb";
 
-export type GraphQLContext = () => { db: Db };
+export type GraphQLContext = { db: Db };
 
 export type ManifestFile = {
   path: string[];

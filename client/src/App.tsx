@@ -3,11 +3,36 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
 import { globalStyle } from "./styles";
 
+import { useQuery, gql } from "@apollo/client";
+
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
 const StyledApp = styled.div`
   background-color: #cccccc;
 `;
+
+const EXCHANGE_RATES = gql`
+  query GetExchangeRates {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
+function ExchangeRates() {
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return data.rates.map(({ currency, rate }) => (
+    <div key={currency}>
+      <p>
+        {currency}: {rate}
+      </p>
+    </div>
+  ));
+}
 
 function App() {
   return (
@@ -26,6 +51,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <ExchangeRates />
     </StyledApp>
   );
 }

@@ -1,14 +1,27 @@
 import React, { StrictMode } from "react";
-import { hydrate } from "react-dom";
+import { hydrateRoot, createRoot } from "react-dom/client";
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://48p1r2roz4.sse.codesandbox.io",
+  cache: new InMemoryCache(),
+});
 
 import App from "./App";
 // import reportWebVitals from './reportWebVitals';
 
-hydrate(
+const container = document.getElementById("root");
+
+const root = createRoot(container!);
+// const root = hydrateRoot(container!, <App />);
+
+root.render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById("root")
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

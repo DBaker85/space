@@ -24,7 +24,7 @@ module.exports = {
     libraryTarget: "commonjs2",
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    extensions: [".jsx", ".ts", ".tsx", ".mjs", ".js"],
   },
   target: "node",
   node: {
