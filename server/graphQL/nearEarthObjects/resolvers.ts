@@ -27,9 +27,10 @@ let nearEarthObjects: QueryResponse;
 export const nearEarthObjectsQueries = {
   nearEarthObjects: async (
     parent: any,
+    args: any,
     context: GraphQLContext
   ): Promise<QueryResponse> => {
-    const db = context().db;
+    const { db } = context;
     const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
     const dbase = db
