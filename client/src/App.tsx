@@ -11,27 +11,30 @@ const StyledApp = styled.div`
   background-color: #cccccc;
 `;
 
-const EXCHANGE_RATES = gql`
-  query GetExchangeRates {
-    rates(currency: "USD") {
-      currency
-      rate
+const WEATHER = gql`
+  query GetData {
+    nearEarthObjects {
+      elements
+    }
+    weather {
+      weather
+      sun {
+        set
+      }
     }
   }
 `;
 function ExchangeRates() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { loading, error, data } = useQuery(WEATHER);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.rates.map(({ currency, rate }) => (
-    <div key={currency}>
-      <p>
-        {currency}: {rate}
-      </p>
+  return (
+    <div>
+      <p>{data.weather.weather}</p>
     </div>
-  ));
+  );
 }
 
 function App() {

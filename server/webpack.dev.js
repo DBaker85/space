@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const StartServerPlugin = require("start-server-nestjs-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   context: resolve(__dirname),
@@ -49,6 +50,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-typescript", "@babel/preset-react"],
+            plugins: [["babel-plugin-styled-components"]],
           },
         },
         exclude: /node_modules/,
@@ -85,6 +87,16 @@ module.exports = {
       "process.env": {
         NODE_ENV: JSON.stringify("development"),
       },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+      reportFilename: resolve(
+        __dirname,
+        "..",
+        "reports",
+        "server-bundle-report.html"
+      ),
+      openAnalyzer: false,
     }),
     new StartServerPlugin({ name: "server.js", nodeArgs: ["--inspect"] }),
     new Dotenv(),

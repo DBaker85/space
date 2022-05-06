@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "prepare": "husky install",
-    "start:client": "yarn workspace server start && yarn workspace client start"
+    "start:server": "yarn workspace client build && yarn workspace server start"
   },
   "devDependencies": {
     "husky": "7.0.4",

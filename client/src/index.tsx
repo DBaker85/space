@@ -4,7 +4,7 @@ import { hydrateRoot, createRoot } from "react-dom/client";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://48p1r2roz4.sse.codesandbox.io",
+  uri: "http://localhost:5055/graphql",
   cache: new InMemoryCache(),
 });
 
@@ -13,16 +13,23 @@ import App from "./App";
 
 const container = document.getElementById("root");
 
-const root = createRoot(container!);
-// const root = hydrateRoot(container!, <App />);
-
-root.render(
+// const root = createRoot(container!);
+const root = hydrateRoot(
+  container!,
   <StrictMode>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
   </StrictMode>
 );
+
+// root.render(
+//   <StrictMode>
+//     <ApolloProvider client={client}>
+//       <App />
+//     </ApolloProvider>
+//   </StrictMode>
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
