@@ -17,6 +17,7 @@
     "apollo-server-koa": "^3.6.7",
     "fs-extra": "10.1.0",
     "graphql": "^16.4.0",
+    "graphql-tools": "^8.2.8",
     "koa": "^2.13.4",
     "koa-compress": "5.1.0",
     "koa-logger": "3.2.1",

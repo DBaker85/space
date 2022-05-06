@@ -6,7 +6,6 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from "apollo-server-core";
-import Koa from "koa";
 import http from "http";
 
 import { readFileSync } from "fs-extra";
@@ -49,23 +48,24 @@ async function startApolloServer() {
     resolvers,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
-      // process.env.NODE_ENV === "production"
-      // ? ApolloServerPluginLandingPageDisabled()
-      // :
-      ApolloServerPluginLandingPageGraphQLPlayground(),
+      process.env.NODE_ENV === "production"
+        ? ApolloServerPluginLandingPageDisabled()
+        : ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
     context: async () => {
-      let i;
-      for (i = 0; i < dbRetries; ++i) {
-        try {
-          await mongoClient.connect();
-          console.log("Connection to database successfull");
-          db = mongoClient.db("space");
-          db.command({ ping: 1 });
-          break;
-        } catch (err) {
-          console.log("Connection to database failed");
-          console.log(err);
+      if (db instanceof Db === false) {
+        let i;
+        for (i = 0; i < dbRetries; ++i) {
+          try {
+            await mongoClient.connect();
+            console.log("Connection to database successfull");
+            db = mongoClient.db("space");
+            db.command({ ping: 1 });
+            break;
+          } catch (err) {
+            console.log("Connection to database failed");
+            console.log(err);
+          }
         }
       }
       return db;
