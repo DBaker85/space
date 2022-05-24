@@ -23,6 +23,7 @@ module.exports = merge(commonConfig, {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-typescript", "@babel/preset-react"],
+            plugins: ["babel-plugin-styled-components"],
           },
         },
         exclude: /node_modules/,
