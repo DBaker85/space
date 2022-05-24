@@ -6,7 +6,7 @@ const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   output: {
-    path: resolve(__dirname, "dist"),
+    path: resolve(__dirname, "..", "dist"),
     filename: "server.js",
     // publicPath: '/assets/',
     libraryTarget: "commonjs2",
@@ -33,7 +33,7 @@ module.exports = {
     rules: [
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/source",
+        type: "asset/resource",
       },
       {
         test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -49,7 +49,7 @@ module.exports = {
       patterns: [
         {
           from: resolve(process.cwd(), "..", "client", "dist"),
-          to: resolve(__dirname, "dist", "public"),
+          to: resolve(__dirname, "..", "dist", "public"),
         },
       ],
     }),
