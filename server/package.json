@@ -20,6 +20,8 @@
     "graphql-modules": "^2.0.0",
     "graphql-scalars": "^1.17.0",
     "graphql-tools": "^8.2.8",
+    "i18next": "^21.8.4",
+    "i18next-http-backend": "^1.4.0",
     "koa": "^2.13.4",
     "koa-compress": "5.1.0",
     "koa-logger": "3.2.1",

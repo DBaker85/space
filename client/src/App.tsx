@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { globalStyle } from "./styles";
 
 import { useQuery, gql } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
@@ -26,33 +27,25 @@ const WEATHER = gql`
 `;
 function ExchangeRates() {
   const { loading, error, data } = useQuery(WEATHER);
+  const { t, i18n } = useTranslation();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <p>{data.weather.weather}</p>
+      <p>{t(data.weather.weather)}</p>
     </div>
   );
 }
 
 function App() {
+  const { t, i18n } = useTranslation();
   return (
     <StyledApp className="App">
       <GlobalStyle />
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>{t("welcome")}</p>
       </header>
       <ExchangeRates />
     </StyledApp>

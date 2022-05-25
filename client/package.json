@@ -30,8 +30,11 @@
   "dependencies": {
     "@apollo/client": "^3.6.5",
     "graphql": "^16.4.0",
+    "i18next": "^21.8.4",
+    "i18next-browser-languagedetector": "^6.1.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-i18next": "^11.16.9",
     "redux-persist": "6.0.0",
     "redux-toolkit": "1.1.2",
     "styled-components": "^5.3.5"

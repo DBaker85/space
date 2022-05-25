@@ -7,7 +7,7 @@ const client = new ApolloClient({
   uri: "http://localhost:5055/graphql",
   cache: new InMemoryCache(),
 });
-
+import "./i18n";
 import App from "./App";
 // import reportWebVitals from './reportWebVitals';
 
