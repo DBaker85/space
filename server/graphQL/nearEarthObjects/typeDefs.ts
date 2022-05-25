@@ -1,4 +1,6 @@
-export const NeoTypes = `
+import { gql } from "graphql-modules";
+
+export const NeoTypes = gql`
   type NeoObjectsType {
     size: Float
     orbit: Float
@@ -10,4 +12,8 @@ export const NeoTypes = `
   }
 `;
 
-export const NeoQuery = `nearEarthObjects: NeoOutputType`;
+export const NeoQuery = gql`
+  type Query {
+    nearEarthObjects: NeoOutputType
+  }
+`;

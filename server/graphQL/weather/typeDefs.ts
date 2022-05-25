@@ -1,5 +1,6 @@
-export const WeatherTypes = `
+import { gql } from "graphql-modules";
 
+export const WeatherTypes = gql`
   type SunType {
     rise: Float
     set: Float
@@ -16,4 +17,8 @@ export const WeatherTypes = `
   }
 `;
 
-export const WeatherQuery = `weather: WeatherOutputType`;
+export const WeatherQuery = gql`
+  type Query {
+    weather: WeatherOutputType
+  }
+`;
