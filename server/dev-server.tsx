@@ -12,8 +12,7 @@ import { readFileSync } from "fs-extra";
 import { createSecureServer } from "http2";
 const destroyable = require("server-destroy");
 import { resolve } from "path";
-import { resolvers } from "./graphQL/resolvers";
-import { typeDefs } from "./graphQL/typeDefs";
+import { schema } from "./graphQL";
 
 import { Db, MongoClient } from "mongodb";
 
@@ -44,8 +43,7 @@ const mongoClient = new MongoClient(MONGO_URL);
 async function startApolloServer() {
   const httpServer = http.createServer();
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       process.env.NODE_ENV === "production"

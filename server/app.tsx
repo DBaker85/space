@@ -16,7 +16,7 @@ import { getDataFromTree } from "@apollo/client/react/ssr";
 import { SchemaLink } from "@apollo/client/link/schema";
 import { makeExecutableSchema } from "graphql-tools";
 
-import { typeDefs } from "./graphQL/typeDefs";
+import { schema } from "./graphQL";
 
 import { getInitialFiles } from "./utils/getInitialFiles";
 import { logger } from "./utils/utils";
@@ -38,8 +38,6 @@ export type PushManifest = {
     [key: string]: ManifestFile;
   };
 };
-
-const schema = makeExecutableSchema({ typeDefs });
 
 const fileList: PushManifest = readJSONSync(
   resolve(__dirname, "public", "push_manifest.json")
