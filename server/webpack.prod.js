@@ -16,19 +16,7 @@ module.exports = merge(commonConfig, {
   mode: "production",
 
   module: {
-    rules: [
-      {
-        test: [/\.jsx?$/, /\.tsx?$/],
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-typescript", "@babel/preset-react"],
-            plugins: ["babel-plugin-styled-components"],
-          },
-        },
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [],
   },
   plugins: [
     new webpack.DefinePlugin({

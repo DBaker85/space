@@ -1,10 +1,10 @@
 import { createModule } from "graphql-modules";
-import { NeoTypes, NeoQuery } from "./typeDefs";
+import neoTypeDefs from "./typeDefs.gql";
 import { nearEarthObjectsQueries } from "./resolvers";
 
 export const NEOModule = createModule({
   id: "NEO-module",
-  typeDefs: [NeoTypes, NeoQuery],
+  typeDefs: [neoTypeDefs],
   resolvers: {
     Query: { ...nearEarthObjectsQueries },
   },

@@ -19,19 +19,7 @@ module.exports = merge(commonConfig, {
   mode: "development",
 
   module: {
-    rules: [
-      {
-        test: [/\.jsx?$/, /\.tsx?$/],
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-typescript", "@babel/preset-react"],
-            plugins: ["babel-plugin-styled-components"],
-          },
-        },
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [],
   },
   devServer: {
     hot: true, // enable HMR on the server

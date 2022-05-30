@@ -1,0 +1,13 @@
+type NeoObjectsType {
+  size: Float
+  orbit: Float
+}
+
+type NeoOutputType {
+  elements: Float
+  objects: [NeoObjectsType]
+}
+
+type Query {
+  nearEarthObjects: NeoOutputType
+}
