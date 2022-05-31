@@ -17,4 +17,4 @@ reports
 
 # generated graphql
 graphql.schema.json
-client/generated/*
+
