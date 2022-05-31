@@ -14,3 +14,7 @@ reports
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# generated graphql
+graphql.schema.json
+client/generated/*
