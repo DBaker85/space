@@ -1,8 +1,7 @@
 overwrite: true
 schema: "server/graphQL/**/*.gql"
-# documents: "client/src/**/*.gql"
 generates:
-  client/generated/graphql.tsx:
+  client/src/generated/graphql.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"

@@ -14,6 +14,8 @@ const StyledApp = styled.div`
 
 const WEATHER = gql`
   query GetData {
+    isLoggedIn @client
+    cartItems @client
     nearEarthObjects {
       elements
     }
@@ -31,6 +33,8 @@ function ExchangeRates() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
+  console.log(data);
 
   return (
     <div>
