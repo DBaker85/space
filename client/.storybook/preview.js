@@ -1,7 +1,7 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { addDecorator } from "@storybook/react";
 import { globalStyle } from "../src/styles";
-import { light } from "../src/styles/theme";
+import { theme } from "../src/styles/theme";
 
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
@@ -18,7 +18,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <>
-      <ThemeProvider theme={light}>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Story />
       </ThemeProvider>

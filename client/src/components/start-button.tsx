@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 
 import { StyledStartButton } from "./start-button.style";
 
-export const StartButton: FunctionComponent = () => (
-  <StyledStartButton>hello</StyledStartButton>
-);
+export const StartButton: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => <StyledStartButton>{children}</StyledStartButton>;

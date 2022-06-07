@@ -2,7 +2,7 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 import styled from "styled-components";
 
-import { StartButton } from "./start-button";
+import { Loader } from "./loader";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,13 +15,13 @@ const Wrapper = styled.div`
 
 const Template: Story = () => (
   <Wrapper>
-    <StartButton>Launch</StartButton>
+    <Loader />
   </Wrapper>
 );
 
 export default {
-  title: "Start Button",
-  component: StartButton,
+  title: "Loader",
+  component: Loader,
   argTypes: {
     className: {
       control: null,
@@ -31,6 +31,6 @@ export default {
 
 export const Default = Template.bind({});
 
-Default.args = {
-  title: "Title goes here",
-};
+// Default.args = {
+//   title: "Title goes here",
+// };

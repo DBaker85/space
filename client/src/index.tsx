@@ -9,7 +9,10 @@ import {
   makeVar,
 } from "@apollo/client";
 import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
-
+import "./i18n";
+import App from "./App";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 // Initializes to true if localStorage includes a 'token' key,
 // false otherwise
 export const isLoggedInVar = makeVar<boolean>(true);
@@ -56,8 +59,7 @@ const client = new ApolloClient({
   cache,
   typeDefs,
 });
-import "./i18n";
-import App from "./App";
+
 // import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById("root");
@@ -65,7 +67,9 @@ const container = document.getElementById("root");
 const Core = () => (
   <StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </ApolloProvider>
   </StrictMode>
 );
