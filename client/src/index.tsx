@@ -1,76 +1,29 @@
 import React, { StrictMode } from "react";
 import { hydrateRoot, createRoot } from "react-dom/client";
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-  makeVar,
-} from "@apollo/client";
-import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
-import "./i18n";
-import App from "./App";
 import { ThemeProvider } from "styled-components";
+
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
+
+import App from "./App";
 import { theme } from "./styles/theme";
-// Initializes to true if localStorage includes a 'token' key,
-// false otherwise
-export const isLoggedInVar = makeVar<boolean>(true);
 
-// Initializes to an empty array
-export const cartItemsVar = makeVar<string[]>(["1", "2", "3"]);
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        isLoggedIn: {
-          read() {
-            return isLoggedInVar();
-          },
-        },
-        cartItems: {
-          read() {
-            return cartItemsVar();
-          },
-        },
-      },
-    },
-  },
-});
-
-// await before instantiating ApolloClient, else queries might run before the cache is persisted
-(async function boot() {
-  await persistCache({
-    cache,
-    storage: new LocalStorageWrapper(window.localStorage),
-  });
-})();
-
-export const typeDefs = gql`
-  extend type Query {
-    isLoggedIn: Boolean!
-    cartItems: [ID!]!
-  }
-`;
-
-const client = new ApolloClient({
-  uri: "http://localhost:5055/graphql",
-  cache,
-  typeDefs,
-});
+const { messages } = require(`@lingui/loader!./locales/en/messages.po`);
 
 // import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById("root");
 
+i18n.load("en", messages);
+i18n.activate("en");
+
 const Core = () => (
   <StrictMode>
-    <ApolloProvider client={client}>
+    <I18nProvider i18n={i18n}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-    </ApolloProvider>
+    </I18nProvider>
   </StrictMode>
 );
 

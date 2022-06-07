@@ -28,10 +28,15 @@ module.exports = merge(commonConfig, {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-typescript", "@babel/preset-react"],
+            presets: [
+              "@babel/preset-typescript",
+              "@babel/preset-react",
+              "@lingui/babel-preset-react",
+            ],
             plugins: [
               require.resolve("react-refresh/babel"),
               "babel-plugin-styled-components",
+              "macros",
             ],
           },
         },

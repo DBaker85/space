@@ -7,7 +7,9 @@
     "build": "webpack --config=webpack.prod.js",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "extract": "lingui extract",
+    "compile": "lingui compile"
   },
   "eslintConfig": {
     "extends": [
@@ -29,6 +31,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.5",
+    "@lingui/react": "^3.13.3",
     "apollo3-cache-persist": "^0.14.0",
     "graphql": "^16.4.0",
     "i18next": "^21.8.4",
@@ -41,10 +44,15 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
-    "@babel/core": "7.17.9",
+    "@babel/core": "^7.18.2",
     "@babel/preset-env": "7.16.11",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
+    "@babel/runtime": "^7.18.3",
+    "@lingui/babel-preset-react": "^2.9.2",
+    "@lingui/cli": "^3.13.3",
+    "@lingui/loader": "^3.13.3",
+    "@lingui/macro": "^3.13.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.5",
     "@principalstudio/html-webpack-inject-preload": "1.2.7",
     "@storybook/addon-actions": "^6.5.6",
@@ -61,7 +69,9 @@
     "@types/react-dom": "^18.0.5",
     "@types/styled-components": "^5.1.25",
     "babel-loader": "8.2.5",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-styled-components": "^2.0.7",
+    "babel-runtime": "^6.26.0",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.2.0",
     "copy-webpack-plugin": "10.2.4",

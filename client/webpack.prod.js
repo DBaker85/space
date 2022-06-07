@@ -46,8 +46,12 @@ module.exports = merge(commonConfig, {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-typescript", "@babel/preset-react"],
-            plugins: ["babel-plugin-styled-components"],
+            presets: [
+              "@babel/preset-typescript",
+              "@babel/preset-react",
+              "@lingui/babel-preset-react",
+            ],
+            plugins: ["babel-plugin-styled-components", "macros"],
           },
         },
         exclude: /node_modules/,
