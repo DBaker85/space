@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lighten } from "polished";
 
 const buttonDepth = 26;
 const color = "#C9C9EE";
@@ -14,7 +15,7 @@ export const StyledStartButton = styled.button`
   width: 280px;
   border-radius: 10px;
   background-color: #fff2f1;
-  color: #453a49;
+  color: ${lighten(20, "#453a49")};
   position: relative;
   align-items: center;
   justify-content: center;

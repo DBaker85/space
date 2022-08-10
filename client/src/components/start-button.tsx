@@ -4,4 +4,8 @@ import { StyledStartButton } from "./start-button.style";
 
 export const StartButton: FunctionComponent<{ children: ReactNode }> = ({
   children,
-}) => <StyledStartButton>{children}</StyledStartButton>;
+}) => (
+  <StyledStartButton>
+    <span>{children}</span>
+  </StyledStartButton>
+);

@@ -25,30 +25,15 @@ export const weatherQueries = {
     args: any,
     context: GraphQLContext
   ): Promise<QueryResponse> => {
-    const { db } = context;
-    const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
-    const dbase = db
-      ? await db.collection("weather").findOne({ date: today })
-      : null;
-    if (dbase) {
-      jsonResp = dbase;
-    } else {
-      const response = (await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${process.env.WEATHER_API_LOCATION}&appid=${process.env.WEATHER_API_KEY}&units=metric`
-      )) as Response;
 
-      jsonResp = (await response.json()) as ApiResponse;
-      const { code, error } = jsonResp;
-      if (!code && !error && db) {
-        db.collection("weather").insertOne({
-          ...{
-            date: today,
-          },
-          ...jsonResp,
-        });
-      }
-    }
+    const response = (await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${process.env.WEATHER_API_LOCATION}&appid=${process.env.WEATHER_API_KEY}&units=metric`
+    )) as Response;
+
+    jsonResp = (await response.json()) as ApiResponse;
+
+    console.log(`api response`);
 
     const {
       weather,

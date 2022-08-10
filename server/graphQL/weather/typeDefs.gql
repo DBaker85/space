@@ -6,7 +6,7 @@ type WindType {
   speed: Float
 }
 
-type WeatherOutputType {
+type WeatherOutputType @cacheControl(maxAge: 100) {
   temperature: Float
   weather: String
   sun: SunType

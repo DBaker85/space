@@ -8,7 +8,7 @@ import { I18nProvider } from "@lingui/react";
 import App from "./App";
 import { theme } from "./styles/theme";
 
-const { messages } = require(`@lingui/loader!./locales/en/messages.po`);
+const { messages } = require(`@lingui/loader!../locales/en/messages.po`);
 
 // import reportWebVitals from './reportWebVitals';
 

@@ -1,1 +1,8 @@
 /dist
+
+
+
+#translations
+/locales
+.linguirc
+lingui.config.ts

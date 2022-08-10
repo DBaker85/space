@@ -30,30 +30,14 @@ export const nearEarthObjectsQueries = {
     args: any,
     context: GraphQLContext
   ): Promise<QueryResponse> => {
-    const { db } = context;
+    // const { db } = context;
     const today = new Date().toISOString().slice(0, 10);
     let jsonResp: ApiResponse;
-    const dbase = db
-      ? await db.collection("near-earth-objects").findOne({ date: today })
-      : null;
-    if (dbase) {
-      jsonResp = dbase;
-    } else {
-      const response = (await fetch(
-        `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=DEMO_KEY`
-      )) as Response;
+    const response = (await fetch(
+      `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=DEMO_KEY`
+    )) as Response;
 
-      jsonResp = (await response.json()) as ApiResponse;
-      const { code, error } = jsonResp;
-      if (!code && !error && db) {
-        db.collection("near-earth-objects").insertOne({
-          ...{
-            date: today,
-          },
-          ...jsonResp,
-        });
-      }
-    }
+    jsonResp = (await response.json()) as ApiResponse;
 
     const {
       element_count,

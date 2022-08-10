@@ -16,10 +16,15 @@ import { getDataFromTree } from "@apollo/client/react/ssr";
 import { SchemaLink } from "@apollo/client/link/schema";
 import { makeExecutableSchema } from "graphql-tools";
 
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
+
 import { schema } from "./graphQL";
 
 import { getInitialFiles } from "./utils/getInitialFiles";
 import { logger } from "./utils/utils";
+
+const { messages } = require(`@lingui/loader!./locales/en/messages.po`);
 
 import App from "../client/src/App";
 
@@ -58,23 +63,21 @@ router.all("(.*)", async (ctx: Context, next) => {
   if (ctx.request.url === "/graphql") {
     return next();
   }
-
+  console.log(ctx.request.headers);
   const sheet = new ServerStyleSheet();
-  const client = new ApolloClient({
-    ssrMode: true,
-    link: new SchemaLink({ schema }),
-    cache: new InMemoryCache(),
-  });
 
   const WrappedApp = () => (
-    <ApolloProvider client={client}>
-      <StyleSheetManager sheet={sheet.instance}>
+    <StyleSheetManager sheet={sheet.instance}>
+      <I18nProvider i18n={i18n}>
         <App />
-      </StyleSheetManager>
-    </ApolloProvider>
+      </I18nProvider>
+    </StyleSheetManager>
   );
 
   try {
+    i18n.load("en", messages);
+    i18n.activate("en");
+
     const html = renderToString(sheet.collectStyles(<WrappedApp />));
     const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
 
@@ -130,6 +133,7 @@ router.all("(.*)", async (ctx: Context, next) => {
 
     ctx.body = index;
   } catch (error) {
+    console.log(error);
     ctx.body = "Welp that went wrong eh";
   } finally {
     sheet.seal();

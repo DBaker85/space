@@ -13,6 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/App.tsx:21
+#: src/App.tsx:24
 msgid "Launch"
 msgstr "Launch"

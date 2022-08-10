@@ -40,23 +40,7 @@ module.exports = merge(commonConfig, {
   },
 
   module: {
-    rules: [
-      {
-        test: [/\.jsx?$/, /\.tsx?$/],
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-typescript",
-              "@babel/preset-react",
-              "@lingui/babel-preset-react",
-            ],
-            plugins: ["babel-plugin-styled-components", "macros"],
-          },
-        },
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [],
   },
 
   performance: {

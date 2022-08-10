@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config=webpack.dev.js",
-    "build": "webpack --config=webpack.prod.js",
+    "build": "lingui compile && webpack --config=webpack.prod.js",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -36,6 +36,7 @@
     "graphql": "^16.4.0",
     "i18next": "^21.8.4",
     "i18next-browser-languagedetector": "^6.1.4",
+    "polished": "^4.2.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.16.9",

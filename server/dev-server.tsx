@@ -5,7 +5,11 @@ import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginCacheControl,
 } from "apollo-server-core";
+import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
+import responseCachePlugin from "apollo-server-plugin-response-cache";
+
 import http from "http";
 
 import { readFileSync } from "fs-extra";
@@ -46,10 +50,16 @@ async function startApolloServer() {
     schema,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginCacheControl(),
+      responseCachePlugin(),
       process.env.NODE_ENV === "production"
         ? ApolloServerPluginLandingPageDisabled()
         : ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
+    cache: new InMemoryLRUCache({
+      // ~50MiB
+      maxSize: Math.pow(2, 20) * 50,
+    }),
     context: async () => {
       if (db instanceof Db === false) {
         let i;
