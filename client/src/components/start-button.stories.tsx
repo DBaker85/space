@@ -2,7 +2,7 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 import styled from "styled-components";
 
-import { StartButton } from "./start-button";
+import { StartButton, ButtonProps } from "./start-button";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,9 +13,9 @@ const Wrapper = styled.div`
   margin: -1rem;
 `;
 
-const Template: Story = () => (
+const Template: Story<ButtonProps> = (args) => (
   <Wrapper>
-    <StartButton>Launch</StartButton>
+    <StartButton {...args}>Launch</StartButton>
   </Wrapper>
 );
 
@@ -24,7 +24,8 @@ export default {
   component: StartButton,
   argTypes: {
     className: {
-      control: null,
+      options: ["", "fade-exit"],
+      control: { type: "select" },
     },
   },
 } as Meta;

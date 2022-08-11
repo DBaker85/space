@@ -2,7 +2,8 @@ import React, { FunctionComponent, ReactNode } from "react";
 
 import { StyledStartButton } from "./start-button.style";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 

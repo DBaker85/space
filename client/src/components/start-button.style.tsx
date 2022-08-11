@@ -1,6 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const buttonDepth = 26;
+
+const shrinkOut = keyframes`
+ 0% { transform:perspective(600px) rotateX(30deg) scaleY(1) scaleX(1); opacity: 1;}
+ 60% { transform:perspective(600px) rotateX(30deg) scaleY(1) scaleX(0.05); opacity: 1;}
+ 70% { transform:perspective(600px) rotateX(30deg) scaleY(0) scaleX(0.01); opacity: 1; }
+ 100% { transform:perspective(600px) rotateX(30deg) scaleY(0) scaleX(0); opacity: 0; }
+`;
 
 export const StyledStartButton = styled.button`
   text-transform: uppercase;
@@ -30,4 +37,27 @@ export const StyledStartButton = styled.button`
       0 3px 2px -1px rgba(0, 0, 0, 0), inset 0 -5px 6px 1px rgba(0, 0, 0, 0.1),
       0 2px 2px 2px rgba(0, 0, 0, 0.1), 0 2px 1px 0px rgba(0, 0, 0, 0.5);
   }
+  & span {
+    opacity: 1;
+  }
+  &.fade-exit {
+    animation-name: ${shrinkOut};
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    opacity: 0;
+    & span {
+      opacity: 0;
+      transition: opacity ease-in-out 0.2s;
+    }
+  }
 `;
+
+// fade-appear
+// fade-appear-active
+// fade-appear-done
+// fade-enter
+// fade-enter-active
+// fade-enter-done
+// fade-exit
+// fade-exit-active
+// fade-exit-done

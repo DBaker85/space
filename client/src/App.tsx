@@ -1,7 +1,8 @@
 import React, { FunctionComponent, Suspense } from "react";
 import { lazyWithPreload } from "react-lazy-with-preload";
 import styled, { createGlobalStyle } from "styled-components";
-import { Router, Route } from "wouter";
+import { Router, Route, Switch, useLocation } from "wouter";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { globalStyle } from "./styles";
 import { idleCallback } from "./utils/requestIdleCallback";
@@ -22,15 +23,24 @@ const StyledApp = styled.div`
 const Main = lazyWithPreload(() => import("./pages/main/main"));
 
 const App: FunctionComponent = () => {
+  const [location] = useLocation();
+
   useEffectOnce(() => idleCallback(() => Main.preload()));
+
   return (
     <StyledApp className="App">
       <GlobalStyle />
       <Router>
-        <Suspense fallback={<Loader />}>
-          <Route path="/main" component={Main} />
-        </Suspense>
-        <Route path="/" component={Start} />
+        <TransitionGroup>
+          <CSSTransition key={location} classNames="fade" timeout={500}>
+            <Suspense fallback={<Loader />}>
+              <Switch location={location}>
+                <Route path="/main" component={Main} />
+                <Route path="/" component={Start} />
+              </Switch>
+            </Suspense>
+          </CSSTransition>
+        </TransitionGroup>
       </Router>
     </StyledApp>
   );
