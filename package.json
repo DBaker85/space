@@ -11,7 +11,9 @@
     "start:client": "yarn workspace client start",
     "start:storybook": "yarn workspace client storybook",
     "generate:codegen": "graphql-codegen --config codegen.yml",
-    "copy:files": "ts-node --skip-project scripts/copy-files.ts"
+    "copy:files": "ts-node --skip-project scripts/copy-files.ts",
+    "build:client": "yarn workspace client build",
+    "build:server": "yarn workspace client build && yarn copy:files && yarn workspace server build"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",

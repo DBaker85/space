@@ -2051,6 +2051,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+  version: 7.18.9
+  resolution: "@babel/runtime@npm:7.18.9"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 36dd736baba7164e82b3cc9d43e081f0cb2d05ff867ad39cac515d99546cee75b7f782018b02a3dcf5f2ef3d27f319faa68965fdfec49d4912c60c6002353a2e
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.12.7, @babel/template@npm:^7.16.7, @babel/template@npm:^7.3.3":
   version: 7.16.7
   resolution: "@babel/template@npm:7.16.7"
@@ -6196,6 +6205,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-transition-group@npm:^4.4.5":
+  version: 4.4.5
+  resolution: "@types/react-transition-group@npm:4.4.5"
+  dependencies:
+    "@types/react": "*"
+  checksum: 265f1c74061556708ffe8d15559e35c60d6c11478c9950d3735575d2c116ca69f461d85effa06d73a613eb8b73c84fd32682feb57cf7c5f9e4284021dbca25b0
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*":
   version: 18.0.6
   resolution: "@types/react@npm:18.0.6"
@@ -6372,6 +6390,15 @@ __metadata:
     "@types/node": "*"
     "@types/webidl-conversions": "*"
   checksum: 975987a9ca14a8d5a883523acb4fa0df7760cd8ca8dee56cd57753821e56060bfbead94df84f4504fe0b4270776d81cbb40fcd1f8643dab86da3a9abe926fb5c
+  languageName: node
+  linkType: hard
+
+"@types/wouter@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@types/wouter@npm:2.2.0"
+  dependencies:
+    wouter: "*"
+  checksum: b9f6625a3ca2de0293333668ff21c8a4e32e984acc6705026bec867a36e2bdbfd75eac48805ab88f4b73479c0444b9e5db2833384443202235aa7e6ef6717792
   languageName: node
   linkType: hard
 
@@ -9109,7 +9136,9 @@ __metadata:
     "@types/jest": ^27.5.1
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.5
+    "@types/react-transition-group": ^4.4.5
     "@types/styled-components": ^5.1.25
+    "@types/wouter": ^2.2.0
     apollo3-cache-persist: ^0.14.0
     babel-loader: 8.2.5
     babel-plugin-macros: ^3.1.0
@@ -9128,7 +9157,9 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     react-i18next: ^11.16.9
+    react-lazy-with-preload: ^2.2.0
     react-refresh: 0.12.0
+    react-transition-group: ^4.4.5
     redux-persist: 6.0.0
     redux-toolkit: 1.1.2
     styled-components: ^5.3.5
@@ -9141,6 +9172,7 @@ __metadata:
     webpack-dev-server: 4.8.1
     webpack-manifest-plugin: 5.0.0
     webpack-merge: 5.8.0
+    wouter: ^2.8.0-alpha.2
   languageName: unknown
   linkType: soft
 
@@ -10417,6 +10449,16 @@ __metadata:
   dependencies:
     utila: ~0.4
   checksum: ea52fe303f5392e48dea563abef0e6fb3a478b8dbe3c599e99bb5d53981c6c38fc4944e56bb92a8ead6bb989d10b7914722ae11febbd2fd0910e33b9fc4aaa77
+  languageName: node
+  linkType: hard
+
+"dom-helpers@npm:^5.0.1":
+  version: 5.2.1
+  resolution: "dom-helpers@npm:5.2.1"
+  dependencies:
+    "@babel/runtime": ^7.8.7
+    csstype: ^3.0.2
+  checksum: 863ba9e086f7093df3376b43e74ce4422571d404fc9828bf2c56140963d5edf0e56160f9b2f3bb61b282c07f8fc8134f023c98fd684bddcb12daf7b0f14d951c
   languageName: node
   linkType: hard
 
@@ -17901,7 +17943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18262,6 +18304,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-lazy-with-preload@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-lazy-with-preload@npm:2.2.0"
+  checksum: c3a50291dd1b3a4343b61c15dfc5eefcec8376bfe4e5f7a03221f05c021c3d3d2db386bd33eaf39b5e8bc3ca966969fde2860e4ef4617831c6289d0c7eab0360
+  languageName: node
+  linkType: hard
+
 "react-refresh@npm:0.12.0":
   version: 0.12.0
   resolution: "react-refresh@npm:0.12.0"
@@ -18288,6 +18337,21 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: c082b48f30f8ba8d0c55ed1d761910630860077c7ff5793c4c912adcb5760df06436ed0ad62be0de28113aac9ad2af55eccd995f8eee98df53382e4ced2072fb
+  languageName: node
+  linkType: hard
+
+"react-transition-group@npm:^4.4.5":
+  version: 4.4.5
+  resolution: "react-transition-group@npm:4.4.5"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    dom-helpers: ^5.0.1
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: ">=16.6.0"
+    react-dom: ">=16.6.0"
+  checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
   languageName: node
   linkType: hard
 
@@ -22272,6 +22336,24 @@ __metadata:
   dependencies:
     microevent.ts: ~0.1.1
   checksum: 8f8607506172f44c05490f3ccf13e5c1f430eeb9b6116a405919c186b8b17add13bbb22467a0dbcd18ec7fcb080709a15738182e0003c5fbe2144721ea00f357
+  languageName: node
+  linkType: hard
+
+"wouter@npm:*":
+  version: 2.7.5
+  resolution: "wouter@npm:2.7.5"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 6059e18642fb6d0b29fbc9e9d845d1efa1e540ba8e5d3af7c3d770554568e4bae08d675888eae8a1da842654aae4c3e556469b3e890f822d6374e65e11bc8c42
+  languageName: node
+  linkType: hard
+
+"wouter@npm:^2.8.0-alpha.2":
+  version: 2.8.0-alpha.2
+  resolution: "wouter@npm:2.8.0-alpha.2"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 748002712b6511ec2b93bd18966ae85ac99e66aa344b672c92f972bf4332d809d6466e831017bdf3030f4163d5cdb04a6993b27dea68993f2a3d845ed08f2b02
   languageName: node
   linkType: hard
 

@@ -28,9 +28,19 @@ module.exports = merge(commonConfig, {
         use: {
           loader: "babel-loader",
           options: {
-            plugins: [require.resolve("react-refresh/babel")],
+            presets: [
+              "@babel/preset-typescript",
+              "@babel/preset-react",
+              "@lingui/babel-preset-react",
+            ],
+            plugins: [
+              "babel-plugin-styled-components",
+              "macros",
+              require.resolve("react-refresh/babel"),
+            ],
           },
         },
+        exclude: /node_modules/,
       },
     ],
   },

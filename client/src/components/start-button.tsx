@@ -2,10 +2,15 @@ import React, { FunctionComponent, ReactNode } from "react";
 
 import { StyledStartButton } from "./start-button.style";
 
-export const StartButton: FunctionComponent<{ children: ReactNode }> = ({
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+}
+
+export const StartButton: FunctionComponent<ButtonProps> = ({
   children,
+  ...props
 }) => (
-  <StyledStartButton>
+  <StyledStartButton {...props}>
     <span>{children}</span>
   </StyledStartButton>
 );

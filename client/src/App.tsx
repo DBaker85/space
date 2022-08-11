@@ -1,9 +1,13 @@
-import React from "react";
+import React, { FunctionComponent, Suspense } from "react";
+import { lazyWithPreload } from "react-lazy-with-preload";
 import styled, { createGlobalStyle } from "styled-components";
-import { Trans } from "@lingui/macro";
+import { Router, Route } from "wouter";
 
 import { globalStyle } from "./styles";
-import { StartButton } from "./components/start-button";
+import { idleCallback } from "./utils/requestIdleCallback";
+import { useEffectOnce } from "./hooks/useEffectOnce";
+import { Start } from "./pages/start/start";
+import { Loader } from "./components/loader/loader";
 
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
@@ -15,17 +19,21 @@ const StyledApp = styled.div`
   align-items: center;
 `;
 
-function App() {
+const Main = lazyWithPreload(() => import("./pages/main/main"));
+
+const App: FunctionComponent = () => {
+  useEffectOnce(() => idleCallback(() => Main.preload()));
   return (
     <StyledApp className="App">
       <GlobalStyle />
-      <header className="App-header">
-        <StartButton>
-          <Trans>Launch</Trans>
-        </StartButton>
-      </header>
+      <Router>
+        <Suspense fallback={<Loader />}>
+          <Route path="/main" component={Main} />
+        </Suspense>
+        <Route path="/" component={Start} />
+      </Router>
     </StyledApp>
   );
-}
+};
 
 export default App;

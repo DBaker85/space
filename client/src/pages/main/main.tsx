@@ -5,6 +5,7 @@ import {
   gql,
   makeVar,
 } from "@apollo/client";
+import React, { FunctionComponent } from "react";
 
 // Initializes to true if localStorage includes a 'token' key,
 // false otherwise
@@ -44,3 +45,7 @@ const client = new ApolloClient({
   cache,
   typeDefs,
 });
+
+const Main: FunctionComponent = () => <div>Hello Main</div>;
+
+export default Main;

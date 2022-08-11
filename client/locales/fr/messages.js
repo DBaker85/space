@@ -1,1 +1,1 @@
-/*eslint-disable*/ module.exports = { messages: { Launch: "Launch" } };
+/*eslint-disable*/ module.exports = { messages: { Start: "Demarrer" } };

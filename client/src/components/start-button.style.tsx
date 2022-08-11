@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import { lighten } from "polished";
 
 const buttonDepth = 26;
-const color = "#C9C9EE";
 
 export const StyledStartButton = styled.button`
   text-transform: uppercase;
-
   font-size: 3rem;
   display: flex;
   border: none;
@@ -14,8 +11,8 @@ export const StyledStartButton = styled.button`
   height: 90px;
   width: 280px;
   border-radius: 10px;
-  background-color: #fff2f1;
-  color: ${lighten(20, "#453a49")};
+  background-color: ${(props) => props.theme.light};
+  color: ${(props) => props.theme.dark};
   position: relative;
   align-items: center;
   justify-content: center;
