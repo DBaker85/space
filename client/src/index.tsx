@@ -6,7 +6,7 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 
 import App from "./App";
-import { theme } from "./styles/theme";
+import { theme } from "./theme";
 
 const { messages } = require(`@lingui/loader!../locales/en/messages.po`);
 

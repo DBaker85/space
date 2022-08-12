@@ -1,11 +1,11 @@
 import { Meta, ColorPalette, ColorItem } from "@storybook/addon-docs/blocks";
 
-import { theme } from "../src/styles/theme";
+import { theme } from "../src/theme";
 
 <Meta title="UI/Colors" />
 
-export const getColors = () =>
-  Object.keys(theme).map((key) => ({ name: key, value: theme[key] }));
+export const getColors = ({ colors }) =>
+  Object.keys(colors).map((key) => ({ name: key, value: colors[key] }));
 
 # Colors
 
@@ -14,7 +14,7 @@ export const getColors = () =>
     {getColors(theme).map(({ name, value }) => (
       <ColorItem
         key={name}
-        title={`theme.${name}`}
+        title={`theme.colors.${name}`}
         subtitle={name}
         colors={[value]}
       />

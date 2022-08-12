@@ -10,6 +10,7 @@ const shrinkOut = keyframes`
 `;
 
 export const StyledStartButton = styled.button`
+  font-family: ${(props) => props.theme.fonts.fontFamily};
   text-transform: uppercase;
   font-size: 3rem;
   display: flex;
@@ -18,8 +19,8 @@ export const StyledStartButton = styled.button`
   height: 90px;
   width: 280px;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.light};
-  color: ${(props) => props.theme.dark};
+  background-color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.dark};
   position: relative;
   align-items: center;
   justify-content: center;

@@ -1,7 +1,7 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { addDecorator } from "@storybook/react";
 import { globalStyle } from "../src/styles";
-import { theme } from "../src/styles/theme";
+import { theme } from "../src/theme";
 
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
