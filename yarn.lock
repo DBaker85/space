@@ -9154,6 +9154,7 @@ __metadata:
     jest: 27.5.1
     mime: 3.0.0
     polished: ^4.2.2
+    preact: ^10.10.2
     react: ^18.1.0
     react-dom: ^18.1.0
     react-i18next: ^11.16.9
@@ -17685,6 +17686,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"preact-render-to-string@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "preact-render-to-string@npm:5.2.1"
+  dependencies:
+    pretty-format: ^3.8.0
+  peerDependencies:
+    preact: ">=10"
+  checksum: 5702638656a5a471a3698e8535e08ff0fca98317a578b2527158026fda28a681c008cebcabdbacd76209dabd2728a90da9793bef778549d28f5d060854cc7f7a
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.10.2":
+  version: 10.10.2
+  resolution: "preact@npm:10.10.2"
+  checksum: 3e994205eb75ce7c79f45bfd86b297645937f926c06fa2a541bf87a5ae168dd6c9f0945af29986065877623d58d1977aff073e4378683994fabee0edbb165c24
+  languageName: node
+  linkType: hard
+
 "prebuild-install@npm:7.0.1":
   version: 7.0.1
   resolution: "prebuild-install@npm:7.0.1"
@@ -17826,6 +17845,13 @@ __metadata:
     ansi-styles: ^5.0.0
     react-is: ^17.0.1
   checksum: cf610cffcb793885d16f184a62162f2dd0df31642d9a18edf4ca298e909a8fe80bdbf556d5c9573992c102ce8bf948691da91bf9739bee0ffb6e79c8a8a6e088
+  languageName: node
+  linkType: hard
+
+"pretty-format@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "pretty-format@npm:3.8.0"
+  checksum: 21a114d43ef06978f8f7f6212be4649b0b094f05d9b30e14e37550bf35c8ca24d8adbca9e5adc4cc15d9eaf7a1e7a30478a4dc37b30982bfdf0292a5b385484c
   languageName: node
   linkType: hard
 
@@ -19431,6 +19457,8 @@ __metadata:
     koa-static: 5.0.0
     mongodb: 4.5.0
     node-fetch: ^2.6.7
+    preact: ^10.10.2
+    preact-render-to-string: ^5.2.1
     react: ^18.1.0
     react-dom: ^18.1.0
     server-destroy: 1.0.1
