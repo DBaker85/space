@@ -8,13 +8,17 @@ import { I18nProvider } from "@lingui/react";
 import App from "./App";
 import { theme } from "./theme";
 
-const { messages } = require(`@lingui/loader!../locales/en/messages.po`);
+const enMessages = require(`@lingui/loader!../locales/en/messages.po`);
+const frMessages = require(`@lingui/loader!../locales/fr/messages.po`);
 
 // import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById("root");
 
-i18n.load("en", messages);
+i18n.load({
+  en: enMessages.messages,
+  fr: frMessages.messages,
+});
 i18n.activate("en");
 
 const Core = () => (
