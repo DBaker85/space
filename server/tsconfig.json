@@ -11,9 +11,7 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "paths": {
-      "*": ["node_modules/*"],
-      "react": ["./node_modules/preact/compat/"],
-      "react-dom": ["./node_modules/preact/compat/"]
+      "*": ["node_modules/*"]
     }
   },
   "include": ["./**/*.ts"]

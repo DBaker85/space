@@ -13,10 +13,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".jsx", ".ts", ".tsx", ".mjs", ".js"],
-    alias: {
-      react: "preact/compat",
-      "react-dom": "preact/compat",
-    },
   },
   target: "node",
   node: {
@@ -60,6 +56,7 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: [
+              "@babel/preset-env",
               "@babel/preset-typescript",
               "@babel/preset-react",
               "@lingui/babel-preset-react",
