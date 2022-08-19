@@ -15,6 +15,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 import { SchemaLink } from "@apollo/client/link/schema";
 import { makeExecutableSchema } from "graphql-tools";
+import { Router as WouterRouter } from "wouter";
+import staticLocationHook from "wouter/static-location";
 
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
@@ -24,7 +26,7 @@ import { schema } from "./graphQL";
 import { getInitialFiles } from "./utils/getInitialFiles";
 import { logger } from "./utils/utils";
 
-const { messages } = require(`@lingui/loader!./locales/en/messages.po`);
+// const { messages } = require(`@lingui/loader!./locales/en/messages.po`);
 
 import App from "../client/src/App";
 
@@ -67,16 +69,18 @@ router.all("(.*)", async (ctx: Context, next) => {
   const sheet = new ServerStyleSheet();
 
   const WrappedApp = () => (
-    <StyleSheetManager sheet={sheet.instance}>
-      <I18nProvider i18n={i18n}>
+    <WouterRouter hook={staticLocationHook(ctx.path)}>
+      <StyleSheetManager sheet={sheet.instance}>
+        {/* <I18nProvider i18n={i18n}> */}
         <App />
-      </I18nProvider>
-    </StyleSheetManager>
+        {/* </I18nProvider> */}
+      </StyleSheetManager>
+    </WouterRouter>
   );
 
   try {
-    i18n.load("en", messages);
-    i18n.activate("en");
+    //   i18n.load("en", messages);
+    //   i18n.activate("en");
 
     const html = renderToString(sheet.collectStyles(<WrappedApp />));
     const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();

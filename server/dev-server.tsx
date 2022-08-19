@@ -1,5 +1,6 @@
 declare const module: any;
 
+import "regenerator-runtime/runtime";
 import { ApolloServer } from "apollo-server-koa";
 import {
   ApolloServerPluginDrainHttpServer,
