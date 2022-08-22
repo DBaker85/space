@@ -1,6 +1,7 @@
 import React, { StrictMode } from "react";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import { ThemeProvider } from "styled-components";
+import { Router } from "wouter";
 
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
@@ -25,7 +26,9 @@ const Core = () => (
   <StrictMode>
     <I18nProvider i18n={i18n}>
       <ThemeProvider theme={theme}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ThemeProvider>
     </I18nProvider>
   </StrictMode>
