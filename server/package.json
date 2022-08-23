@@ -35,7 +35,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "server-destroy": "1.0.1",
-    "styled-components": "^5.3.5"
+    "styled-components": "6.0.0-alpha.5"
   },
   "devDependencies": {
     "@babel/core": "7.17.9",
@@ -54,7 +54,6 @@
     "@types/node": "^17.0.35",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
-    "@types/styled-components": "^5.1.25",
     "babel-loader": "8.2.5",
     "babel-plugin-styled-components": "^2.0.7",
     "clean-webpack-plugin": "4.0.0",

@@ -7,8 +7,8 @@ import mount from "koa-mount";
 import Koa, { Context } from "koa";
 import Router from "@koa/router";
 import React from "react";
-import { renderToString } from "react-dom/server";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import { renderToString, renderToNodeStream } from "react-dom/server";
+import Styled, { ServerStyleSheet, StyleSheetManager } from "styled-components";
 import KoaLogger from "koa-logger";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
@@ -65,7 +65,7 @@ router.all("(.*)", async (ctx: Context, next) => {
   if (ctx.request.url === "/graphql") {
     return next();
   }
-  console.log(ctx.request.headers);
+
   const sheet = new ServerStyleSheet();
 
   const WrappedApp = () => (
@@ -82,34 +82,34 @@ router.all("(.*)", async (ctx: Context, next) => {
     //   i18n.load("en", messages);
     //   i18n.activate("en");
 
-    const html = renderToString(sheet.collectStyles(<WrappedApp />));
-    const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
+    // const html = renderToString(sheet.collectStyles(<WrappedApp />));
+    // const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
 
     const indexContent = await readFile(indexFile, "utf8");
 
-    const index = indexContent.replace(
-      rootDivRegex,
-      `<div id="root">
-        ${styleTags}
-        ${html}
-    </div>`
-    );
+    // const index = indexContent.replace(
+    //   rootDivRegex,
+    //   `<div id="root">
+    //     ${styleTags}
+    //     ${html}
+    // </div>`
+    // );
 
-    //   ctx.res.write('<html><head><title>Test</title></head><body>');
+    ctx.res.write("<html><head><title>Test</title></head><body>");
 
-    // const Heading = styled.h1`
-    // color: red;
-    // `;
+    const Heading = Styled.h1`
+    color: red;
+    `;
 
-    // const sheet = new ServerStyleSheet();
-    // const jsx = sheet.collectStyles(<Heading>Hello SSR!</Heading>);
-    // const stream = sheet.interleaveWithNodeStream(renderToNodeStream(jsx));
+    const sheet = new ServerStyleSheet();
+    const jsx = sheet.collectStyles(<Heading>Hello SSR!</Heading>);
+    const stream = sheet.interleaveWithNodeStream(renderToNodeStream(jsx));
 
-    // // you'd then pipe the stream into the response object until it's done
-    // stream.pipe(ctx.res, { end: false });
+    // you'd then pipe the stream into the response object until it's done
+    stream.pipe(ctx.res, { end: false });
 
-    // // and finalize the response with closing HTML
-    // stream.on('end', () => ctx.res.end('</body></html>'));
+    // and finalize the response with closing HTML
+    stream.on("end", () => ctx.res.end("</body></html>"));
 
     // console.log(file); // => 'html'
     // initialFiles.forEach((file) => {
@@ -135,7 +135,7 @@ router.all("(.*)", async (ctx: Context, next) => {
     //   );
     // });
 
-    ctx.body = index;
+    // ctx.body = index;
   } catch (error) {
     console.log(error);
     ctx.body = "Welp that went wrong eh";
