@@ -32,6 +32,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.5",
     "@lingui/react": "^3.13.3",
+    "@react-three/drei": "^9.24.4",
     "@react-three/fiber": "^8.3.1",
     "apollo3-cache-persist": "^0.14.0",
     "graphql": "^16.4.0",

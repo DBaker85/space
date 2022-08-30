@@ -1,6 +1,13 @@
 import * as THREE from "three";
 import React, { useRef, useState, FunctionComponent } from "react";
 import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import styled from "styled-components";
+
+const StyledCanvasWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
 function Box(props: ThreeElements["mesh"]) {
   const ref = useRef<THREE.Mesh>(null!);
@@ -23,12 +30,15 @@ function Box(props: ThreeElements["mesh"]) {
 }
 
 const Main: FunctionComponent = () => (
-  <Canvas>
-    <ambientLight />
-    <pointLight position={[10, 10, 10]} />
-    <Box position={[-1.2, 0, 0]} />
-    <Box position={[1.2, 0, 0]} />
-  </Canvas>
+  <StyledCanvasWrapper>
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} />
+      <OrbitControls autoRotate autoRotateSpeed={0.1} />
+    </Canvas>
+  </StyledCanvasWrapper>
 );
 
 // import {

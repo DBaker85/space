@@ -23,15 +23,15 @@ i18n.load({
 i18n.activate("en");
 
 const Core = () => (
-  <StrictMode>
-    <I18nProvider i18n={i18n}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <App />
-        </Router>
-      </ThemeProvider>
-    </I18nProvider>
-  </StrictMode>
+  // <StrictMode>
+  <I18nProvider i18n={i18n}>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
+  </I18nProvider>
+  // </StrictMode>
 );
 
 if (process.env.NODE_ENV === "production") {
