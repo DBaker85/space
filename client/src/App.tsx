@@ -9,6 +9,7 @@ import { idleCallback } from "./utils/requestIdleCallback";
 import { useEffectOnce } from "./hooks/useEffectOnce";
 import { Start } from "./pages/start/start";
 import { Loader } from "./components/loader/loader";
+import { Interpolation } from "styled-components/dist/types";
 
 const GlobalStyle = createGlobalStyle`${globalStyle}`;
 
