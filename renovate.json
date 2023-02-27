@@ -1,0 +1,9 @@
+{
+  "extends": ["config:base"],
+  "baseBranches": ["dev"],
+  "schedule": [
+    "after 9am every weekday",
+    "before 6pm every weekday",
+    "every weekend"
+  ]
+}
