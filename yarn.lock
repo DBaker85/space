@@ -23499,9 +23499,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:6.0.0-beta.9":
-  version: 6.0.0-beta.9
-  resolution: "styled-components@npm:6.0.0-beta.9"
+"styled-components@npm:6.0.0-beta.11":
+  version: 6.0.0-beta.11
+  resolution: "styled-components@npm:6.0.0-beta.11"
   dependencies:
     "@babel/cli": ^7.20.7
     "@babel/core": ^7.20.7
@@ -23534,7 +23534,7 @@ __metadata:
       optional: true
     tslib:
       optional: true
-  checksum: 3cfddb3f4879cf2142f539e7877de33a28d03cd768b4b3afd685ed4e9df703267c6c22fd1d3f6c9abd937073fcc42747f88e45078b6814c2d144af6f26cf57ea
+  checksum: cb749642935e248a6cb9a8b2ec1364cf6e4f74f600b67be36caa0011c54e47a30eb00de8ede58edd94a4be33ee045a718d268fd6749ecd2690fab4c7149ecac1
   languageName: node
   linkType: hard
 
