@@ -1,12 +1,9 @@
 const { resolve } = require("path");
+const webpack = require("webpack");
+
 module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
-
-    // alias: {
-    //   react: "preact/compat",
-    //   "react-dom": "preact/compat",
-    // },
   },
   module: {
     rules: [
@@ -25,14 +22,14 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
         generator: {
-          filename: "static/img/[name].[hash][ext][query]",
+          filename: "static/img/[name].[contenthash][ext][query]",
         },
       },
       {
         test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         type: "asset/resource",
         generator: {
-          filename: "static/fonts/[name].[hash][ext][query]",
+          filename: "static/fonts/[name].[contenthash][ext][query]",
         },
       },
       {
@@ -53,8 +50,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [new webpack.ids.HashedModuleIdsPlugin()],
   output: {
-    filename: "static/js/[name].[fullhash].min.js",
+    filename: "static/js/[name].[contenthash].min.js",
     path: resolve(process.cwd(), "dist"),
     publicPath: "/",
   },
