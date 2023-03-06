@@ -33,20 +33,25 @@ export const weatherQueries = {
 
     jsonResp = (await response.json()) as ApiResponse;
 
-    console.log(`api response`);
+    console.log("request");
 
     const {
       weather,
-      main: { temp },
-      wind: { speed },
-      sys: { sunrise, sunset },
+      main,
+      wind,
+      sys,
+      cod,
       code,
       error,
+      message = "",
       http_error = "",
     } = jsonResp;
 
-    if (code && code > 400) {
-      throw new Error(`${code.toString()} : ${http_error}`);
+    const httpErrorCode = cod || code;
+    const httpErrorMessage = message + http_error;
+
+    if (httpErrorCode && httpErrorCode > 400) {
+      throw new Error(`${httpErrorCode.toString()} : ${httpErrorMessage}`);
     }
     if (error) {
       throw new Error(`${error.code} : ${error.message}`);
@@ -54,14 +59,14 @@ export const weatherQueries = {
 
     weatherResponse = {
       weather: weather[0].main,
-      temperature: temp,
+      temperature: main.temp,
       wind: {
         // speed is in m/s.
-        speed,
+        speed: wind.speed,
       },
       sun: {
-        rise: sunrise,
-        set: sunset,
+        rise: sys.sunrise,
+        set: sys.sunset,
       },
     };
 

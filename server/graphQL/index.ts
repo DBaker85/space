@@ -9,4 +9,6 @@ const application = createApplication({
 });
 
 // This is your actual GraphQL schema
-export const schema = application.createSchemaForApollo();
+export const schema = application.schema;
+
+export const executor = application.createApolloExecutor();

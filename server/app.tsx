@@ -10,6 +10,7 @@ import React from "react";
 import { renderToString, renderToNodeStream } from "react-dom/server";
 import Styled, { ServerStyleSheet, StyleSheetManager } from "styled-components";
 import KoaLogger from "koa-logger";
+import bodyParser from "koa-bodyparser";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { getDataFromTree } from "@apollo/client/react/ssr";
@@ -153,5 +154,6 @@ app.use(compress());
 app.use(mount("/", serve(clientPath, { index: "none" })));
 
 app.use(router.routes());
+app.use(bodyParser());
 
 export { app };

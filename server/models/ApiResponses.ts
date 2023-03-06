@@ -12,4 +12,6 @@ interface ApiError {
   };
 }
 
-export interface ApiErrorResponse extends NetworkError, ApiError {}
+export interface ApiErrorResponse extends NetworkError, ApiError {
+  message: string;
+}
