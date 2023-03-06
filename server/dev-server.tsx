@@ -11,6 +11,7 @@ import "regenerator-runtime/runtime";
 import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
 
 import responseCachePlugin from "@apollo/server-plugin-response-cache";
+import { ApolloServerPluginCacheControl } from "@apollo/server/plugin/cacheControl";
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { koaMiddleware } from "@as-integrations/koa";
@@ -48,6 +49,49 @@ const MONGO_URL = process.env.PRODUCTION ? mongo : localMongo;
 let db: Db;
 
 const mongoClient = new MongoClient(MONGO_URL);
+
+async function startApolloServer() {
+  const httpServer = http.createServer(app.callback());
+  const cache = new InMemoryLRUCache({
+    // ~50MiB
+    maxSize: Math.pow(2, 20) * 50,
+  });
+
+  // Set up Apollo Server
+  const server = new ApolloServer({
+    gateway: {
+      async load() {
+        return { executor };
+      },
+      onSchemaLoadOrUpdate(callback) {
+        callback({ apiSchema: schema } as any);
+        return () => {};
+      },
+      async stop() {},
+    },
+
+    cache,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginCacheControl(),
+      responseCachePlugin(),
+    ],
+  });
+  await server.start();
+
+  app.use(
+    koaMiddleware(server, {
+      context: async ({ ctx }) => {
+        return { token: ctx.headers.token, cache };
+      },
+    })
+  );
+
+  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
+  console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
+}
+
+startApolloServer();
 
 // async function startApolloServer() {
 //   const httpServer = http.createServer();
@@ -107,45 +151,3 @@ const mongoClient = new MongoClient(MONGO_URL);
 
 //   return { server, app };
 // }
-
-async function startApolloServer() {
-  const httpServer = http.createServer(app.callback());
-  const cache = new InMemoryLRUCache({
-    // ~50MiB
-    maxSize: Math.pow(2, 20) * 50,
-  });
-
-  // Set up Apollo Server
-  const server = new ApolloServer({
-    gateway: {
-      async load() {
-        return { executor };
-      },
-      onSchemaLoadOrUpdate(callback) {
-        callback({ apiSchema: schema } as any);
-        return () => {};
-      },
-      async stop() {},
-    },
-
-    cache,
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      responseCachePlugin(),
-    ],
-  });
-  await server.start();
-
-  app.use(
-    koaMiddleware(server, {
-      context: async ({ ctx }) => {
-        return { token: ctx.headers.token, cache };
-      },
-    })
-  );
-
-  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
-  console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
-}
-
-startApolloServer();
